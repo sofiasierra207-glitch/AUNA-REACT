@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-Regular.woff2") format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-Medium.woff2") format("woff2");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-Bold.woff2") format("woff2");
+    font-weight: 700;
+}
+
+
+/* Playfair Display: títulos */
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url("PlayfairDisplay-Medium.woff2") format("woff2");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url("PlayfairDisplay-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url("PlayfairDisplay-Bold.woff2") format("woff2");
+    font-weight: 700;
+}
