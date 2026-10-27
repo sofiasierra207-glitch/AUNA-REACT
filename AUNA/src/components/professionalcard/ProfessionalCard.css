@@ -1,0 +1,172 @@
+/*
+   AÚNA - PROFESSIONALCARD
+   Arriba: paleta de colores (:root), la misma en todos los CSS
+   Abajo: Tarjeta de una profesional verificada (Community)
+*/
+
+:root {
+    /* Textos */
+    --text: #6E5A63;          /* texto secundario */
+    --text-h: #2C1D25;        /* títulos y texto principal */
+
+    /* Fondos y bordes */
+    --bg: #FFF7F3;            /* fondo crema de la página */
+    --white: #FFFFFF;         /* tarjetas, header y textos blancos */
+    --dark-bg: #3B2430;       /* caja oscura de AÚNA Help */
+    --border: #F1DFE4;        /* bordes finos */
+
+    /* Rosado de AÚNA */
+    --accent: #C2456E;        /* botones y página activa */
+    --accent-hover: #A93A5E;  /* rosado al pasar el mouse */
+    --accent-bg: #F7D9E3;     /* rosado claro */
+    --accent-soft: #FDEEF1;   /* rosado muy claro */
+
+    /* Sombra de las tarjetas */
+    --shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+
+    /* Fuentes */
+    --sans: "Inter", Arial, Helvetica, sans-serif;
+    --heading: "Playfair Display", Georgia, serif;
+}
+
+
+/* Tarjeta blanca con todo centrado */
+.professional-card {
+    width: 32%;
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Círculo rosado con la inicial */
+.professional-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background-color: var(--accent-bg);
+    color: var(--accent);
+    font-size: 26px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.professional-card h3 {
+    font-family: var(--heading);
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.professional-user {
+    color: var(--text);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* Etiqueta rosada con el check */
+.verified-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--accent-soft);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.verified-tag img {
+    width: 12px;
+    height: 12px;
+}
+
+/* Descripción con alto fijo para que las tarjetas queden parejas */
+.professional-description {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 44px;
+    margin-bottom: 10px;
+}
+
+/* Seguidores y tiempo de respuesta */
+.professional-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.professional-stats strong {
+    color: var(--text-h);
+    font-weight: 600;
+}
+
+/* Punto gris entre los datos */
+.stats-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #D8CCD0;
+}
+
+/* Botón ancho rosado */
+.professional-follow {
+    width: 100%;
+    border: 1px solid var(--accent);
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 11px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.professional-follow:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Estado Following: blanco con texto rosado */
+.professional-follow.following {
+    background-color: var(--white);
+    border-color: var(--border);
+    color: var(--accent);
+}
+
+
+/*
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    .professional-card {
+        width: 49%;
+    }
+}
+
+
+/*
+   Mobile
+*/
+
+@media (max-width: 700px) {
+
+    /* Una tarjeta por fila */
+    .professional-card {
+        width: 100%;
+    }
+}
