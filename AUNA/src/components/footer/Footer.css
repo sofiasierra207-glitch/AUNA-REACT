@@ -1,0 +1,91 @@
+/*
+   Footer
+*/
+
+/* 
+   Footer
+*/
+
+/* Pie de página blanco */
+footer {
+    background-color: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand strong {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.footer-brand p {
+    color: var(--text);
+    font-size: 12px;
+}
+
+.footer-navigation {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-navigation a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-navigation a:hover {
+    color: var(--accent);
+}
+
+
+/* Header y footer en pantallas grandes */
+@media (min-width: 1360px) {
+
+    footer {
+        padding: 40px 80px;
+    }
+
+    .footer-brand strong {
+        font-size: 18px;
+    }
+
+    .footer-brand p {
+        font-size: 14px;
+    }
+
+    .footer-navigation a {
+        font-size: 14px;
+    }
+}
+
+
+/* 
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    footer {
+        padding: 28px 32px;
+    }
+}
+
+
+/* 
+   Mobile
+  */
+@media (max-width: 700px) {
+
+    /* Footer en columna */
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px 20px;
+    }
+}
