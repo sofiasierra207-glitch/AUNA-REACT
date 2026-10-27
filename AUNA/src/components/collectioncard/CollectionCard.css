@@ -1,0 +1,71 @@
+/* tarjeta de coleccion: el texto queda pegado abajo */
+.coleccion {
+    flex: 1;
+    height: 200px;
+    padding: 28px;
+    border-radius: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.coleccion h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.coleccion p {
+    font-size: 14px;
+    line-height: 20px;
+    color: #6e5a63;
+}
+
+.coleccion a {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c2456e;
+}
+
+.coleccion a:hover {
+    text-decoration: underline;
+}
+
+/* color de fondo de cada coleccion */
+.coleccion-rosa-claro {
+    background-color: #fdedf1;
+}
+
+.coleccion-rosa {
+    background-color: #f7d9e3;
+}
+
+/* la oscura lleva los textos claros */
+.coleccion-oscura {
+    background-color: #3b2430;
+    color: #ffffff;
+}
+
+.coleccion-oscura p {
+    color: #ffffff;
+    opacity: 0.75;
+}
+
+.coleccion-oscura a {
+    color: #ffffff;
+}
+
+/* tablet: 2 por fila */
+@media (max-width: 1024px) {
+    .coleccion {
+        flex: 1 1 48%;
+    }
+}
+
+/* celular: una debajo de la otra */
+@media (max-width: 600px) {
+    .coleccion {
+        flex: none;
+        height: 160px;
+    }
+}
