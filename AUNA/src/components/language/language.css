@@ -1,0 +1,88 @@
+/* Menú de idiomas */
+
+/* El grupo de íconos es la referencia para ubicar el menú */
+.header-actions {
+    position: relative;
+}
+
+/* Botón de idioma con el menú abierto: fondo rosado claro */
+.icon-button.active {
+    background-color: #F7D9E3;
+    border-color: #F7D9E3;
+}
+
+/* Cajita blanca debajo del botón, oculta al inicio */
+.language-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 16px;
+    padding: 12px 8px 8px;
+    box-shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+    z-index: 1100;
+}
+
+/* Se muestra cuando JS le pone la clase "open" */
+.language-menu.open {
+    display: block;
+}
+
+/* Título pequeño en mayúsculas */
+.language-title {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6E5A63;
+    padding: 0 10px 8px;
+}
+
+/* Cada idioma ocupa todo el ancho */
+.language-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    color: #2C1D25;
+    cursor: pointer;
+}
+
+.language-option:hover {
+    background-color: #FDEEF1;
+}
+
+/* El check está oculto en todos los idiomas */
+.language-option img {
+    display: none;
+    width: 16px;
+    height: 16px;
+}
+
+/* Idioma elegido: texto rosado y check visible */
+.language-option.active {
+    color: #C2456E;
+    font-weight: 600;
+}
+
+.language-option.active img {
+    display: block;
+}
+
+/* En tablet los íconos son más pequeños, el menú sube un poco */
+@media (max-width: 1000px) {
+
+    .language-menu {
+        top: 52px;
+    }
+
+}
