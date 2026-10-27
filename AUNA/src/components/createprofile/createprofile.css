@@ -1,0 +1,206 @@
+/* Ventana para crear un perfil */
+
+/* Fondo oscuro que cubre toda la pantalla, oculto al inicio */
+.create-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 29, 37, 0.45);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Se muestra cuando JS le pone la clase "open" */
+.create-overlay.open {
+    display: flex;
+}
+
+/* Quita márgenes del navegador; el padding queda dentro del ancho */
+.create-overlay,
+.create-overlay * {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Caja blanca; si no cabe en la pantalla se puede bajar */
+.create-modal {
+    width: 560px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+    border-radius: 32px;
+    padding: 40px 48px 28px;
+    font-family: "Inter", Arial, sans-serif;
+    color: #2C1D25;
+    box-shadow: 0 20px 48px rgba(44, 29, 37, 0.2);
+}
+
+/* Título y botón cerrar */
+.create-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.create-header h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 32px;
+    font-weight: 500;
+}
+
+/* Botón redondo de cerrar */
+.create-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: #FDF3F1;
+    color: #2C1D25;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.create-close:hover {
+    background-color: #F7D9E3;
+}
+
+.create-text {
+    color: #6E5A63;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* Formulario en columna */
+.create-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-form label {
+    color: #6E5A63;
+    font-size: 13px;
+    margin: 12px 0 8px;
+}
+
+/* Campos rosados claros */
+.create-input {
+    width: 100%;
+    border: 1px solid #F1DFE4;
+    background-color: #FFF4F2;
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #2C1D25;
+    outline: none;
+}
+
+.create-input:focus {
+    border-color: #C2456E;
+}
+
+/* Campo con error: borde rojo */
+.create-input.error {
+    border-color: #D14B5A;
+}
+
+/* Casilla de términos */
+.create-form .create-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 6px;
+    font-size: 14px;
+}
+
+.create-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: #C2456E;
+}
+
+/* Mensaje de error en rojo */
+.create-error {
+    color: #D14B5A;
+    font-size: 13px;
+    min-height: 20px;
+}
+
+/* Botón ancho rosado (también se usa en "Go to home") */
+.create-button {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 15px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.create-button:hover {
+    background-color: #A93A5E;
+}
+
+/* "Already have an account? Log in" */
+.create-login {
+    color: #6E5A63;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.create-login-button {
+    border: none;
+    background: none;
+    color: #6E5A63;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.create-login-button:hover {
+    color: #C2456E;
+}
+
+/* Bienvenida oculta hasta crear el perfil */
+.create-welcome {
+    display: none;
+}
+
+/* Perfil creado: se oculta el formulario y se ve la bienvenida */
+.create-modal.done .create-form {
+    display: none;
+}
+
+.create-modal.done .create-welcome {
+    display: block;
+}
+
+/* En celular la caja es más compacta */
+@media (max-width: 700px) {
+
+    .create-modal {
+        padding: 28px 20px 22px;
+        border-radius: 24px;
+    }
+
+    .create-header h3 {
+        font-size: 26px;
+    }
+
+}
