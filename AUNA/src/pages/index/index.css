@@ -1,8 +1,7 @@
 /*
    AÚNA - INDEX
-   Arriba: paleta de colores (:root) y estilos generales de toda la app
-   Abajo: estilos del Home, todos dentro de .home para que no se mezclen
-   con las otras páginas (el header, el menú y el footer están en components)
+   Arriba: paleta de colores (:root), la misma en todos los CSS
+   Abajo: estilos generales y estilos del Home
 */
 
 :root {
@@ -93,1038 +92,1032 @@ input:focus-visible {
 }
 
 
-/*
-   Home
+/* 
+   Hero
 */
-.home {
 
-    /* 
-       Hero
-    */
+/* Dos columnas: tarjeta a la izquierda y texto a la derecha */
+.home-hero {
+    padding: 56px 80px 80px;
+    display: flex;
+    align-items: center;
+    gap: 72px;
+}
 
-    /* Dos columnas: tarjeta a la izquierda y texto a la derecha */
-    .hero {
-        padding: 56px 80px 80px;
-        display: flex;
-        align-items: center;
-        gap: 72px;
+/* Tarjeta blanca del post destacado */
+.hero-card {
+    width: 390px;
+    flex-shrink: 0;
+    background-color: var(--white);
+    border-radius: 28px;
+    padding: 24px 32px 20px;
+    box-shadow: var(--shadow);
+}
+
+/* Foto de la tarjeta */
+.hero-card-image {
+    width: 100%;
+    height: 318px;
+    object-fit: cover;
+    border-radius: 24px;
+    display: block;
+}
+
+/* Fila con avatar, nombre y Follow */
+.hero-card-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    padding-left: 12px;
+}
+
+/* Avatar redondo con la inicial */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-bg);
+    color: var(--accent);
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Nombre y rol uno debajo del otro */
+.hero-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hero-card-info strong {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hero-card-info span {
+    font-size: 11px;
+    color: var(--text);
+}
+
+/* Botón Follow pequeño, empujado a la derecha */
+.follow-button {
+    margin-left: auto;
+    margin-right: 12px;
+    border: 1px solid var(--accent);
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Estado Following: blanco con borde rosado */
+.follow-button.following {
+    background-color: var(--white);
+    color: var(--accent);
+}
+
+/* Texto de likes y comentarios */
+.hero-card-stats {
+    font-size: 11px;
+    color: var(--text);
+    margin-top: 8px;
+    padding-left: 12px;
+}
+
+/* Bloque de texto de bienvenida */
+.hero-content {
+    max-width: 600px;
+}
+
+/* Cuadradito redondo blanco con punto rosado */
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Título grande con letra serif */
+.hero-content h1 {
+    font-family: var(--heading);
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.hero-content p {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Botón blanco con borde fino */
+.hero-button {
+    display: inline-block;
+    background-color: var(--white);
+    color: var(--text-h);
+    border: 1px solid var(--border);
+    padding: 12px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.hero-button:hover {
+    background-color: var(--accent-bg);
+}
+
+/* Datos cortos en fila */
+.hero-features {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.hero-features li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-size: 11px;
+}
+
+/* Los puntos de los datos son de color coral y más pequeños */
+.hero-features .dot {
+    width: 5px;
+    height: 5px;
+    background-color: #E2836F;
+}
+
+
+/* 
+   Seccion comunidad
+ */
+
+.community-section {
+    padding: 40px 80px 80px;
+}
+
+/* Título de la sección con "View all" a la derecha */
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 4px 24px;
+    margin-bottom: 24px;
+}
+
+/* Texto pequeño en mayúsculas */
+.section-heading>span {
+    width: 100%;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.section-heading h2 {
+    font-family: var(--heading);
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.section-heading>a {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+
+.section-heading>a:hover {
+    text-decoration: underline;
+}
+
+
+/* 
+   Formulario para publicar 
+ */
+
+/* Caja blanca del formulario */
+.create-post {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px 24px 24px;
+    margin-bottom: 40px;
+}
+
+.create-post h3 {
+    font-family: var(--heading);
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.create-post>p {
+    color: var(--text);
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+/* Campo de texto grande */
+.create-post textarea {
+    width: 100%;
+    min-height: 68px;
+    resize: vertical;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background-color: var(--bg);
+    padding: 14px;
+    font-size: 12px;
+    color: var(--text-h);
+}
+
+.create-post textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+/* Mensaje de error en rosado debajo del texto */
+.form-error {
+    min-height: 18px;
+    margin: 4px 0 6px;
+    color: var(--accent);
+    font-size: 11px;
+}
+
+/* Link "Log in" dentro del mensaje de error */
+.form-error a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Fila con "Content type" y "Topic" */
+.post-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+}
+
+/* Cada grupo: título arriba y opciones abajo */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.option-label {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* Chips en fila */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Chip: cuadradito redondo rosado muy claro */
+.chip {
+    border: none;
+    background-color: var(--accent-soft);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Los chips de tema son más anchos */
+.topic-chip {
+    padding: 6px 28px;
+}
+
+.chip:hover {
+    background-color: var(--accent-bg);
+}
+
+/* Chip activo: rosado fuerte con texto blanco */
+.chip.active {
+    background-color: var(--accent);
+    color: var(--white);
+}
+
+/* Portadas en fila */
+.covers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Botón de portada sin estilo propio */
+.cover {
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.cover img {
+    width: 100px;
+    height: 66px;
+    object-fit: cover;
+}
+
+/* Portada elegida: borde rosado */
+.cover.active {
+    border-color: var(--accent);
+}
+
+/* Botón Post a la derecha */
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post-button {
+    border: none;
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post-button:hover {
+    background-color: var(--accent-hover);
+}
+
+
+/* 
+   Tarjetas de posts
+*/
+
+/* Tarjetas en filas de tres en computador */
+.posts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+/* 
+   Estadisticas
+*/
+
+/* Caja blanca con tres números */
+.community-stats {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-top: 48px;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Número arriba y texto abajo */
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+/* El primero alineado a la izquierda y el último a la derecha */
+.stat-left {
+    align-items: flex-start;
+}
+
+.stat-right {
+    align-items: flex-end;
+}
+
+.stat strong {
+    font-family: var(--heading);
+    font-weight: 500;
+    font-size: 28px;
+    color: var(--accent);
+}
+
+.stat span {
+    color: var(--text);
+    font-size: 11px;
+}
+
+
+/* 
+   AÚNA Help
+  */
+
+/* Caja oscura con dos columnas: texto y recursos */
+.auna-help {
+    margin: 0 80px 80px;
+    padding: 48px;
+    background-color: var(--dark-bg);
+    border-radius: 28px;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+}
+
+/* La columna de texto ocupa el espacio que sobra */
+.help-content {
+    flex: 1;
+}
+
+/* Círculo rosado con la "A" */
+.help-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.help-content h2 {
+    font-family: var(--heading);
+    font-weight: 500;
+    font-size: 34px;
+    color: var(--white);
+    line-height: 1.1;
+}
+
+/* Subtítulo pequeño en mayúsculas */
+.help-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    margin: 4px 0 16px;
+}
+
+.help-content p {
+    font-size: 13px;
+    color: #E6D5DA;
+    margin-bottom: 32px;
+}
+
+/* Botón blanco con texto rosado */
+.help-button {
+    border: none;
+    background-color: var(--white);
+    color: var(--accent);
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.help-button:hover {
+    background-color: var(--accent-bg);
+}
+
+/* Lista de lugares, uno debajo del otro */
+.help-resources {
+    width: 340px;
+    flex-shrink: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Tarjeta blanca de cada lugar */
+.resource-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: var(--white);
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.resource-card:hover {
+    background-color: var(--accent-soft);
+}
+
+/* Nombre y distancia uno debajo del otro */
+.resource-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-info strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.resource-info span {
+    font-size: 10px;
+    color: var(--text);
+}
+
+
+/* 
+   Mensaje temporal (toast)
+*/
+
+/* Escondido abajo hasta que JS le pone "visible" */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+    background-color: var(--text-h);
+    color: var(--white);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2000;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
+/* 
+   Pantallas grandes
+*/
+
+/* Hero en pantallas grandes (tamaños del Figma) */
+@media (min-width: 1360px) {
+
+    .home-hero {
+        padding: 73px 80px 80px 104px;
+        gap: 94px;
     }
 
-    /* Tarjeta blanca del post destacado */
     .hero-card {
-        width: 390px;
-        flex-shrink: 0;
-        background-color: var(--white);
-        border-radius: 28px;
-        padding: 24px 32px 20px;
-        box-shadow: var(--shadow);
+        width: 506px;
+        padding: 30px 38px 26px;
     }
 
-    /* Foto de la tarjeta */
     .hero-card-image {
-        width: 100%;
-        height: 318px;
-        object-fit: cover;
-        border-radius: 24px;
-        display: block;
+        height: 419px;
     }
 
-    /* Fila con avatar, nombre y Follow */
     .hero-card-author {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-top: 20px;
-        padding-left: 12px;
+        margin-top: 30px;
+        padding-left: 18px;
+        gap: 28px;
     }
 
-    /* Avatar redondo con la inicial */
     .user-avatar {
-        width: 32px;
-        height: 32px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--accent-bg);
-        color: var(--accent);
-        border-radius: 50%;
-        font-size: 13px;
-        font-weight: 600;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 
-    /* Nombre y rol uno debajo del otro */
     .hero-card-info {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
+        gap: 8px;
     }
 
     .hero-card-info strong {
-        font-size: 13px;
-        font-weight: 600;
+        font-size: 14px;
     }
 
     .hero-card-info span {
-        font-size: 11px;
-        color: var(--text);
+        font-size: 12px;
     }
 
-    /* Botón Follow pequeño, empujado a la derecha */
     .follow-button {
-        margin-left: auto;
-        margin-right: 12px;
-        border: 1px solid var(--accent);
-        background-color: var(--accent);
-        color: var(--white);
-        padding: 4px 14px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
+        padding: 7px 18px;
+        font-size: 13px;
+        margin-right: 22px;
     }
 
-    /* Estado Following: blanco con borde rosado */
-    .follow-button.following {
-        background-color: var(--white);
-        color: var(--accent);
-    }
-
-    /* Texto de likes y comentarios */
     .hero-card-stats {
-        font-size: 11px;
-        color: var(--text);
-        margin-top: 8px;
-        padding-left: 12px;
+        font-size: 12px;
+        margin-top: 10px;
+        padding-left: 18px;
     }
 
-    /* Bloque de texto de bienvenida */
     .hero-content {
-        max-width: 600px;
+        max-width: 715px;
     }
 
-    /* Cuadradito redondo blanco con punto rosado */
     .hero-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
-        background-color: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 500;
-        margin-bottom: 20px;
-    }
-
-    /* Título grande con letra serif */
-    .hero-content h1 {
-        font-family: var(--heading);
-        font-weight: 600;
-        font-size: 48px;
-        line-height: 1.1;
-        margin-bottom: 24px;
-    }
-
-    .hero-content p {
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.6;
-        margin-bottom: 40px;
-    }
-
-    /* Botón blanco con borde fino */
-    .hero-button {
-        display: inline-block;
-        background-color: var(--white);
-        color: var(--text-h);
-        border: 1px solid var(--border);
-        padding: 12px 22px;
-        border-radius: 999px;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 600;
-        transition: background-color 0.2s ease;
-    }
-
-    .hero-button:hover {
-        background-color: var(--accent-bg);
-    }
-
-    /* Datos cortos en fila */
-    .hero-features {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 24px;
-    }
-
-    .hero-features li {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--text);
-        font-size: 11px;
-    }
-
-    /* Los puntos de los datos son de color coral y más pequeños */
-    .hero-features .dot {
-        width: 5px;
-        height: 5px;
-        background-color: #E2836F;
-    }
-
-
-    /* 
-       Seccion comunidad
-     */
-
-    .community-section {
-        padding: 40px 80px 80px;
-    }
-
-    /* Título de la sección con "View all" a la derecha */
-    .section-heading {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 4px 24px;
-        margin-bottom: 24px;
-    }
-
-    /* Texto pequeño en mayúsculas */
-    .section-heading>span {
-        width: 100%;
-        color: var(--accent);
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-    }
-
-    .section-heading h2 {
-        font-family: var(--heading);
-        font-weight: 500;
-        font-size: 34px;
-        line-height: 1.2;
-    }
-
-    .section-heading>a {
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 500;
-        text-decoration: none;
-        margin-bottom: 8px;
-    }
-
-    .section-heading>a:hover {
-        text-decoration: underline;
-    }
-
-
-    /* 
-       Formulario para publicar 
-     */
-
-    /* Caja blanca del formulario */
-    .create-post {
-        background-color: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 24px;
-        padding: 28px 24px 24px;
-        margin-bottom: 40px;
-    }
-
-    .create-post h3 {
-        font-family: var(--heading);
-        font-weight: 500;
-        font-size: 20px;
-    }
-
-    .create-post>p {
-        color: var(--text);
-        font-size: 11px;
-        margin-bottom: 20px;
-    }
-
-    /* Campo de texto grande */
-    .create-post textarea {
-        width: 100%;
-        min-height: 68px;
-        resize: vertical;
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        background-color: var(--bg);
-        padding: 14px;
-        font-size: 12px;
-        color: var(--text-h);
-    }
-
-    .create-post textarea:focus {
-        border-color: var(--accent);
-        outline: none;
-    }
-
-    /* Mensaje de error en rosado debajo del texto */
-    .form-error {
-        min-height: 18px;
-        margin: 4px 0 6px;
-        color: var(--accent);
-        font-size: 11px;
-    }
-
-    /* Link "Log in" dentro del mensaje de error */
-    .form-error a {
-        color: var(--accent);
-        font-weight: 600;
-    }
-
-    /* Fila con "Content type" y "Topic" */
-    .post-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px 40px;
-    }
-
-    /* Cada grupo: título arriba y opciones abajo */
-    .option-group {
-        display: flex;
-        flex-direction: column;
+        padding: 8px 14px;
         gap: 10px;
-        margin-bottom: 16px;
-    }
-
-    .option-label {
-        font-size: 10px;
-        font-weight: 600;
-    }
-
-    /* Chips en fila */
-    .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    /* Chip: cuadradito redondo rosado muy claro */
-    .chip {
-        border: none;
-        background-color: var(--accent-soft);
-        color: var(--text);
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
-    }
-
-    /* Los chips de tema son más anchos */
-    .topic-chip {
-        padding: 6px 28px;
-    }
-
-    .chip:hover {
-        background-color: var(--accent-bg);
-    }
-
-    /* Chip activo: rosado fuerte con texto blanco */
-    .chip.active {
-        background-color: var(--accent);
-        color: var(--white);
-    }
-
-    /* Portadas en fila */
-    .covers {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    /* Botón de portada sin estilo propio */
-    .cover {
-        padding: 0;
-        border: 2px solid transparent;
-        border-radius: 10px;
-        background: none;
-        overflow: hidden;
-        cursor: pointer;
-        line-height: 0;
-    }
-
-    .cover img {
-        width: 100px;
-        height: 66px;
-        object-fit: cover;
-    }
-
-    /* Portada elegida: borde rosado */
-    .cover.active {
-        border-color: var(--accent);
-    }
-
-    /* Botón Post a la derecha */
-    .post-actions {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .post-button {
-        border: none;
-        background-color: var(--accent);
-        color: var(--white);
-        padding: 10px 24px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .post-button:hover {
-        background-color: var(--accent-hover);
-    }
-
-
-    /* 
-       Tarjetas de posts
-    */
-
-    /* Tarjetas en filas de tres en computador */
-    .posts-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px 2%;
-    }
-
-    /* 
-       Estadisticas
-    */
-
-    /* Caja blanca con tres números */
-    .community-stats {
-        background-color: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        margin-top: 48px;
-        padding: 28px 32px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* Número arriba y texto abajo */
-    .stat {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-    }
-
-    /* El primero alineado a la izquierda y el último a la derecha */
-    .stat-left {
-        align-items: flex-start;
-    }
-
-    .stat-right {
-        align-items: flex-end;
-    }
-
-    .stat strong {
-        font-family: var(--heading);
-        font-weight: 500;
-        font-size: 28px;
-        color: var(--accent);
-    }
-
-    .stat span {
-        color: var(--text);
-        font-size: 11px;
-    }
-
-
-    /* 
-       AÚNA Help
-      */
-
-    /* Caja oscura con dos columnas: texto y recursos */
-    .auna-help {
-        margin: 0 80px 80px;
-        padding: 48px;
-        background-color: var(--dark-bg);
-        border-radius: 28px;
-        display: flex;
-        gap: 48px;
-        align-items: center;
-    }
-
-    /* La columna de texto ocupa el espacio que sobra */
-    .help-content {
-        flex: 1;
-    }
-
-    /* Círculo rosado con la "A" */
-    .help-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: var(--accent);
-        color: var(--white);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        margin-bottom: 16px;
-    }
-
-    .help-content h2 {
-        font-family: var(--heading);
-        font-weight: 500;
-        font-size: 34px;
-        color: var(--white);
-        line-height: 1.1;
-    }
-
-    /* Subtítulo pequeño en mayúsculas */
-    .help-label {
-        display: block;
-        font-size: 10px;
-        letter-spacing: 0.12em;
-        color: var(--white);
-        margin: 4px 0 16px;
-    }
-
-    .help-content p {
         font-size: 13px;
-        color: #E6D5DA;
         margin-bottom: 32px;
     }
 
-    /* Botón blanco con texto rosado */
-    .help-button {
-        border: none;
-        background-color: var(--white);
-        color: var(--accent);
-        padding: 12px 22px;
-        border-radius: 999px;
+    .hero-tag .dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .hero-content h1 {
+        font-size: 58px;
+    }
+
+    .hero-content p {
+        font-size: 17px;
+        line-height: 1.65;
+        margin-bottom: 56px;
+    }
+
+    .hero-button {
+        padding: 14px 27px;
+        font-size: 15px;
+    }
+
+    .hero-features {
+        gap: 24px;
+        margin-top: 28px;
+    }
+
+    .hero-features li {
+        font-size: 13px;
+    }
+}
+
+
+/* Título y formulario en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .section-heading>span {
         font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
     }
 
-    .help-button:hover {
-        background-color: var(--accent-bg);
+    .section-heading h2 {
+        font-size: 40px;
     }
 
-    /* Lista de lugares, uno debajo del otro */
-    .help-resources {
-        width: 340px;
-        flex-shrink: 0;
-        list-style: none;
-        display: flex;
-        flex-direction: column;
+    .section-heading>a {
+        font-size: 15px;
+    }
+
+    .create-post {
+        padding: 32px 32px 30px;
+        border-radius: 28px;
+        margin-bottom: 48px;
+    }
+
+    .create-post h3 {
+        font-size: 26px;
+    }
+
+    .create-post>p {
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+
+    /* display block quita el espacio de abajo del campo */
+    .create-post textarea {
+        display: block;
+        min-height: 90px;
+        padding: 18px;
+        font-size: 15px;
+    }
+
+    /* Mensaje de error pegado al campo de texto */
+    .create-post .form-error {
+        margin: 4px 0 0;
+        font-size: 13px;
+    }
+
+    .post-options {
+        gap: 16px 50px;
+    }
+
+    .option-group {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .option-label {
+        font-size: 13px;
+    }
+
+    .chips {
         gap: 10px;
     }
 
-    /* Tarjeta blanca de cada lugar */
+    .chip {
+        padding: 8px 9px;
+        font-size: 15px;
+    }
+
+    .topic-chip {
+        padding: 10px 36px;
+    }
+
+    .covers {
+        gap: 12px;
+    }
+
+    .cover {
+        border-radius: 12px;
+    }
+
+    .cover img {
+        width: 132px;
+        height: 88px;
+    }
+
+    .post-actions {
+        margin-top: 22px;
+    }
+
+    .post-button {
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+}
+
+
+/* Tarjetas de posts en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .posts-grid {
+        gap: 25px 1.85%;
+    }
+}
+
+
+/* Estadísticas y AÚNA Help en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .community-stats {
+        margin-top: 74px;
+        padding: 40px 48px;
+        border-radius: 28px;
+    }
+
+    /* Los tres números alineados a la izquierda, como en el Figma */
+    .stat,
+    .stat-right {
+        align-items: flex-start;
+    }
+
+    .stat strong {
+        font-size: 40px;
+        line-height: 1.1;
+    }
+
+    .stat span {
+        font-size: 14px;
+    }
+
+    .auna-help {
+        padding: 52px 56px;
+        gap: 60px;
+    }
+
+    .help-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .help-content h2 {
+        font-size: 44px;
+    }
+
+    .help-label {
+        font-size: 12px;
+        margin: 6px 0 22px;
+    }
+
+    .help-content p {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+    .help-button {
+        padding: 16px 28px;
+        font-size: 15px;
+    }
+
+    .help-resources {
+        width: 440px;
+        gap: 12px;
+    }
+
     .resource-card {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        background-color: var(--white);
-        border-radius: 14px;
-        padding: 12px 16px;
-        text-decoration: none;
-        transition: background-color 0.2s ease;
-    }
-
-    .resource-card:hover {
-        background-color: var(--accent-soft);
-    }
-
-    /* Nombre y distancia uno debajo del otro */
-    .resource-info {
-        display: flex;
-        flex-direction: column;
+        padding: 16px 20px;
     }
 
     .resource-info strong {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-h);
+        font-size: 15px;
     }
 
     .resource-info span {
-        font-size: 10px;
-        color: var(--text);
-    }
-
-
-    /* 
-       Mensaje temporal (toast)
-    */
-
-    /* Escondido abajo hasta que JS le pone "visible" */
-    .toast {
-        position: fixed;
-        left: 50%;
-        bottom: 24px;
-        transform: translate(-50%, 20px);
-        background-color: var(--text-h);
-        color: var(--white);
-        padding: 10px 18px;
-        border-radius: 999px;
         font-size: 12px;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease, transform 0.2s ease;
-        z-index: 2000;
+    }
+}
+
+
+/* 
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    /* Hero con la tarjeta más pequeña */
+    .home-hero {
+        padding: 48px 32px;
+        gap: 40px;
     }
 
-    .toast.visible {
-        opacity: 1;
-        transform: translate(-50%, 0);
+    .hero-card {
+        width: 320px;
     }
 
-
-    /* 
-       Pantallas grandes
-    */
-
-    /* Hero en pantallas grandes (tamaños del Figma) */
-    @media (min-width: 1360px) {
-
-        .hero {
-            padding: 73px 80px 80px 104px;
-            gap: 94px;
-        }
-
-        .hero-card {
-            width: 506px;
-            padding: 30px 38px 26px;
-        }
-
-        .hero-card-image {
-            height: 419px;
-        }
-
-        .hero-card-author {
-            margin-top: 30px;
-            padding-left: 18px;
-            gap: 28px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
-        }
-
-        .hero-card-info {
-            gap: 8px;
-        }
-
-        .hero-card-info strong {
-            font-size: 14px;
-        }
-
-        .hero-card-info span {
-            font-size: 12px;
-        }
-
-        .follow-button {
-            padding: 7px 18px;
-            font-size: 13px;
-            margin-right: 22px;
-        }
-
-        .hero-card-stats {
-            font-size: 12px;
-            margin-top: 10px;
-            padding-left: 18px;
-        }
-
-        .hero-content {
-            max-width: 715px;
-        }
-
-        .hero-tag {
-            padding: 8px 14px;
-            gap: 10px;
-            font-size: 13px;
-            margin-bottom: 32px;
-        }
-
-        .hero-tag .dot {
-            width: 7px;
-            height: 7px;
-        }
-
-        .hero-content h1 {
-            font-size: 58px;
-        }
-
-        .hero-content p {
-            font-size: 17px;
-            line-height: 1.65;
-            margin-bottom: 56px;
-        }
-
-        .hero-button {
-            padding: 14px 27px;
-            font-size: 15px;
-        }
-
-        .hero-features {
-            gap: 24px;
-            margin-top: 28px;
-        }
-
-        .hero-features li {
-            font-size: 13px;
-        }
+    .hero-card-image {
+        height: 260px;
     }
 
-
-    /* Título y formulario en pantallas grandes */
-    @media (min-width: 1360px) {
-
-        .section-heading>span {
-            font-size: 12px;
-        }
-
-        .section-heading h2 {
-            font-size: 40px;
-        }
-
-        .section-heading>a {
-            font-size: 15px;
-        }
-
-        .create-post {
-            padding: 32px 32px 30px;
-            border-radius: 28px;
-            margin-bottom: 48px;
-        }
-
-        .create-post h3 {
-            font-size: 26px;
-        }
-
-        .create-post>p {
-            font-size: 15px;
-            margin-bottom: 24px;
-        }
-
-        /* display block quita el espacio de abajo del campo */
-        .create-post textarea {
-            display: block;
-            min-height: 90px;
-            padding: 18px;
-            font-size: 15px;
-        }
-
-        /* Mensaje de error pegado al campo de texto */
-        .create-post .form-error {
-            margin: 4px 0 0;
-            font-size: 13px;
-        }
-
-        .post-options {
-            gap: 16px 50px;
-        }
-
-        .option-group {
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .option-label {
-            font-size: 13px;
-        }
-
-        .chips {
-            gap: 10px;
-        }
-
-        .chip {
-            padding: 8px 9px;
-            font-size: 15px;
-        }
-
-        .topic-chip {
-            padding: 10px 36px;
-        }
-
-        .covers {
-            gap: 12px;
-        }
-
-        .cover {
-            border-radius: 12px;
-        }
-
-        .cover img {
-            width: 132px;
-            height: 88px;
-        }
-
-        .post-actions {
-            margin-top: 22px;
-        }
-
-        .post-button {
-            padding: 14px 28px;
-            font-size: 16px;
-        }
+    .hero-content h1 {
+        font-size: 38px;
     }
 
-
-    /* Tarjetas de posts en pantallas grandes */
-    @media (min-width: 1360px) {
-
-        .posts-grid {
-            gap: 25px 1.85%;
-        }
+    .community-section {
+        padding: 40px 32px 64px;
     }
 
-
-    /* Estadísticas y AÚNA Help en pantallas grandes */
-    @media (min-width: 1360px) {
-
-        .community-stats {
-            margin-top: 74px;
-            padding: 40px 48px;
-            border-radius: 28px;
-        }
-
-        /* Los tres números alineados a la izquierda, como en el Figma */
-        .stat,
-    .stat-right {
-            align-items: flex-start;
-        }
-
-        .stat strong {
-            font-size: 40px;
-            line-height: 1.1;
-        }
-
-        .stat span {
-            font-size: 14px;
-        }
-
-        .auna-help {
-            padding: 52px 56px;
-            gap: 60px;
-        }
-
-        .help-icon {
-            width: 52px;
-            height: 52px;
-            font-size: 20px;
-            margin-bottom: 18px;
-        }
-
-        .help-content h2 {
-            font-size: 44px;
-        }
-
-        .help-label {
-            font-size: 12px;
-            margin: 6px 0 22px;
-        }
-
-        .help-content p {
-            font-size: 16px;
-            margin-bottom: 40px;
-        }
-
-        .help-button {
-            padding: 16px 28px;
-            font-size: 15px;
-        }
-
-        .help-resources {
-            width: 440px;
-            gap: 12px;
-        }
-
-        .resource-card {
-            padding: 16px 20px;
-        }
-
-        .resource-info strong {
-            font-size: 15px;
-        }
-
-        .resource-info span {
-            font-size: 12px;
-        }
+    /* Dos tarjetas por fila */
+    .posts-grid {
+        max-width: none;
     }
 
-
-    /* 
-       Tablet
-    */
-
-    @media (max-width: 1000px) {
-
-        /* Hero con la tarjeta más pequeña */
-        .hero {
-            padding: 48px 32px;
-            gap: 40px;
-        }
-
-        .hero-card {
-            width: 320px;
-        }
-
-        .hero-card-image {
-            height: 260px;
-        }
-
-        .hero-content h1 {
-            font-size: 38px;
-        }
-
-        .community-section {
-            padding: 40px 32px 64px;
-        }
-
-        /* Dos tarjetas por fila */
-        .posts-grid {
-            max-width: none;
-        }
-
-        /* AÚNA Help con márgenes a los lados */
-        .auna-help {
-            margin: 0 32px 64px;
-            padding: 40px;
-        }
-
-        .help-resources {
-            width: 300px;
-        }
+    /* AÚNA Help con márgenes a los lados */
+    .auna-help {
+        margin: 0 32px 64px;
+        padding: 40px;
     }
 
+    .help-resources {
+        width: 300px;
+    }
+}
 
-    /* 
-       Mobile
-      */
-    @media (max-width: 700px) {
 
-        /* Hero en una columna */
-        .hero {
-            flex-direction: column;
-            align-items: stretch;
-            padding: 20px 20px 40px;
-            gap: 40px;
-        }
+/* 
+   Mobile
+  */
+@media (max-width: 700px) {
 
-        /* En celular la tarjeta no tiene fondo blanco */
-        .hero-card {
-            width: 100%;
-            padding: 0;
-            background: none;
-            box-shadow: none;
-        }
+    /* Hero en una columna */
+    .home-hero {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 20px 40px;
+        gap: 40px;
+    }
 
-        .hero-card-image {
-            display: block;
-            max-width: 300px;
-            height: 294px;
-            margin: 0 auto;
-            border-radius: 20px;
-        }
+    /* En celular la tarjeta no tiene fondo blanco */
+    .hero-card {
+        width: 100%;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
 
-        /* Fila del autor del mismo ancho que la foto */
-        .hero-card-author,
+    .hero-card-image {
+        display: block;
+        max-width: 300px;
+        height: 294px;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+
+    /* Fila del autor del mismo ancho que la foto */
+    .hero-card-author,
     .hero-card-stats {
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-content h1 {
-            font-size: 36px;
-        }
-
-        .hero-content p {
-            font-size: 16px;
-            margin-bottom: 28px;
-        }
-
-        .hero-tag {
-            font-size: 14px;
-            padding: 8px 14px;
-        }
-
-        /* Sección comunidad con menos espacio */
-        .community-section {
-            padding: 24px 20px 48px;
-        }
-
-        .section-heading h2 {
-            font-size: 28px;
-        }
-
-        .create-post {
-            padding: 20px 16px;
-        }
-
-        .topic-chip {
-            padding: 6px 14px;
-        }
-
-        .cover img {
-            width: 72px;
-            height: 52px;
-        }
-
-        /* Estadísticas una debajo de otra */
-        .community-stats {
-            flex-direction: column;
-            gap: 20px;
-            text-align: center;
-        }
-
-        .stat-left,
-    .stat-right {
-            align-items: center;
-        }
-
-        /* AÚNA Help en una columna */
-        .auna-help {
-            flex-direction: column;
-            align-items: stretch;
-            margin: 0 20px 40px;
-            padding: 32px 24px;
-            gap: 32px;
-        }
-
-        .help-resources {
-            width: 100%;
-        }
-
-        /* El toast queda encima del menú inferior */
-        .toast {
-            bottom: 84px;
-        }
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
+    .hero-content h1 {
+        font-size: 36px;
+    }
 
-    /*
-       Mobile different size
-     */
+    .hero-content p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
 
-    @media (max-width: 450px) {
+    .hero-tag {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
 
-        .hero-content h1 {
-            font-size: 32px;
-        }
+    /* Sección comunidad con menos espacio */
+    .community-section {
+        padding: 24px 20px 48px;
+    }
 
-        .auna-help {
-            border-radius: 20px;
-        }
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .create-post {
+        padding: 20px 16px;
+    }
+
+    .topic-chip {
+        padding: 6px 14px;
+    }
+
+    .cover img {
+        width: 72px;
+        height: 52px;
+    }
+
+    /* Estadísticas una debajo de otra */
+    .community-stats {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .stat-left,
+    .stat-right {
+        align-items: center;
+    }
+
+    /* AÚNA Help en una columna */
+    .auna-help {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 0 20px 40px;
+        padding: 32px 24px;
+        gap: 32px;
+    }
+
+    .help-resources {
+        width: 100%;
+    }
+
+    /* El toast queda encima del menú inferior */
+    .toast {
+        bottom: 84px;
+    }
+}
+
+
+/*
+   Mobile different size
+ */
+
+@media (max-width: 450px) {
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .auna-help {
+        border-radius: 20px;
     }
 }
