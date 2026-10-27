@@ -1,0 +1,628 @@
+/* colores del figma guardados en variables
+   asi uso var(--nombre) en vez de escribir el codigo del color cada vez */
+:root {
+    --rosa-principal: #c2456e;
+    --rosa-suave: #f7d9e3;
+    --rosa-claro: #fdedf1;
+    --fondo-pagina: #fff7f3;
+    --blanco: #ffffff;
+    --borde: #f1dfe4;
+    --borde-boton: #d8ccd0;
+    --texto-principal: #2c1d25;
+    --texto-secundario: #6e5a63;
+    --morado-oscuro: #3b2430;
+}
+
+/* quito los margenes que pone el navegador
+   border-box hace que el padding y el borde queden dentro del ancho */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background-color: var(--fondo-pagina);
+    color: var(--texto-principal);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* le quito a los botones el estilo gris del navegador */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+}
+
+
+/* ---------- header (igual que en explore) ---------- */
+
+/* flex pone logo, menu y botones en una fila */
+.header {
+    background-color: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* width auto para que el logo no se deforme */
+.logo img {
+    height: 56px;
+    width: auto;
+    display: block;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+/* border-radius 999px hace la forma de pildora */
+.nav a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texto-secundario);
+}
+
+.nav a:hover {
+    color: var(--rosa-principal);
+}
+
+/* la pagina en la que estoy */
+.nav .nav-activo {
+    background-color: var(--rosa-suave);
+    color: var(--rosa-principal);
+}
+
+.header-botones {
+    display: flex;
+    gap: 12px;
+}
+
+/* el svg es solo el icono, el circulo lo hago con css */
+.btn-circulo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--borde-boton);
+    background-color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-circulo:hover {
+    background-color: var(--rosa-suave);
+    border-color: var(--rosa-suave);
+}
+
+.btn-circulo img {
+    width: 22px;
+    height: 22px;
+}
+
+/* el menu de idiomas se ubica con position absolute,
+   por eso la caja de botones tiene que ser position relative:
+   asi el menu sale justo debajo del boton y no en otra parte de la pagina */
+.header-botones {
+    position: relative;
+}
+
+/* boton de idioma rosado mientras el menu esta abierto
+   la clase active se la pone el js del componente */
+.btn-circulo.active {
+    background-color: var(--rosa-suave);
+    border-color: var(--rosa-suave);
+}
+
+
+/* ---------- hero ---------- */
+
+/* flex column pone todo uno debajo del otro */
+.hero {
+    padding: 64px 80px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* texto pequeño rosado de arriba */
+.etiqueta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: var(--rosa-principal);
+}
+
+.hero h1 {
+    font-size: 46px;
+    line-height: 54px;
+}
+
+.hero-texto {
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--texto-secundario);
+}
+
+
+/* ---------- tabs ---------- */
+
+/* caja blanca redonda donde van las tabs
+   align-self flex-start para que no ocupe todo el ancho */
+.tabs {
+    align-self: flex-start;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    padding: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+/* cada tab tiene el texto y el numero en fila */
+.tab {
+    padding: 11px 20px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab:hover {
+    color: var(--rosa-principal);
+}
+
+/* pastilla rosada con el numero */
+.tab-numero {
+    background-color: var(--rosa-suave);
+    color: var(--rosa-principal);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+/* tab seleccionada (el js le pone o le quita esta clase) */
+.tab.tab-activa {
+    background-color: var(--rosa-principal);
+    color: var(--blanco);
+}
+
+/* en la tab activa la pastilla se vuelve blanca */
+.tab.tab-activa .tab-numero {
+    background-color: var(--blanco);
+}
+
+
+/* ---------- mis colecciones ---------- */
+
+.colecciones {
+    padding: 0 80px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.colecciones h2 {
+    font-size: 30px;
+    line-height: 36px;
+}
+
+/* cada fila de colecciones
+   flex-wrap para que las colecciones nuevas bajen si ya no caben */
+.colecciones-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* flex 1 hace que todas las de la fila midan lo mismo
+   justify-content flex-end pega el texto abajo como en el figma
+   min-width para que no se pongan muy angostas */
+.coleccion {
+    flex: 1;
+    min-width: 220px;
+    height: 150px;
+    padding: 26px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.coleccion h3 {
+    font-size: 22px;
+    line-height: 28px;
+}
+
+.coleccion p {
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+/* color de fondo de cada coleccion */
+.coleccion-rosa-claro {
+    background-color: var(--rosa-claro);
+}
+
+.coleccion-rosa {
+    background-color: var(--rosa-suave);
+}
+
+/* la oscura lleva los textos claros */
+.coleccion-oscura {
+    background-color: var(--morado-oscuro);
+    color: var(--blanco);
+}
+
+.coleccion-oscura p {
+    color: #e5d9de;
+}
+
+/* ---------- guardado recientemente ---------- */
+
+.recientes {
+    padding: 0 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recientes h2 {
+    font-size: 26px;
+    line-height: 36px;
+}
+
+/* tarjetas en fila, flex-wrap hace que bajen si hay mas de 3 */
+.recientes-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+/* tarjeta de guardado (la crea el js)
+   32% + 32% + 32% + 2% + 2% = 100%, por eso caben 3
+   overflow hidden corta la imagen en las esquinas redondas */
+.guardado {
+    width: 32%;
+    background-color: var(--blanco);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+/* object-fit cover para que la imagen no se deforme */
+.guardado-imagen {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+    background-color: var(--rosa-claro);
+}
+
+.guardado-cuerpo {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* POST, PLACE o CREATOR en rosado */
+.guardado-tipo {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--rosa-principal);
+}
+
+.guardado-nombre {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.guardado-texto {
+    font-size: 12px;
+    line-height: 17px;
+    color: var(--texto-secundario);
+}
+
+/* mensaje cuando no hay nada guardado, empieza escondido */
+.sin-resultados {
+    display: none;
+    color: var(--texto-secundario);
+    padding: 20px 0;
+}
+
+
+/* ---------- footer ---------- */
+
+/* nombre a la izquierda y links a la derecha */
+.footer {
+    background-color: var(--blanco);
+    border-top: 1px solid var(--borde);
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--texto-secundario);
+}
+
+.footer-logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 28px;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    color: var(--rosa-principal);
+}
+
+
+/* ---------- responsive ---------- */
+
+/* tablet: pantallas de 1024px o menos */
+/* ---------- menu de abajo (celular) ---------- */
+
+/* en computador no se ve, solo aparece en el @media de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+@media (max-width: 1024px) {
+
+    /* el menu baja a otra linea */
+    .header {
+        height: auto;
+        padding: 16px 32px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    /* order 3 manda el menu al final */
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-circulo {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* menos espacio a los lados */
+    .hero,
+    .colecciones,
+    .recientes {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+        line-height: 46px;
+    }
+
+    /* 2 colecciones por fila */
+    .colecciones-fila {
+        flex-wrap: wrap;
+    }
+
+    .coleccion {
+        flex: 1 1 calc(50% - 12px);
+    }
+
+    /* 2 tarjetas por fila */
+    .guardado {
+        width: 49%;
+    }
+
+    .footer {
+        padding: 32px;
+    }
+}
+
+/* celular: pantallas de 600px o menos */
+@media (max-width: 600px) {
+
+    .header {
+        padding: 16px;
+    }
+
+    .logo img {
+        height: 44px;
+    }
+
+    .btn-circulo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .btn-circulo img {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* menu con scroll de lado */
+    .nav {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav a {
+        white-space: nowrap;
+    }
+
+    .hero {
+        padding: 40px 16px 32px;
+    }
+
+    .colecciones,
+    .recientes {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    /* las tabs se deslizan de lado si no caben */
+    .tabs {
+        align-self: stretch;
+        overflow-x: auto;
+    }
+
+    .tab {
+        padding: 9px 14px;
+        white-space: nowrap;
+    }
+
+    /* colecciones una debajo de la otra */
+    .colecciones-fila {
+        flex-direction: column;
+    }
+
+    .coleccion {
+        flex: none;
+        height: 130px;
+    }
+
+    /* 1 tarjeta por fila */
+    .guardado {
+        width: 100%;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 32px 16px;
+    }
+}
+
+
+/* ---------- celular: menu abajo como en el figma movil ---------- */
+/* lo pongo al final para que gane sobre los otros @media
+   copie los estilos del menu de abajo de Sofía (index.css) para que se vea igual en todas las paginas */
+@media (max-width: 700px) {
+
+    /* header solo con logo, lupa y perfil */
+    .header {
+        height: 64px;
+        padding: 0 20px;
+        flex-wrap: nowrap;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    /* el menu de arriba y el boton de idioma se esconden
+       el menu pasa abajo */
+    .nav,
+    #language-button {
+        display: none;
+    }
+
+    .header-botones {
+        gap: 8px;
+    }
+
+    .btn-circulo {
+        width: 28px;
+        height: 28px;
+    }
+
+    .btn-circulo img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* menu fijo pegado abajo de la pantalla
+       position fixed hace que no se mueva al hacer scroll */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: var(--blanco);
+        border-top: 1px solid var(--borde);
+        padding: 10px 0 14px;
+    }
+
+    /* cada link: un puntico arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: var(--texto-secundario);
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--rosa-suave);
+    }
+
+    /* la pagina en la que estoy va en rosado */
+    .bottom-link.active {
+        color: var(--rosa-principal);
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: var(--rosa-principal);
+    }
+
+    /* espacio abajo para que el menu no tape el footer
+       se lo pongo al footer (que es blanco) y no al body,
+       porque en el body se veia una franja del color de fondo debajo del footer */
+    .footer {
+        padding-bottom: 96px;
+    }
+}
