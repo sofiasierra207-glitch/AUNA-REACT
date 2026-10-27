@@ -1,0 +1,1573 @@
+/* Quita los espacios que pone el navegador por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Desplazamiento suave al usar links como #community */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    background-color: #FFF7F3;
+    color: #2C1D25;
+    line-height: 1.5;
+}
+
+/* Los botones y campos usan la misma fuente de la página */
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+/* Las imágenes nunca se salen de su contenedor */
+img {
+    max-width: 100%;
+}
+
+/* Borde visible al navegar con el teclado */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+    outline: 2px solid #C2456E;
+    outline-offset: 3px;
+}
+
+
+/*
+   Header
+ */
+
+/* Barra blanca de arriba; se va al bajar la página */
+header {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #F1DFE4;
+}
+
+/* Logo a la izquierda, menú al centro, íconos a la derecha */
+.header {
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 56px;
+    width: auto;
+    display: block;
+}
+
+/* Links del menú en fila */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Cada link es un cuadrito redondo */
+.nav-link {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #C2456E;
+}
+
+/* Página actual: cuadradito redondo rosado */
+.nav-link.active {
+    background-color: #F7D9E3;
+    color: #C2456E;
+}
+
+/* Grupo de botones redondos */
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Botón redondo con borde fino */
+.icon-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #D8CCD0;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-button:hover {
+    background-color: #F7D9E3;
+    border-color: #F7D9E3;
+}
+
+/* Tamaño de los íconos */
+.icon-button img {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* 
+   Menu inferior (mobile)
+*/
+
+/* Oculto en computador; se muestra en la parte de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+/* 
+   Hero
+*/
+
+/* Dos columnas: tarjeta a la izquierda y texto a la derecha */
+.hero {
+    padding: 56px 80px 80px;
+    display: flex;
+    align-items: center;
+    gap: 72px;
+}
+
+/* Tarjeta blanca del post destacado */
+.hero-card {
+    width: 390px;
+    flex-shrink: 0;
+    background-color: #FFFFFF;
+    border-radius: 28px;
+    padding: 24px 32px 20px;
+    box-shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+}
+
+/* Foto de la tarjeta */
+.hero-card-image {
+    width: 100%;
+    height: 318px;
+    object-fit: cover;
+    border-radius: 24px;
+    display: block;
+}
+
+/* Fila con avatar, nombre y Follow */
+.hero-card-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    padding-left: 12px;
+}
+
+/* Avatar redondo con la inicial */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F7D9E3;
+    color: #C2456E;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Nombre y rol uno debajo del otro */
+.hero-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.hero-card-info strong {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.hero-card-info span {
+    font-size: 11px;
+    color: #6E5A63;
+}
+
+/* Botón Follow pequeño, empujado a la derecha */
+.follow-button {
+    margin-left: auto;
+    margin-right: 12px;
+    border: 1px solid #C2456E;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Estado Following: blanco con borde rosado */
+.follow-button.following {
+    background-color: #FFFFFF;
+    color: #C2456E;
+}
+
+/* Texto de likes y comentarios */
+.hero-card-stats {
+    font-size: 11px;
+    color: #6E5A63;
+    margin-top: 8px;
+    padding-left: 12px;
+}
+
+/* Bloque de texto de bienvenida */
+.hero-content {
+    max-width: 600px;
+}
+
+/* Cuadradito redondo blanco con punto rosado */
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Punto redondo (se usa en varias partes) */
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    flex-shrink: 0;
+}
+
+/* Título grande con letra serif */
+.hero-content h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.hero-content p {
+    color: #6E5A63;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Botón blanco con borde fino */
+.hero-button {
+    display: inline-block;
+    background-color: #FFFFFF;
+    color: #2C1D25;
+    border: 1px solid #F1DFE4;
+    padding: 12px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.hero-button:hover {
+    background-color: #F7D9E3;
+}
+
+/* Datos cortos en fila */
+.hero-features {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.hero-features li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6E5A63;
+    font-size: 11px;
+}
+
+/* Los puntos de los datos son de color coral y más pequeños */
+.hero-features .dot {
+    width: 5px;
+    height: 5px;
+    background-color: #E2836F;
+}
+
+
+/* 
+   Seccion comunidad
+ */
+
+.community-section {
+    padding: 40px 80px 80px;
+}
+
+/* Título de la sección con "View all" a la derecha */
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 4px 24px;
+    margin-bottom: 24px;
+}
+
+/* Texto pequeño en mayúsculas */
+.section-heading>span {
+    width: 100%;
+    color: #C2456E;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.section-heading h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+.section-heading>a {
+    color: #C2456E;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+
+.section-heading>a:hover {
+    text-decoration: underline;
+}
+
+
+/* 
+   Formulario para publicar 
+ */
+
+/* Caja blanca del formulario */
+.create-post {
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 24px;
+    padding: 28px 24px 24px;
+    margin-bottom: 40px;
+}
+
+.create-post h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.create-post>p {
+    color: #6E5A63;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+/* Campo de texto grande */
+.create-post textarea {
+    width: 100%;
+    min-height: 68px;
+    resize: vertical;
+    border: 1px solid #F1DFE4;
+    border-radius: 16px;
+    background-color: #FFF7F3;
+    padding: 14px;
+    font-size: 12px;
+    color: #2C1D25;
+}
+
+.create-post textarea:focus {
+    border-color: #C2456E;
+    outline: none;
+}
+
+/* Mensaje de error en rosado debajo del texto */
+.form-error {
+    min-height: 18px;
+    margin: 4px 0 6px;
+    color: #C2456E;
+    font-size: 11px;
+}
+
+/* Link "Log in" dentro del mensaje de error */
+.form-error a {
+    color: #C2456E;
+    font-weight: 600;
+}
+
+/* Fila con "Content type" y "Topic" */
+.post-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+}
+
+/* Cada grupo: título arriba y opciones abajo */
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.option-label {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* Chips en fila */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Chip: cuadradito redondo rosado muy claro */
+.chip {
+    border: none;
+    background-color: #FDEEF1;
+    color: #6E5A63;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Los chips de tema son más anchos */
+.topic-chip {
+    padding: 6px 28px;
+}
+
+.chip:hover {
+    background-color: #F7D9E3;
+}
+
+/* Chip activo: rosado fuerte con texto blanco */
+.chip.active {
+    background-color: #C2456E;
+    color: #FFFFFF;
+}
+
+/* Portadas en fila */
+.covers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Botón de portada sin estilo propio */
+.cover {
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: none;
+    overflow: hidden;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.cover img {
+    width: 100px;
+    height: 66px;
+    object-fit: cover;
+}
+
+/* Portada elegida: borde rosado */
+.cover.active {
+    border-color: #C2456E;
+}
+
+/* Botón Post a la derecha */
+.post-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.post-button {
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post-button:hover {
+    background-color: #A93A5E;
+}
+
+
+/* 
+   Tarjetas de posts
+*/
+
+/* Tarjetas en filas de tres en computador */
+.posts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+/* Tarjeta blanca */
+.post-card {
+    width: 32%;
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Foto de la tarjeta */
+.post-card>img {
+    width: 100%;
+    height: 176px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Contenido de la tarjeta */
+.post-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Avatar, usuario y rol en fila */
+.post-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.post-user strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.post-meta {
+    font-size: 10px;
+    color: #6E5A63;
+}
+
+/* Tema del post con forma de cuadradito redondo con borde */
+.post-tag {
+    align-self: flex-start;
+    padding: 3px 10px;
+    border: 1px solid #F7D9E3;
+    border-radius: 999px;
+    color: #C2456E;
+    font-size: 10px;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.post-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #6E5A63;
+    margin-bottom: 14px;
+}
+
+/* Botones abajo: comentar y like a la izquierda, guardar a la derecha */
+.post-interactions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: auto;
+}
+
+/* Botón sin fondo con ícono y número */
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #6E5A63;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.action-button:hover {
+    color: #C2456E;
+}
+
+/* Tamaño de los íconos de la tarjeta */
+.action-button img {
+    width: 15px;
+    height: 15px;
+}
+
+/* margin-left auto empuja Guardar a la derecha */
+.save-button {
+    margin-left: auto;
+    font-weight: 500;
+}
+
+/* Like y guardado activos: rosado y relleno */
+.like-button.liked,
+.save-button.saved {
+    color: #C2456E;
+}
+
+
+/* Caja para comentar, oculta al inicio */
+.comment-box {
+    display: none;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Se muestra cuando JS le pone la clase "open" */
+.comment-box.open {
+    display: flex;
+}
+
+.comment-box input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px solid #F1DFE4;
+    border-radius: 999px;
+    background-color: #FFF7F3;
+    font-size: 12px;
+}
+
+.comment-box button {
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 
+   Estadisticas
+*/
+
+/* Caja blanca con tres números */
+.community-stats {
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 20px;
+    margin-top: 48px;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Número arriba y texto abajo */
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+/* El primero alineado a la izquierda y el último a la derecha */
+.stat-left {
+    align-items: flex-start;
+}
+
+.stat-right {
+    align-items: flex-end;
+}
+
+.stat strong {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 28px;
+    color: #C2456E;
+}
+
+.stat span {
+    color: #6E5A63;
+    font-size: 11px;
+}
+
+
+/* 
+   AÚNA Help
+  */
+
+/* Caja oscura con dos columnas: texto y recursos */
+.auna-help {
+    margin: 0 80px 80px;
+    padding: 48px;
+    background-color: #3B2430;
+    border-radius: 28px;
+    display: flex;
+    gap: 48px;
+    align-items: center;
+}
+
+/* La columna de texto ocupa el espacio que sobra */
+.help-content {
+    flex: 1;
+}
+
+/* Círculo rosado con la "A" */
+.help-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.help-content h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    color: #FFFFFF;
+    line-height: 1.1;
+}
+
+/* Subtítulo pequeño en mayúsculas */
+.help-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: #FFFFFF;
+    margin: 4px 0 16px;
+}
+
+.help-content p {
+    font-size: 13px;
+    color: #E6D5DA;
+    margin-bottom: 32px;
+}
+
+/* Botón blanco con texto rosado */
+.help-button {
+    border: none;
+    background-color: #FFFFFF;
+    color: #C2456E;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.help-button:hover {
+    background-color: #F7D9E3;
+}
+
+/* Lista de lugares, uno debajo del otro */
+.help-resources {
+    width: 340px;
+    flex-shrink: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Tarjeta blanca de cada lugar */
+.resource-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    padding: 12px 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.resource-card:hover {
+    background-color: #FDEEF1;
+}
+
+/* Nombre y distancia uno debajo del otro */
+.resource-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-info strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2C1D25;
+}
+
+.resource-info span {
+    font-size: 10px;
+    color: #6E5A63;
+}
+
+
+/* 
+   Mensaje temporal (toast)
+*/
+
+/* Escondido abajo hasta que JS le pone "visible" */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+    background-color: #2C1D25;
+    color: #FFFFFF;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2000;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
+/* 
+   Footer
+*/
+
+/* Pie de página blanco */
+footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid #F1DFE4;
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand strong {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.footer-brand p {
+    color: #6E5A63;
+    font-size: 12px;
+}
+
+.footer-navigation {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-navigation a {
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-navigation a:hover {
+    color: #C2456E;
+}
+
+
+/* 
+   Pantallas grandes
+*/
+
+/* Hero en pantallas grandes (tamaños del Figma) */
+@media (min-width: 1360px) {
+
+    .hero {
+        padding: 73px 80px 80px 104px;
+        gap: 94px;
+    }
+
+    .hero-card {
+        width: 506px;
+        padding: 30px 38px 26px;
+    }
+
+    .hero-card-image {
+        height: 419px;
+    }
+
+    .hero-card-author {
+        margin-top: 30px;
+        padding-left: 18px;
+        gap: 28px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .hero-card-info {
+        gap: 8px;
+    }
+
+    .hero-card-info strong {
+        font-size: 14px;
+    }
+
+    .hero-card-info span {
+        font-size: 12px;
+    }
+
+    .follow-button {
+        padding: 7px 18px;
+        font-size: 13px;
+        margin-right: 22px;
+    }
+
+    .hero-card-stats {
+        font-size: 12px;
+        margin-top: 10px;
+        padding-left: 18px;
+    }
+
+    .hero-content {
+        max-width: 715px;
+    }
+
+    .hero-tag {
+        padding: 8px 14px;
+        gap: 10px;
+        font-size: 13px;
+        margin-bottom: 32px;
+    }
+
+    .hero-tag .dot {
+        width: 7px;
+        height: 7px;
+    }
+
+    .hero-content h1 {
+        font-size: 58px;
+    }
+
+    .hero-content p {
+        font-size: 17px;
+        line-height: 1.65;
+        margin-bottom: 56px;
+    }
+
+    .hero-button {
+        padding: 14px 27px;
+        font-size: 15px;
+    }
+
+    .hero-features {
+        gap: 24px;
+        margin-top: 28px;
+    }
+
+    .hero-features li {
+        font-size: 13px;
+    }
+
+}
+
+
+/* Título y formulario en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .section-heading>span {
+        font-size: 12px;
+    }
+
+    .section-heading h2 {
+        font-size: 40px;
+    }
+
+    .section-heading>a {
+        font-size: 15px;
+    }
+
+    .create-post {
+        padding: 32px 32px 30px;
+        border-radius: 28px;
+        margin-bottom: 48px;
+    }
+
+    .create-post h3 {
+        font-size: 26px;
+    }
+
+    .create-post>p {
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+
+    /* display block quita el espacio de abajo del campo */
+    .create-post textarea {
+        display: block;
+        min-height: 90px;
+        padding: 18px;
+        font-size: 15px;
+    }
+
+    /* Mensaje de error pegado al campo de texto */
+    .create-post .form-error {
+        margin: 4px 0 0;
+        font-size: 13px;
+    }
+
+    .post-options {
+        gap: 16px 50px;
+    }
+
+    .option-group {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .option-label {
+        font-size: 13px;
+    }
+
+    .chips {
+        gap: 10px;
+    }
+
+    .chip {
+        padding: 8px 9px;
+        font-size: 15px;
+    }
+
+    .topic-chip {
+        padding: 10px 36px;
+    }
+
+    .covers {
+        gap: 12px;
+    }
+
+    .cover {
+        border-radius: 12px;
+    }
+
+    .cover img {
+        width: 132px;
+        height: 88px;
+    }
+
+    .post-actions {
+        margin-top: 22px;
+    }
+
+    .post-button {
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+
+}
+
+
+/* Tarjetas de posts en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .posts-grid {
+        gap: 25px 1.85%;
+    }
+
+    .post-card {
+        width: 30.25%;
+        border-radius: 18px;
+    }
+
+    .post-card>img {
+        height: 230px;
+    }
+
+    .post-content {
+        padding: 22px;
+    }
+
+    .post-user {
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .post-user strong {
+        font-size: 15px;
+    }
+
+    .post-meta {
+        font-size: 12px;
+    }
+
+    .post-tag {
+        padding: 4px 12px;
+        font-size: 13px;
+    }
+
+    .post-text {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 4px;
+    }
+
+    .post-interactions {
+        gap: 20px;
+    }
+
+    .action-button {
+        gap: 8px;
+        font-size: 13px;
+    }
+
+    .action-button img {
+        width: 17px;
+        height: 17px;
+    }
+
+}
+
+
+/* Estadísticas y AÚNA Help en pantallas grandes */
+@media (min-width: 1360px) {
+
+    .community-stats {
+        margin-top: 74px;
+        padding: 40px 48px;
+        border-radius: 28px;
+    }
+
+    /* Los tres números alineados a la izquierda, como en el Figma */
+    .stat,
+    .stat-right {
+        align-items: flex-start;
+    }
+
+    .stat strong {
+        font-size: 40px;
+        line-height: 1.1;
+    }
+
+    .stat span {
+        font-size: 14px;
+    }
+
+    .auna-help {
+        padding: 52px 56px;
+        gap: 60px;
+    }
+
+    .help-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .help-content h2 {
+        font-size: 44px;
+    }
+
+    .help-label {
+        font-size: 12px;
+        margin: 6px 0 22px;
+    }
+
+    .help-content p {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+    .help-button {
+        padding: 16px 28px;
+        font-size: 15px;
+    }
+
+    .help-resources {
+        width: 440px;
+        gap: 12px;
+    }
+
+    .resource-card {
+        padding: 16px 20px;
+    }
+
+    .resource-info strong {
+        font-size: 15px;
+    }
+
+    .resource-info span {
+        font-size: 12px;
+    }
+
+}
+
+
+/* Header y footer en pantallas grandes */
+@media (min-width: 1360px) {
+
+    /* Botones redondos más grandes */
+    .header-actions {
+        gap: 10px;
+    }
+
+    .icon-button {
+        width: 58px;
+        height: 58px;
+    }
+
+    .icon-button img {
+        width: 24px;
+        height: 24px;
+    }
+
+    footer {
+        padding: 40px 80px;
+    }
+
+    .footer-brand strong {
+        font-size: 18px;
+    }
+
+    .footer-brand p {
+        font-size: 14px;
+    }
+
+    .footer-navigation a {
+        font-size: 14px;
+    }
+
+}
+
+
+/* 
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    /* Header más compacto */
+    .header {
+        height: 80px;
+        padding: 0 32px;
+    }
+
+    .logo img {
+        height: 46px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Hero con la tarjeta más pequeña */
+    .hero {
+        padding: 48px 32px;
+        gap: 40px;
+    }
+
+    .hero-card {
+        width: 320px;
+    }
+
+    .hero-card-image {
+        height: 260px;
+    }
+
+    .hero-content h1 {
+        font-size: 38px;
+    }
+
+    .community-section {
+        padding: 40px 32px 64px;
+    }
+
+    /* Dos tarjetas por fila */
+    .posts-grid {
+        max-width: none;
+    }
+
+    .post-card {
+        width: 49%;
+    }
+
+    /* AÚNA Help con márgenes a los lados */
+    .auna-help {
+        margin: 0 32px 64px;
+        padding: 40px;
+    }
+
+    .help-resources {
+        width: 300px;
+    }
+
+    footer {
+        padding: 28px 32px;
+    }
+
+}
+
+
+/* 
+   Mobile
+  */
+@media (max-width: 700px) {
+
+    /* Header solo con logo, búsqueda y perfil */
+    .header {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    /* El menú pasa abajo y se oculta el idioma */
+    .main-nav,
+    #language-button {
+        display: none;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .icon-button {
+        width: 28px;
+        height: 28px;
+    }
+
+    .icon-button img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Menú fijo en la parte de abajo */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #FFFFFF;
+        border-top: 1px solid #F1DFE4;
+        padding: 10px 0 14px;
+    }
+
+    /* Cada link con un punto arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: #6E5A63;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        background-color: #F7D9E3;
+    }
+
+    /* Página actual en rosado */
+    .bottom-link.active {
+        color: #C2456E;
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: #C2456E;
+    }
+
+    /* Espacio para que el menú no tape el final
+       (en iPhone la barra de Safari también ocupa espacio) */
+    body {
+        padding-bottom: 96px;
+    }
+
+    /* Hero en una columna */
+    .hero {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px 20px 40px;
+        gap: 40px;
+    }
+
+    /* En celular la tarjeta no tiene fondo blanco */
+    .hero-card {
+        width: 100%;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .hero-card-image {
+        display: block;
+        max-width: 300px;
+        height: 294px;
+        margin: 0 auto;
+        border-radius: 20px;
+    }
+
+    /* Fila del autor del mismo ancho que la foto */
+    .hero-card-author,
+    .hero-card-stats {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .hero-tag {
+        font-size: 14px;
+        padding: 8px 14px;
+    }
+
+    /* Sección comunidad con menos espacio */
+    .community-section {
+        padding: 24px 20px 48px;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .create-post {
+        padding: 20px 16px;
+    }
+
+    .topic-chip {
+        padding: 6px 14px;
+    }
+
+    .cover img {
+        width: 72px;
+        height: 52px;
+    }
+
+    /* Una tarjeta por fila */
+    .post-card {
+        width: 100%;
+    }
+
+    /* Estadísticas una debajo de otra */
+    .community-stats {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .stat-left,
+    .stat-right {
+        align-items: center;
+    }
+
+    /* AÚNA Help en una columna */
+    .auna-help {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 0 20px 40px;
+        padding: 32px 24px;
+        gap: 32px;
+    }
+
+    .help-resources {
+        width: 100%;
+    }
+
+    /* Footer en columna */
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px 20px;
+    }
+
+    /* El toast queda encima del menú inferior */
+    .toast {
+        bottom: 84px;
+    }
+
+}
+
+
+/*
+   Mobile different size
+ */
+
+@media (max-width: 450px) {
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .auna-help {
+        border-radius: 20px;
+    }
+
+}
