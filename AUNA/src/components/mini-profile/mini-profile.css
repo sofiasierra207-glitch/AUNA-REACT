@@ -1,0 +1,106 @@
+/* ---------- menu del mini perfil ---------- */
+
+/* el menu sale debajo del boton de perfil
+   position absolute lo ubica respecto a la caja de botones del header,
+   por eso esa caja tiene que tener position relative en la pagina
+   empieza escondido con display none */
+.mini-perfil {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #f1dfe4;
+    border-radius: 24px;
+    padding: 24px 8px 8px;
+    box-shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+    font-family: "Inter", Arial, sans-serif;
+    color: #2c1d25;
+    z-index: 1100;
+}
+
+/* cuando el js le pone la clase abierto se muestra */
+.mini-perfil.abierto {
+    display: block;
+}
+
+/* le quito el margin que pone el navegador */
+.mini-perfil * {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* fila de arriba: circulo con la inicial, nombre y usuario */
+.mini-perfil-arriba {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px 20px;
+    border-bottom: 1px solid #f1dfe4;
+    margin-bottom: 8px;
+}
+
+/* circulo rosado con la inicial
+   flex-shrink 0 para que no se aplaste */
+.perfil-avatar {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #f7d9e3;
+    color: #c2456e;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mini-perfil-nombre {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mini-perfil-usuario {
+    font-size: 13px;
+    color: #6e5a63;
+    margin-top: 4px;
+}
+
+/* cada opcion del menu ocupa todo el ancho
+   uso la misma clase para los botones y los links, asi se ven iguales */
+.mini-perfil-opcion {
+    display: block;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    border: none;
+    background: none;
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #2c1d25;
+    cursor: pointer;
+}
+
+.mini-perfil-opcion:hover {
+    background-color: #fdedf1;
+}
+
+/* log out va en rosado como en el figma */
+.mini-perfil-salir {
+    color: #c2456e;
+}
+
+
+/* ---------- celular ---------- */
+@media (max-width: 600px) {
+
+    /* el menu un poco mas angosto */
+    .mini-perfil {
+        width: 260px;
+        top: 48px;
+    }
+}
