@@ -88,10 +88,10 @@ function Index() {
 
     // El header, el menú y el footer los pone MainLayout
     return (
-        <main className="home">
+        <main>
 
             {/* ===== Hero ===== */}
-            <section className="hero" id="home">
+            <section className="home-hero" id="home">
 
                 {/* Tarjeta del post destacado */}
                 <article className="hero-card">
