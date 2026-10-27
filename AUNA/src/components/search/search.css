@@ -1,0 +1,131 @@
+/* fondo oscuro que tapa la pagina cuando abro el popup
+   position fixed hace que quede pegado a la pantalla aunque haga scroll
+   empieza escondido con display none */
+.buscar-fondo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 29, 37, 0.45);
+    justify-content: center;
+    align-items: flex-start;
+    padding: 120px 16px 16px;
+    /* 3000 para que quede encima del menu de abajo en celular (igual que las ventanas de Sofía) */
+    z-index: 3000;
+}
+
+/* cuando el js le pone la clase abierto se muestra
+   flex centra el popup en la pantalla */
+.buscar-fondo.abierto {
+    display: flex;
+}
+
+/* caja blanca del popup
+   max-width 100% para que en celular no se salga de la pantalla */
+.buscar-popup {
+    width: 420px;
+    max-width: 100%;
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 26px 28px;
+    box-shadow: 0 12px 40px rgba(44, 29, 37, 0.2);
+    font-family: "Inter", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* el navegador le pone margin al h3 y al p, se los quito
+   border-box hace que el padding quede dentro del ancho
+   asi el buscador no se sale de la caja blanca */
+.buscar-popup * {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* titulo, le pongo Inter porque en las paginas los h3 son Playfair */
+.buscar-popup h3 {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #2c1d25;
+}
+
+/* buscador */
+.buscar-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #f1dfe4;
+    border-radius: 14px;
+    background-color: #fff7f3;
+    font-family: inherit;
+    font-size: 14px;
+    color: #2c1d25;
+    outline: none;
+}
+
+/* borde rosado cuando estoy escribiendo */
+.buscar-input:focus {
+    border-color: #c2456e;
+}
+
+/* texto de "Suggestions" */
+.buscar-subtitulo {
+    font-size: 12px;
+    color: #6e5a63;
+}
+
+/* fila de sugerencias */
+.buscar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* cada sugerencia es una pildora rosada */
+.buscar-tag {
+    border: none;
+    background-color: #f7d9e3;
+    color: #c2456e;
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.buscar-tag:hover {
+    background-color: #d3cc00d2;
+    color: #ffffff;
+}
+
+/* boton de volver al inicio, ocupa todo el ancho
+   es un link (a) pero lo hago ver como boton */
+.buscar-volver {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color: #f7d9e3;
+    color: #c2456e;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: 999px;
+}
+
+.buscar-volver:hover {
+    background-color: #f1c7d5;
+}
+
+/* celular: el popup queda mas arriba */
+@media (max-width: 600px) {
+    .buscar-fondo {
+        padding-top: 80px;
+    }
+
+    .buscar-popup {
+        padding: 22px 20px;
+    }
+}
