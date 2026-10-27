@@ -1,0 +1,256 @@
+/* Ventana de configuración (Settings) */
+
+/* Fondo oscuro que cubre toda la pantalla, oculto al inicio */
+.settings-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 29, 37, 0.45);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Se muestra cuando JS le pone la clase "open" */
+.settings-overlay.open {
+    display: flex;
+}
+
+/* Quita márgenes del navegador; el padding queda dentro del ancho */
+.settings-overlay,
+.settings-overlay * {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Caja blanca; si no cabe en la pantalla se puede bajar */
+.settings-modal {
+    width: 480px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+    border-radius: 28px;
+    padding: 32px;
+    font-family: "Inter", Arial, sans-serif;
+    color: #2C1D25;
+    box-shadow: 0 20px 48px rgba(44, 29, 37, 0.2);
+}
+
+/* Título y botón cerrar */
+.settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.settings-header h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Botón redondo de cerrar */
+.settings-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: #FDF3F1;
+    color: #2C1D25;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.settings-close:hover {
+    background-color: #F7D9E3;
+}
+
+/* Títulos ACCOUNT, NOTIFICATIONS y PRIVACY */
+.settings-group {
+    color: #6E5A63;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin: 8px 0 12px;
+}
+
+
+/* Filas de la cuenta */
+
+.settings-account {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+/* Fila rosada clara con la flecha a la derecha */
+.settings-row {
+    position: relative;
+    background-color: #FDF3F1;
+    border-radius: 16px;
+    padding: 10px 40px 10px 18px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.settings-row:hover {
+    background-color: #FBE8EC;
+}
+
+.settings-label {
+    color: #6E5A63;
+    font-size: 13px;
+}
+
+.settings-value {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Campo para escribir, oculto hasta que se edita */
+.settings-input {
+    display: none;
+    border: 1px solid #C2456E;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Editando: se ve el campo y se oculta el texto */
+.settings-row.editing .settings-input {
+    display: block;
+}
+
+.settings-row.editing .settings-value {
+    display: none;
+}
+
+/* Flecha a la derecha, centrada en la fila */
+.settings-arrow {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -12px;
+    color: #6E5A63;
+    font-size: 16px;
+}
+
+
+/* Interruptores */
+
+.settings-switches {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+/* Texto a la izquierda e interruptor a la derecha */
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.switch-row strong {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.switch-row p {
+    color: #6E5A63;
+    font-size: 12px;
+}
+
+/* Interruptor apagado: rosado muy claro con el punto a la izquierda */
+.switch {
+    width: 44px;
+    height: 26px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 999px;
+    background-color: #F1DFE4;
+    padding: 3px;
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+/* Punto blanco */
+.switch-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+}
+
+/* Interruptor encendido: rosado fuerte con el punto a la derecha */
+.switch.on {
+    background-color: #C2456E;
+    justify-content: flex-end;
+}
+
+
+/* Botones de abajo */
+
+/* Log out: blanco con borde rojo */
+.settings-logout {
+    width: 100%;
+    border: 1.5px solid #D14B5A;
+    background-color: #FFFFFF;
+    color: #D14B5A;
+    padding: 13px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.settings-logout:hover {
+    background-color: #FDEEF1;
+}
+
+/* Delete: texto pequeño sin fondo */
+.settings-delete {
+    display: block;
+    margin: 14px auto 0;
+    border: none;
+    background: none;
+    color: #6E5A63;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* Al pedir confirmación se pone rojo */
+.settings-delete.confirm {
+    color: #D14B5A;
+    font-weight: 600;
+}
+
+/* En celular la caja es más compacta */
+@media (max-width: 700px) {
+
+    .settings-modal {
+        padding: 24px 20px;
+        border-radius: 24px;
+    }
+
+    .settings-header h3 {
+        font-size: 22px;
+    }
+
+}
