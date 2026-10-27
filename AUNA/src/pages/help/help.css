@@ -1,0 +1,663 @@
+/* 
+   AÚNA - PÁGINA DE AYUDA
+   Header, menú inferior, footer y mensaje temporal son iguales al Home
+*/
+
+/* Quita los espacios que pone el navegador por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Desplazamiento suave al usar links como #community */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    background-color: #FFF7F3;
+    color: #2C1D25;
+    line-height: 1.5;
+}
+
+/* Los botones y campos usan la misma fuente de la página */
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+/* Las imágenes nunca se salen de su contenedor */
+img {
+    max-width: 100%;
+}
+
+/* Borde visible al navegar con el teclado */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+    outline: 2px solid #C2456E;
+    outline-offset: 3px;
+}
+
+
+/*
+   Header
+ */
+
+/* Barra blanca de arriba; se va al bajar la página */
+header {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #F1DFE4;
+}
+
+/* Logo a la izquierda, menú al centro, íconos a la derecha */
+.header {
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 56px;
+    width: auto;
+    display: block;
+}
+
+/* Links del menú en fila */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Cada link es un cuadrito redondo */
+.nav-link {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #C2456E;
+}
+
+/* Página actual: cuadradito redondo rosado */
+.nav-link.active {
+    background-color: #F7D9E3;
+    color: #C2456E;
+}
+
+/* Grupo de botones redondos */
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Botón redondo con borde fino */
+.icon-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #D8CCD0;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-button:hover {
+    background-color: #F7D9E3;
+    border-color: #F7D9E3;
+}
+
+/* Tamaño de los íconos */
+.icon-button img {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* 
+   Menu inferior (mobile)
+*/
+
+/* Oculto en computador; se muestra en la parte de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+/* Punto redondo (se usa en varias partes) */
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    flex-shrink: 0;
+}
+
+
+/* 
+   Página de ayuda
+*/
+
+/* Contenido con espacio a los lados igual que el header */
+.help-page {
+    padding: 64px 80px 48px;
+}
+
+/* Título grande con letra serif */
+.help-intro h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.help-intro p {
+    max-width: 660px;
+    color: #6E5A63;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+
+/* 
+   Filtros
+*/
+
+/* Filtros en fila */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 48px;
+}
+
+/* Cada filtro: botón redondeado blanco con borde */
+.chip {
+    border: 1px solid #F1DFE4;
+    background-color: #FFFFFF;
+    color: #2C1D25;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.chip:hover {
+    background-color: #FDEEF1;
+}
+
+/* Filtro activo: rosado fuerte con texto blanco */
+.chip.active {
+    background-color: #C2456E;
+    border-color: #C2456E;
+    color: #FFFFFF;
+}
+
+
+/* 
+   Tarjetas de lugares
+*/
+
+/* Tarjetas en filas de tres en computador */
+.resources-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 24px 2%;
+    margin-bottom: 64px;
+}
+
+/* Tarjeta blanca */
+.resource-card {
+    width: 32%;
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Categoría en mayúsculas sobre fondo rosado claro */
+.resource-tag {
+    align-self: flex-start;
+    background-color: #FDEEF1;
+    color: #C2456E;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.resource-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.resource-description {
+    color: #6E5A63;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* Distancia y horario con punto rosado */
+.resource-details {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6E5A63;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+/* Botón ancho rosado */
+.contact-button {
+    width: 100%;
+    border: 1px solid #C2456E;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 13px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.contact-button:hover {
+    background-color: #A93A5E;
+}
+
+/* Estado Contacted: blanco con borde y texto rosado */
+.contact-button.contacted {
+    background-color: #FFFFFF;
+    border-color: #F1DFE4;
+    color: #C2456E;
+}
+
+
+/* 
+   Caja para pedir ayuda
+*/
+
+/* Caja oscura con texto a la izquierda y botón a la derecha */
+.ask-help {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    background-color: #3B2430;
+    border-radius: 28px;
+    padding: 40px 48px;
+    margin-bottom: 48px;
+}
+
+.ask-help h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 28px;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+}
+
+.ask-help p {
+    color: #E6D5DA;
+    font-size: 15px;
+}
+
+/* Botón rosado */
+.ask-help-button {
+    flex-shrink: 0;
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ask-help-button:hover {
+    background-color: #A93A5E;
+}
+
+
+/* 
+   Preguntas frecuentes
+*/
+
+.faq h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* Preguntas una debajo de otra */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Cada pregunta en una tarjeta blanca */
+.faq-item {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 18px 32px;
+}
+
+.faq-item h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.faq-item p {
+    color: #6E5A63;
+    font-size: 14px;
+}
+
+
+/* 
+   Mensaje temporal (toast)
+*/
+
+/* Escondido abajo hasta que JS le pone "visible" */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+    background-color: #2C1D25;
+    color: #FFFFFF;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2000;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
+/* 
+   Footer
+*/
+
+/* Pie de página blanco */
+footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid #F1DFE4;
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand strong {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.footer-brand p {
+    color: #6E5A63;
+    font-size: 12px;
+}
+
+.footer-navigation {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-navigation a {
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-navigation a:hover {
+    color: #C2456E;
+}
+
+
+/*
+   Pantallas grandes
+*/
+
+/* Botones redondos del header del mismo tamaño que en Home */
+@media (min-width: 1360px) {
+
+    .header-actions {
+        gap: 10px;
+    }
+
+    .icon-button {
+        width: 58px;
+        height: 58px;
+    }
+
+    .icon-button img {
+        width: 24px;
+        height: 24px;
+    }
+
+}
+
+
+/* 
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    /* Header más compacto */
+    .header {
+        height: 80px;
+        padding: 0 32px;
+    }
+
+    .logo img {
+        height: 46px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Menos espacio a los lados */
+    .help-page {
+        padding: 48px 32px 64px;
+    }
+
+    .help-intro h1 {
+        font-size: 44px;
+    }
+
+    /* Dos tarjetas por fila */
+    .resource-card {
+        width: 49%;
+    }
+
+    footer {
+        padding: 28px 32px;
+    }
+
+}
+
+
+/* 
+   Mobile
+*/
+
+@media (max-width: 700px) {
+
+    /* Header solo con logo, búsqueda y perfil */
+    .header {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    /* El menú pasa abajo y se oculta el idioma */
+    .main-nav,
+    #language-button {
+        display: none;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .icon-button {
+        width: 28px;
+        height: 28px;
+    }
+
+    .icon-button img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Menú fijo en la parte de abajo */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #FFFFFF;
+        border-top: 1px solid #F1DFE4;
+        padding: 10px 0 14px;
+    }
+
+    /* Cada link con un punto arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: #6E5A63;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        background-color: #F7D9E3;
+    }
+
+    /* Página actual en rosado */
+    .bottom-link.active {
+        color: #C2456E;
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: #C2456E;
+    }
+
+    /* Espacio para que el menú no tape el final
+       (en iPhone la barra de Safari también ocupa espacio) */
+    body {
+        padding-bottom: 96px;
+    }
+
+    /* Contenido con poco espacio a los lados */
+    .help-page {
+        padding: 32px 20px 48px;
+    }
+
+    .help-intro h1 {
+        font-size: 40px;
+    }
+
+    .chips {
+        gap: 8px;
+        margin-bottom: 32px;
+    }
+
+    .chip {
+        padding: 8px 18px;
+    }
+
+    /* Una tarjeta por fila */
+    .resource-card {
+        width: 100%;
+        border: 1px solid #F1DFE4;
+    }
+
+    /* Caja oscura en columna */
+    .ask-help {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 32px 24px;
+    }
+
+    .ask-help-button {
+        width: 100%;
+    }
+
+    .faq-item {
+        padding: 20px;
+    }
+
+    /* Footer en columna */
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px 20px;
+    }
+
+    /* El toast queda encima del menú inferior */
+    .toast {
+        bottom: 84px;
+    }
+
+}
