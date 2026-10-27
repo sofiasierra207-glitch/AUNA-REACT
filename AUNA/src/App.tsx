@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import MainLayout from './components/mainlayout/MainLayout';
 import Index from './pages/index/Index';
+import Explore from './pages/explore/Explore';
 
 // Rutas de AÚNA: cada path muestra una página
 function App() {
@@ -10,8 +11,7 @@ function App() {
             {/* Páginas que llevan header, menú de celular y footer */}
             <Route element={<MainLayout />}>
                 <Route path="/" element={<Index />} />
-                {/* Aquí van las demás páginas, por ejemplo: */}
-                {/* <Route path="/explore" element={<Explore />} /> */}
+                <Route path="/explore" element={<Explore />} />
             </Route>
         </Routes>
     );
