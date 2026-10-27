@@ -4,6 +4,27 @@
    el header y el footer ya no van aqui, ahora son componentes */
 .favorites {
 
+
+    /* ---------- base ----------
+       estilos generales que antes estaban en el css de la pagina
+       los dejo dentro de .favorites para no cambiar las otras paginas */
+    a {
+        text-decoration: none;
+    }
+
+    button {
+        cursor: pointer;
+        border: none;
+        background: none;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 600;
+    }
+
     /* ---------- hero ---------- */
     .hero {
         padding: 64px 80px 44px;
