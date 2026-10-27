@@ -1,0 +1,904 @@
+/*
+   AÚNA - PÁGINA DE COMUNIDAD
+   Header, menú inferior, footer y mensaje temporal son iguales al Home
+*/
+
+/* Quita los espacios que pone el navegador por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Desplazamiento suave al usar links como #community */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    background-color: #FFF7F3;
+    color: #2C1D25;
+    line-height: 1.5;
+}
+
+/* Los botones y campos usan la misma fuente de la página */
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+/* Las imágenes nunca se salen de su contenedor */
+img {
+    max-width: 100%;
+}
+
+/* Borde visible al navegar con el teclado */
+a:focus-visible,
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+    outline: 2px solid #C2456E;
+    outline-offset: 3px;
+}
+
+
+/*
+   Header
+ */
+
+/* Barra blanca de arriba; se va al bajar la página */
+header {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #F1DFE4;
+}
+
+/* Logo a la izquierda, menú al centro, íconos a la derecha */
+.header {
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 56px;
+    width: auto;
+    display: block;
+}
+
+/* Links del menú en fila */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Cada link es un cuadrito redondo */
+.nav-link {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #C2456E;
+}
+
+/* Página actual: cuadradito redondo rosado */
+.nav-link.active {
+    background-color: #F7D9E3;
+    color: #C2456E;
+}
+
+/* Grupo de botones redondos */
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Botón redondo con borde fino */
+.icon-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #D8CCD0;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.icon-button:hover {
+    background-color: #F7D9E3;
+    border-color: #F7D9E3;
+}
+
+/* Tamaño de los íconos */
+.icon-button img {
+    width: 22px;
+    height: 22px;
+}
+
+
+/*
+   Menu inferior (mobile)
+*/
+
+/* Oculto en computador; se muestra en la parte de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+/* Punto redondo del menú inferior */
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    flex-shrink: 0;
+}
+
+
+/*
+   Página de comunidad
+*/
+
+/* Espacio a los lados igual que el header */
+.community-page {
+    padding: 72px 80px 72px;
+}
+
+/* Títulos con letra serif */
+.community-page h1,
+.community-page h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 500;
+}
+
+
+/*
+   Introducción
+*/
+
+/* Texto a la izquierda y caja oscura a la derecha */
+.community-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+    margin-bottom: 48px;
+}
+
+.intro-content {
+    max-width: 860px;
+}
+
+/* Etiqueta pequeña rosada */
+.page-label {
+    display: block;
+    color: #C2456E;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+}
+
+/* Título grande en cursiva */
+.community-intro h1 {
+    font-size: 44px;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 72px;
+}
+
+.community-intro p {
+    color: #6E5A63;
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 44px;
+}
+
+
+/*
+   Filtros
+*/
+
+/* Filtros en fila */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Cada filtro: botón redondeado blanco con borde */
+.chip {
+    border: 1px solid #F1DFE4;
+    background-color: #FFFFFF;
+    color: #6E5A63;
+    padding: 9px 22px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.chip:hover {
+    background-color: #FDEEF1;
+}
+
+/* Filtro activo: rosado fuerte con texto blanco */
+.chip.active {
+    background-color: #C2456E;
+    border-color: #C2456E;
+    color: #FFFFFF;
+}
+
+
+/*
+   Caja "How we verify"
+*/
+
+/* Caja oscura con esquinas redondas */
+.verify-steps {
+    width: 440px;
+    flex-shrink: 0;
+    background-color: #3B2430;
+    border-radius: 28px;
+    padding: 32px;
+}
+
+.verify-steps h2 {
+    color: #FFFFFF;
+    font-size: 26px;
+    margin-bottom: 16px;
+}
+
+/* Pasos uno debajo de otro, sin números automáticos */
+.verify-steps ol {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.verify-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    color: #E6D5DA;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Círculo rosado con el número */
+.step-number {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*
+   Profesionales verificadas
+*/
+
+/* Título a la izquierda y número a la derecha */
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.section-heading h2 {
+    font-size: 30px;
+}
+
+.section-heading span {
+    color: #6E5A63;
+    font-size: 14px;
+}
+
+/* Tarjetas en filas de tres en computador */
+.professionals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 2%;
+    margin-bottom: 72px;
+}
+
+/* Tarjeta blanca con todo centrado */
+.professional-card {
+    width: 32%;
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 24px;
+    padding: 28px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Círculo rosado con la inicial */
+.professional-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background-color: #F7D9E3;
+    color: #C2456E;
+    font-size: 26px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.professional-card h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.professional-user {
+    color: #6E5A63;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+/* Etiqueta rosada con el check */
+.verified-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #FDEEF1;
+    color: #C2456E;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.verified-tag img {
+    width: 12px;
+    height: 12px;
+}
+
+/* Descripción con alto fijo para que las tarjetas queden parejas */
+.professional-description {
+    color: #6E5A63;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 44px;
+    margin-bottom: 10px;
+}
+
+/* Seguidores y tiempo de respuesta */
+.professional-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #6E5A63;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.professional-stats strong {
+    color: #2C1D25;
+    font-weight: 600;
+}
+
+/* Punto gris entre los datos */
+.stats-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #D8CCD0;
+}
+
+/* Botón ancho rosado */
+.follow-button {
+    width: 100%;
+    border: 1px solid #C2456E;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 11px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.follow-button:hover {
+    background-color: #A93A5E;
+}
+
+/* Estado Following: blanco con texto rosado */
+.follow-button.following {
+    background-color: #FFFFFF;
+    border-color: #F1DFE4;
+    color: #C2456E;
+}
+
+
+/*
+   Círculos abiertos
+*/
+
+.circles h2 {
+    font-size: 30px;
+}
+
+.circles-subtitle {
+    color: #6E5A63;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Filas una debajo de otra */
+.circles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 64px;
+}
+
+/* Fila blanca: inicial, texto y botón */
+.circle-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background-color: #FFFFFF;
+    border: 1px solid #F1DFE4;
+    border-radius: 20px;
+    padding: 16px 24px;
+}
+
+/* Círculo rosado claro con la inicial */
+.circle-avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #FDEEF1;
+    color: #C2456E;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* El texto ocupa el espacio del medio */
+.circle-info {
+    flex: 1;
+}
+
+.circle-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.circle-info p {
+    color: #6E5A63;
+    font-size: 14px;
+}
+
+.circle-details {
+    color: #C2456E;
+    font-size: 12px;
+}
+
+/* Botón Join blanco con borde */
+.join-button {
+    flex-shrink: 0;
+    border: 1px solid #F1DFE4;
+    background-color: #FFFFFF;
+    color: #2C1D25;
+    padding: 11px 26px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.join-button:hover {
+    background-color: #FDEEF1;
+}
+
+/* Estado Joined: rosado con texto blanco */
+.join-button.joined {
+    background-color: #C2456E;
+    border-color: #C2456E;
+    color: #FFFFFF;
+}
+
+
+/*
+   Caja para verificarse
+*/
+
+/* Caja rosada con texto a la izquierda y botón a la derecha */
+.get-verified {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    background-color: #F7D9E3;
+    border-radius: 28px;
+    padding: 40px 48px;
+}
+
+.get-verified h2 {
+    font-size: 28px;
+}
+
+.get-verified p {
+    color: #6E5A63;
+    font-size: 15px;
+}
+
+/* Botón rosado */
+.verify-button {
+    flex-shrink: 0;
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 13px 26px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.verify-button:hover {
+    background-color: #A93A5E;
+}
+
+
+/*
+   Mensaje temporal (toast)
+*/
+
+/* Escondido abajo hasta que JS le pone "visible" */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+    background-color: #2C1D25;
+    color: #FFFFFF;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 2000;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
+/*
+   Footer
+*/
+
+/* Pie de página blanco */
+footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid #F1DFE4;
+    padding: 32px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-brand strong {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.footer-brand p {
+    color: #6E5A63;
+    font-size: 12px;
+}
+
+.footer-navigation {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-navigation a {
+    color: #6E5A63;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-navigation a:hover {
+    color: #C2456E;
+}
+
+
+/*
+   Pantallas grandes
+*/
+
+/* Botones redondos del header del mismo tamaño que en Home */
+@media (min-width: 1360px) {
+
+    .header-actions {
+        gap: 10px;
+    }
+
+    .icon-button {
+        width: 58px;
+        height: 58px;
+    }
+
+    .icon-button img {
+        width: 24px;
+        height: 24px;
+    }
+
+}
+
+
+/*
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    /* Header más compacto */
+    .header {
+        height: 80px;
+        padding: 0 32px;
+    }
+
+    .logo img {
+        height: 46px;
+    }
+
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .icon-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Menos espacio a los lados */
+    .community-page {
+        padding: 48px 32px 64px;
+    }
+
+    /* Introducción en una columna */
+    .community-intro {
+        flex-direction: column;
+        gap: 32px;
+        margin-bottom: 56px;
+    }
+
+    .community-intro h1 {
+        font-size: 40px;
+        margin-bottom: 24px;
+    }
+
+    .community-intro p {
+        margin-bottom: 28px;
+    }
+
+    .verify-steps {
+        width: 100%;
+    }
+
+    /* Dos tarjetas por fila */
+    .professionals-grid {
+        gap: 24px 2%;
+    }
+
+    .professional-card {
+        width: 49%;
+    }
+
+    footer {
+        padding: 28px 32px;
+    }
+
+}
+
+
+/*
+   Mobile
+*/
+
+@media (max-width: 700px) {
+
+    /* Header solo con logo, búsqueda y perfil */
+    .header {
+        height: 64px;
+        padding: 0 20px;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    /* El menú pasa abajo y se oculta el idioma */
+    .main-nav,
+    #language-button {
+        display: none;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .icon-button {
+        width: 28px;
+        height: 28px;
+    }
+
+    .icon-button img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Menú fijo en la parte de abajo */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #FFFFFF;
+        border-top: 1px solid #F1DFE4;
+        padding: 10px 0 14px;
+    }
+
+    /* Cada link con un punto arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: #6E5A63;
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        background-color: #F7D9E3;
+    }
+
+    /* Página actual en rosado */
+    .bottom-link.active {
+        color: #C2456E;
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: #C2456E;
+    }
+
+    /* Espacio para que el menú no tape el final
+       (en iPhone la barra de Safari también ocupa espacio) */
+    body {
+        padding-bottom: 96px;
+    }
+
+    .community-page {
+        padding: 32px 20px 48px;
+    }
+
+    /* En celular solo "Who's" va en cursiva */
+    .community-intro h1 {
+        font-size: 34px;
+        font-style: normal;
+        margin-bottom: 12px;
+    }
+
+    .community-intro p {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .chip {
+        padding: 6px 16px;
+        font-size: 14px;
+    }
+
+    .verify-steps {
+        padding: 28px 24px;
+    }
+
+    /* Título y número uno debajo del otro */
+    .section-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .section-heading h2,
+    .circles h2 {
+        font-size: 28px;
+    }
+
+    /* Una tarjeta por fila */
+    .professional-card {
+        width: 100%;
+    }
+
+    /* Círculo: el botón baja debajo del texto */
+    .circle-card {
+        flex-wrap: wrap;
+        padding: 18px;
+    }
+
+    .join-button {
+        width: 100%;
+    }
+
+    /* Caja de verificación en columna */
+    .get-verified {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 32px 24px;
+        gap: 20px;
+    }
+
+    .get-verified h2 {
+        font-size: 26px;
+    }
+
+    /* Footer en columna */
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 24px 20px;
+    }
+
+    /* El toast queda encima del menú inferior */
+    .toast {
+        bottom: 84px;
+    }
+
+}
