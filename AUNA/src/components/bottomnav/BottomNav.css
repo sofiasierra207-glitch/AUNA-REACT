@@ -1,0 +1,60 @@
+/*
+   BottomNav
+*/
+
+/* 
+   Menu inferior (mobile)
+*/
+
+/* Oculto en computador; se muestra en la parte de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+/* 
+   Mobile
+  */
+@media (max-width: 700px) {
+
+    /* Menú fijo en la parte de abajo */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: var(--white);
+        border-top: 1px solid var(--border);
+        padding: 10px 0 14px;
+    }
+
+    /* Cada link con un punto arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: var(--text);
+        text-decoration: none;
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        background-color: var(--accent-bg);
+    }
+
+    /* Página actual en rosado */
+    .bottom-link.active {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: var(--accent);
+    }
+}

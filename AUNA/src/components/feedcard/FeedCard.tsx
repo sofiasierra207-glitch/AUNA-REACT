@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import './PostCard.css';
+import './FeedCard.css';
 
-import type { Post } from '../../../pages/index/data';
-import commentIcon from '../../../assets/icons/comment.svg';
-import heartIcon from '../../../assets/icons/heart.svg';
-import heartFilledIcon from '../../../assets/icons/heart-filled.svg';
-import saveIcon from '../../../assets/icons/save.svg';
-import saveFilledIcon from '../../../assets/icons/save-filled.svg';
+import type { Post } from '../../pages/index/data';
+import commentIcon from '../../assets/icons/comment.svg';
+import heartIcon from '../../assets/icons/heart.svg';
+import heartFilledIcon from '../../assets/icons/heart-filled.svg';
+import saveIcon from '../../assets/icons/save.svg';
+import saveFilledIcon from '../../assets/icons/save-filled.svg';
 
 // Datos que recibe la tarjeta
-interface PostCardProps {
+interface FeedCardProps {
     post: Post;
 }
 
-// Tarjeta de un post del feed
-function PostCard({ post }: PostCardProps) {
+// Tarjeta de un post del feed del Home
+function FeedCard({ post }: FeedCardProps) {
 
     // Estados de la tarjeta (como el contador de clase)
     const [liked, setLiked] = useState(post.liked);
@@ -99,4 +99,4 @@ function PostCard({ post }: PostCardProps) {
     );
 }
 
-export default PostCard;
+export default FeedCard;
