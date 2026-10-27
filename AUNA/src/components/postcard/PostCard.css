@@ -1,0 +1,237 @@
+/* tarjeta de publicacion de explore
+   todo va dentro de .explore igual que la pagina, asi no choca con la tarjeta del home (FeedCard)
+   32% + 32% + 32% + 2% + 2% = 100%, por eso caben 3 por fila */
+.explore {
+
+    .post {
+        width: 32%;
+        background-color: #ffffff;
+        border: 1px solid #f1dfe4;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* object-fit para que la imagen no se deforme */
+    .post-portada {
+        width: 100%;
+        height: 176px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .post-cuerpo {
+        padding: 16px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-autora {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    /* circulo con la inicial */
+    .avatar {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background-color: #f7d9e3;
+        color: #c2456e;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .post-usuario {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .post-meta {
+        font-size: 10px;
+        color: #6e5a63;
+    }
+
+    .post-tag {
+        padding: 3px 10px;
+        border: 1px solid #f7d9e3;
+        border-radius: 999px;
+        color: #c2456e;
+        font-size: 10px;
+        font-weight: 500;
+        margin-bottom: 14px;
+    }
+
+    .post-texto {
+        font-size: 12px;
+        line-height: 1.6;
+        color: #6e5a63;
+        margin-bottom: 14px;
+    }
+
+    /* margin-top auto para que quede abajo de la tarjeta */
+    .post-acciones {
+        width: 100%;
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .post-metricas {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    /* comentarios, like y guardar */
+    .post-accion {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: #6e5a63;
+    }
+
+    .post-accion img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .btn-comentar:hover,
+    .btn-like:hover,
+    .btn-guardar:hover {
+        color: #c2456e;
+    }
+
+    .btn-guardar {
+        font-weight: 500;
+    }
+
+    /* like o guardado activo */
+    .btn-like.activo,
+    .btn-guardar.activo {
+        color: #c2456e;
+    }
+
+    /* caja de comentario */
+    .caja-comentario {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    /* flex 1 hace que el input ocupe el espacio que sobra
+       min-width 0 para que no se salga de la tarjeta */
+    .caja-comentario input {
+        flex: 1;
+        min-width: 0;
+        padding: 8px 12px;
+        border: 1px solid #f1dfe4;
+        border-radius: 999px;
+        background-color: #fff7f3;
+        font-family: inherit;
+        font-size: 12px;
+        outline: none;
+    }
+
+    .caja-comentario input:focus {
+        border-color: #c2456e;
+    }
+
+    /* boton rosado de Send */
+    .btn-enviar {
+        background-color: #c2456e;
+        color: #ffffff;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .btn-enviar:hover {
+        opacity: 0.9;
+    }
+
+    /* tablet: 2 tarjetas por fila */
+    @media (max-width: 1024px) {
+        .post {
+            width: 49%;
+        }
+    }
+
+    /* celular: 1 tarjeta por fila */
+    @media (max-width: 600px) {
+        .post {
+            width: 100%;
+        }
+    }
+
+    /* tamaños del figma en pantallas grandes */
+    @media (min-width: 1360px) {
+        .post {
+            width: 30.25%;
+            border-radius: 18px;
+        }
+
+        .post-portada {
+            height: 230px;
+        }
+
+        .post-cuerpo {
+            padding: 22px;
+        }
+
+        .post-autora {
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .post-usuario {
+            font-size: 15px;
+        }
+
+        .post-meta {
+            font-size: 12px;
+        }
+
+        .post-tag {
+            padding: 4px 12px;
+            font-size: 13px;
+        }
+
+        .post-texto {
+            font-size: 14px;
+        }
+
+        .post-metricas {
+            gap: 20px;
+        }
+
+        .post-accion {
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .post-accion img {
+            width: 17px;
+            height: 17px;
+        }
+    }
+}
