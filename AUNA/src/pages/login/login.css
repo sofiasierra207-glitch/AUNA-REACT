@@ -1,0 +1,321 @@
+/*
+   AÚNA - PÁGINA DE INICIO DE SESIÓN
+*/
+
+/* Quita los espacios que pone el navegador por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    background-color: #FFF7F3;
+    color: #2C1D25;
+    line-height: 1.5;
+}
+
+/* Los botones y campos usan la misma fuente de la página */
+button,
+input {
+    font-family: inherit;
+}
+
+/* Borde visible al navegar con el teclado */
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid #C2456E;
+    outline-offset: 3px;
+}
+
+/* Punto rosado */
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    flex-shrink: 0;
+}
+
+
+/*
+   Dos columnas que ocupan toda la pantalla
+*/
+
+.login-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/*
+   Columna oscura
+*/
+
+.login-intro {
+    width: 45%;
+    background-color: #3B2430;
+    color: #FFFFFF;
+    padding: 64px 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Logo con círculo rosado */
+.login-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-logo-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #C2456E;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-logo-name {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* El texto queda en el centro de lo que sobra */
+.login-intro-text {
+    margin: auto 0;
+}
+
+.login-intro h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 40px;
+}
+
+.login-intro p {
+    max-width: 420px;
+    color: #E6D5DA;
+    font-size: 16px;
+    margin-bottom: 32px;
+}
+
+/* Etiqueta con punto rosado */
+.login-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #5A3A48;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/*
+   Columna del formulario
+*/
+
+/* El formulario queda centrado en la columna */
+.login-form-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+}
+
+.login-form {
+    width: 420px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.login-subtitle {
+    color: #6E5A63;
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+.login-form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Campos blancos con borde fino */
+.login-input {
+    width: 100%;
+    border: 1px solid #EBD9DE;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 11px 18px;
+    font-size: 15px;
+    color: #2C1D25;
+    outline: none;
+    margin-bottom: 16px;
+}
+
+.login-input:focus {
+    border-color: #C2456E;
+}
+
+/* Campo con error: borde rojo */
+.login-input.error {
+    border-color: #D14B5A;
+}
+
+/* "Forgot your password?" a la derecha */
+.login-forgot {
+    align-self: flex-end;
+    border: none;
+    background: none;
+    color: #C2456E;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+/* Mensaje de error en rojo */
+.login-message {
+    min-height: 20px;
+    color: #D14B5A;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+/* Mensaje de aviso en gris */
+.login-message.info {
+    color: #6E5A63;
+}
+
+/* Botón ancho rosado */
+.login-button {
+    width: 100%;
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 14px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #A93A5E;
+}
+
+/* Línea con "or" en el medio */
+.login-divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #6E5A63;
+    font-size: 13px;
+    margin: 20px 0;
+}
+
+/* Las dos líneas a los lados del "or" */
+.login-line {
+    flex: 1;
+    height: 1px;
+    background-color: #EBD9DE;
+}
+
+.login-create {
+    text-align: center;
+    color: #6E5A63;
+    font-size: 14px;
+}
+
+/* "Create account" en rosado */
+.login-create-button {
+    border: none;
+    background: none;
+    color: #C2456E;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-create-button:hover,
+.login-forgot:hover {
+    text-decoration: underline;
+}
+
+
+/*
+   Tablet
+*/
+
+@media (max-width: 1000px) {
+
+    .login-intro {
+        padding: 48px 40px;
+    }
+
+    .login-intro h1 {
+        font-size: 36px;
+    }
+
+}
+
+
+/*
+   Mobile: la parte oscura arriba y el formulario abajo
+*/
+
+@media (max-width: 700px) {
+
+    .login-page {
+        flex-direction: column;
+    }
+
+    .login-intro {
+        width: 100%;
+        padding: 24px 24px 36px;
+    }
+
+    .login-intro-text {
+        margin-top: 24px;
+    }
+
+    .login-intro h1 {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+
+    .login-intro p {
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    .login-form-side {
+        align-items: flex-start;
+        padding: 32px 24px 40px;
+    }
+
+    .login-form h2 {
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+}
