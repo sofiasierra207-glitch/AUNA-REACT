@@ -1,0 +1,265 @@
+/* Ventana del perfil */
+
+/* Fondo oscuro que cubre toda la pantalla, oculto al inicio */
+.profile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(44, 29, 37, 0.45);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Se muestra cuando JS le pone la clase "open" */
+.profile-overlay.open {
+    display: flex;
+}
+
+/* Quita márgenes del navegador; el padding queda dentro del ancho */
+.profile-overlay,
+.profile-overlay * {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Caja blanca */
+.profile-modal {
+    width: 520px;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+    border-radius: 28px;
+    padding: 32px;
+    font-family: "Inter", Arial, sans-serif;
+    color: #2C1D25;
+    box-shadow: 0 20px 48px rgba(44, 29, 37, 0.2);
+}
+
+/* Avatar, nombre y botón cerrar en fila */
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+/* Círculo grande con la inicial */
+.profile-avatar {
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #F7D9E3;
+    color: #C2456E;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* El nombre ocupa el espacio del medio */
+.profile-names {
+    flex: 1;
+}
+
+.profile-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.profile-title h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Etiqueta rosada de verificada */
+.profile-badge {
+    background-color: #F7D9E3;
+    color: #C2456E;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.profile-user {
+    color: #6E5A63;
+    font-size: 14px;
+}
+
+/* Botón redondo de cerrar */
+.profile-close {
+    align-self: flex-start;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #FDF3F1;
+    color: #2C1D25;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.profile-close:hover {
+    background-color: #F7D9E3;
+}
+
+.profile-bio {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Tres números en una caja rosada clara */
+.profile-stats {
+    display: flex;
+    background-color: #FDF3F1;
+    border-radius: 16px;
+    padding: 12px 0;
+    margin-bottom: 24px;
+}
+
+.profile-stats div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Líneas a los lados del número del medio */
+.profile-stats .profile-stat-middle {
+    border-left: 1px solid #EBD9DE;
+    border-right: 1px solid #EBD9DE;
+}
+
+.profile-stats strong {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-stats span {
+    color: #6E5A63;
+    font-size: 12px;
+}
+
+/* Títulos "Interests" y "Collections" */
+.profile-subtitle {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Chips de intereses */
+.profile-interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-bottom: 24px;
+}
+
+.profile-chip {
+    background-color: #F7D9E3;
+    color: #C2456E;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+}
+
+/* Tres colecciones en fila */
+.profile-collections {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.profile-collection {
+    flex: 1;
+    min-height: 80px;
+    border: none;
+    border-radius: 16px;
+    background-color: #FDF3F1;
+    padding: 14px 16px;
+    font-family: inherit;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.profile-collection strong {
+    color: #2C1D25;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.profile-collection span {
+    color: #6E5A63;
+    font-size: 11px;
+}
+
+/* Colección elegida en rosado */
+.profile-collection.active {
+    background-color: #F7D9E3;
+}
+
+/* Botón ancho rosado */
+.profile-edit {
+    width: 100%;
+    border: none;
+    background-color: #C2456E;
+    color: #FFFFFF;
+    padding: 14px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-edit:hover {
+    background-color: #A93A5E;
+}
+
+/* En celular la caja es más compacta */
+@media (max-width: 700px) {
+
+    .profile-modal {
+        padding: 24px 20px;
+        border-radius: 24px;
+    }
+
+    .profile-avatar {
+        width: 64px;
+        height: 64px;
+        font-size: 24px;
+    }
+
+    .profile-title h3 {
+        font-size: 20px;
+    }
+
+    /* Colecciones más pequeñas */
+    .profile-collections {
+        gap: 8px;
+    }
+
+    .profile-collection {
+        padding: 12px 10px;
+    }
+
+}
