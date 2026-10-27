@@ -1,0 +1,850 @@
+/* colores del figma */
+:root {
+    --rosa-principal: #c2456e;
+    --rosa-suave: #f7d9e3;
+    --rosa-claro: #fdedf1;
+    --fondo-pagina: #fff7f3;
+    --blanco: #ffffff;
+    --borde: #f1dfe4;
+    --borde-boton: #d8ccd0;
+    --texto-principal: #2c1d25;
+    --texto-secundario: #6e5a63;
+    --morado-oscuro: #3b2430;
+}
+
+/* quitar margenes por defecto */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background-color: var(--fondo-pagina);
+    color: var(--texto-principal);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* quitar estilo gris de los botones */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+}
+
+
+/* header */
+.header {
+    background-color: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+    height: 96px;
+    padding: 0 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 56px;
+    width: auto;
+    display: block;
+}
+
+.nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--texto-secundario);
+}
+
+.nav a:hover {
+    color: var(--rosa-principal);
+}
+
+/* pagina en la que estoy */
+.nav .nav-activo {
+    background-color: var(--rosa-suave);
+    color: var(--rosa-principal);
+}
+
+.header-botones {
+    display: flex;
+    gap: 12px;
+}
+
+/* botones redondos del header */
+.btn-circulo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--borde-boton);
+    background-color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-circulo:hover {
+    background-color: var(--rosa-suave);
+    border-color: var(--rosa-suave);
+}
+
+.btn-circulo img {
+    width: 22px;
+    height: 22px;
+}
+/* el menu de idiomas se ubica con position absolute,
+   por eso la caja de botones tiene que ser position relative:
+   asi el menu sale justo debajo del boton y no en otra parte de la pagina */
+.header-botones {
+    position: relative;
+}
+
+/* boton de idioma rosado mientras el menu esta abierto
+   la clase active se la pone el js del componente */
+.btn-circulo.active {
+    background-color: var(--rosa-suave);
+    border-color: var(--rosa-suave);
+}
+
+
+/* hero */
+.hero {
+    padding: 64px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.etiqueta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: var(--rosa-principal);
+}
+
+.hero h1 {
+    font-size: 46px;
+    line-height: 54px;
+}
+
+.hero-texto {
+    font-size: 16px;
+    line-height: 26px;
+    color: var(--texto-secundario);
+}
+
+
+/* buscador */
+.buscador {
+    display: flex;
+    gap: 12px;
+}
+
+.input-buscar {
+    flex-grow: 1;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.input-buscar img {
+    width: 20px;
+    height: 20px;
+}
+
+/* el borde lo tiene la caja de afuera */
+.input-buscar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 17px 0;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--texto-principal);
+}
+
+.input-buscar input::placeholder {
+    color: var(--texto-secundario);
+}
+
+/* borde rosado cuando escribo */
+.input-buscar:focus-within {
+    border-color: var(--rosa-principal);
+}
+
+.btn-principal {
+    background-color: var(--rosa-principal);
+    color: var(--blanco);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 17px 34px;
+    border-radius: 999px;
+}
+
+.btn-principal:hover {
+    opacity: 0.9;
+}
+
+
+/* filtros */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.filtro {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+}
+
+.filtro:hover {
+    border-color: var(--rosa-principal);
+}
+
+/* filtro seleccionado (lo pone el js) */
+.filtro.filtro-activo {
+    background-color: var(--rosa-principal);
+    border-color: var(--rosa-principal);
+    color: var(--blanco);
+}
+
+
+/* colecciones */
+.colecciones {
+    padding: 0 80px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.colecciones h2,
+.publicaciones h2 {
+    font-size: 30px;
+    line-height: 36px;
+}
+
+.colecciones-lista {
+    display: flex;
+    gap: 24px;
+}
+
+/* texto pegado abajo de la tarjeta */
+.coleccion {
+    flex: 1;
+    height: 200px;
+    padding: 28px;
+    border-radius: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.coleccion h3 {
+    font-size: 24px;
+    line-height: 30px;
+}
+
+.coleccion p {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--texto-secundario);
+}
+
+.coleccion a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--rosa-principal);
+}
+
+.coleccion a:hover {
+    text-decoration: underline;
+}
+
+.coleccion-rosa-claro {
+    background-color: var(--rosa-claro);
+}
+
+.coleccion-rosa {
+    background-color: var(--rosa-suave);
+}
+
+.coleccion-oscura {
+    background-color: var(--morado-oscuro);
+    color: var(--blanco);
+}
+
+.coleccion-oscura p {
+    color: var(--blanco);
+    opacity: 0.75;
+}
+
+.coleccion-oscura a {
+    color: var(--blanco);
+}
+
+
+/* publicaciones */
+.publicaciones {
+    padding: 0 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.publicaciones-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* contenedor de las tarjetas
+   flex-wrap hace que la cuarta tarjeta baje a otra fila
+   gap: 16px entre filas y 2% entre columnas */
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+/* tarjeta (la crea el js) */
+.post {
+    width: 32%;
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* object-fit para que la imagen no se deforme */
+.post-portada {
+    width: 100%;
+    height: 176px;
+    object-fit: cover;
+    display: block;
+}
+
+.post-cuerpo {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.post-autora {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+/* circulo con la inicial */
+.avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: var(--rosa-suave);
+    color: var(--rosa-principal);
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-usuario {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.post-meta {
+    font-size: 10px;
+    color: var(--texto-secundario);
+}
+
+.post-tag {
+    padding: 3px 10px;
+    border: 1px solid var(--rosa-suave);
+    border-radius: 999px;
+    color: var(--rosa-principal);
+    font-size: 10px;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.post-texto {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    margin-bottom: 14px;
+}
+
+/* margin-top auto para que quede abajo */
+.post-acciones {
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-metricas {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* comentarios, like y guardar */
+.post-accion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.post-accion img {
+    width: 15px;
+    height: 15px;
+}
+
+/* rosado cuando paso el mouse por el icono de comentarios */
+.btn-comentar:hover {
+    color: var(--rosa-principal);
+}
+
+/* caja de comentario, empieza escondida
+   width 100% para que ocupe todo el ancho de la tarjeta */
+.caja-comentario {
+    display: none;
+    width: 100%;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* cuando el js le pone la clase abierta se muestra */
+.caja-comentario.abierta {
+    display: flex;
+}
+
+/* flex 1 hace que el input ocupe todo el espacio que sobra
+   min-width 0 para que no se salga de la tarjeta */
+.caja-comentario input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    background-color: var(--fondo-pagina);
+    font-family: inherit;
+    font-size: 12px;
+    outline: none;
+}
+
+/* borde rosado cuando estoy escribiendo */
+.caja-comentario input:focus {
+    border-color: var(--rosa-principal);
+}
+
+/* boton rosado de Send */
+.btn-enviar {
+    background-color: var(--rosa-principal);
+    color: var(--blanco);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.btn-enviar:hover {
+    opacity: 0.9;
+}
+
+
+.btn-like .corazon {
+    font-size: 15px;
+}
+
+.btn-like:hover,
+.btn-guardar:hover {
+    color: var(--rosa-principal);
+}
+
+.btn-guardar {
+    font-weight: 500;
+}
+
+/* like o guardado activo (lo pone el js) */
+.btn-like.activo,
+.btn-guardar.activo {
+    color: var(--rosa-principal);
+}
+
+/* mensaje cuando no hay resultados, escondido al inicio */
+/* resultado de la busqueda, empieza escondido
+   el js le pone la clase visible cuando busco algo */
+.resultado-busqueda {
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--texto-secundario);
+}
+
+.resultado-busqueda.visible {
+    display: flex;
+}
+
+/* boton de borrar la busqueda, parece un link rosado */
+.btn-limpiar {
+    color: var(--rosa-principal);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.sin-resultados {
+    display: none;
+    text-align: center;
+    color: var(--texto-secundario);
+    padding: 20px;
+}
+
+.cargar-mas {
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+}
+
+.btn-secundario {
+    background-color: var(--blanco);
+    border: 1.5px solid var(--borde);
+    border-radius: 999px;
+    padding: 15px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.btn-secundario:hover {
+    border-color: var(--rosa-principal);
+}
+
+/* cuando ya no hay mas posts */
+.btn-secundario:disabled {
+    cursor: default;
+    color: var(--texto-secundario);
+    border-color: var(--borde);
+}
+
+
+/* footer */
+.footer {
+    background-color: var(--blanco);
+    border-top: 1px solid var(--borde);
+    padding: 40px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--texto-secundario);
+}
+
+.footer-logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--texto-principal);
+    margin-bottom: 6px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 28px;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    color: var(--rosa-principal);
+}
+
+
+/* tablet */
+/* ---------- menu de abajo (celular) ---------- */
+
+/* en computador no se ve, solo aparece en el @media de celular */
+.bottom-nav {
+    display: none;
+}
+
+
+@media (max-width: 1024px) {
+
+    /* el menu baja a otra linea */
+    .header {
+        height: auto;
+        padding: 16px 32px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-circulo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .hero,
+    .colecciones,
+    .publicaciones {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+        line-height: 46px;
+    }
+
+    /* 2 colecciones por fila */
+    .colecciones-lista {
+        flex-wrap: wrap;
+    }
+
+    .coleccion {
+        flex: 1 1 calc(50% - 12px);
+    }
+
+    /* 2 tarjetas por fila */
+    .grid {
+        max-width: none;
+    }
+
+    .post {
+        width: 49%;
+    }
+
+    .footer {
+        padding: 32px;
+    }
+}
+
+/* celular */
+@media (max-width: 600px) {
+
+    .header {
+        padding: 16px;
+    }
+
+    .logo img {
+        height: 44px;
+    }
+
+    .btn-circulo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .btn-circulo img {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* menu con scroll de lado */
+    .nav {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .nav a {
+        white-space: nowrap;
+    }
+
+    .hero {
+        padding: 40px 16px 32px;
+    }
+
+    .colecciones,
+    .publicaciones {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+        line-height: 38px;
+    }
+
+    /* buscador en columna */
+    .buscador {
+        flex-direction: column;
+    }
+
+    .btn-principal {
+        padding: 14px;
+    }
+
+    .colecciones-lista {
+        flex-direction: column;
+    }
+
+    .coleccion {
+        flex: none;
+        height: 160px;
+    }
+
+    .publicaciones-titulo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    /* 1 tarjeta por fila */
+    .post {
+        width: 100%;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 32px 16px;
+    }
+}
+
+
+/* ---------- celular: menu abajo como en el figma movil ---------- */
+/* lo pongo al final para que gane sobre los otros @media
+   copie los estilos del menu de abajo de Sofía (index.css) para que se vea igual en todas las paginas */
+@media (max-width: 700px) {
+
+    /* header solo con logo, lupa y perfil */
+    .header {
+        height: 64px;
+        padding: 0 20px;
+        flex-wrap: nowrap;
+    }
+
+    .logo img {
+        height: 36px;
+    }
+
+    /* el menu de arriba y el boton de idioma se esconden
+       el menu pasa abajo */
+    .nav,
+    #language-button {
+        display: none;
+    }
+
+    .header-botones {
+        gap: 8px;
+    }
+
+    .btn-circulo {
+        width: 28px;
+        height: 28px;
+    }
+
+    .btn-circulo img {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* menu fijo pegado abajo de la pantalla
+       position fixed hace que no se mueva al hacer scroll */
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: var(--blanco);
+        border-top: 1px solid var(--borde);
+        padding: 10px 0 14px;
+    }
+
+    /* cada link: un puntico arriba y el texto abajo */
+    .bottom-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        color: var(--texto-secundario);
+        font-size: 12px;
+    }
+
+    .bottom-link .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--rosa-suave);
+    }
+
+    /* la pagina en la que estoy va en rosado */
+    .bottom-link.active {
+        color: var(--rosa-principal);
+        font-weight: 600;
+    }
+
+    .bottom-link.active .dot {
+        background-color: var(--rosa-principal);
+    }
+
+    /* espacio abajo para que el menu no tape el footer
+       se lo pongo al footer (que es blanco) y no al body,
+       porque en el body se veia una franja del color de fondo debajo del footer */
+    .footer {
+        padding-bottom: 96px;
+    }
+}
