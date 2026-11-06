@@ -5,6 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 // Fuentes de AÚNA (Inter y Playfair Display)
 import './assets/fonts/fonts.css';
 
+// Paleta de colores de toda la app
+import './assets/colors.css';
+
 import App from './App.tsx';
 
 // Pone la app dentro del div "root"
