@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
 import SavedCard from '../../components/savedcard/SavedCard';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import { publicaciones } from '../explore/data';
+import { posts } from '../index/data';
 import { guardadosFigma, misColecciones, tabs } from './data';
 import type { Guardado, TipoGuardado } from './data';
 import './favorites.css';
 
+// tipado de las props: los ids guardados vienen del estado global de App
+// son los que guarde con el boton "Save" en Explore o en el Home
+interface FavoritesProps {
+    idsGuardados: number[];
+}
+
 // pagina de Favorites
-function Favorites() {
-    // leo los ids que guarde en explore con el boton "Save"
-    // es la misma clave "aunaGuardados" que usa Explore
-    const [idsGuardados] = useLocalStorage<number[]>('aunaGuardados', []);
+function Favorites({ idsGuardados }: FavoritesProps) {
 
     // la tab seleccionada, empieza en All
     const [tipoActual, setTipoActual] = useState<'All' | TipoGuardado>('All');
@@ -29,11 +32,22 @@ function Favorites() {
             idExplore: post.id,
         }));
 
+    // lo mismo con los posts del Home que guarde
+    const deHome: Guardado[] = posts
+        .filter((post) => idsGuardados.includes(post.id))
+        .map((post) => ({
+            tipo: 'Post',
+            nombre: post.user,
+            texto: post.text,
+            imagen: post.image,
+            idExplore: 0,
+        }));
+
     // quito del figma los que ya guarde en explore, asi no sale el mismo post dos veces
     const delFigma = guardadosFigma.filter((item) => !idsGuardados.includes(item.idExplore));
 
-    // primero los del figma y al final los que guarde en explore
-    const todosLosGuardados = [...delFigma, ...deExplore];
+    // primero los del figma y al final los que guarde en explore y en el home
+    const todosLosGuardados = [...delFigma, ...deExplore, ...deHome];
 
     // cuantos hay de cada tipo, para la pastilla de cada tab
     function contar(tipo: 'All' | TipoGuardado) {
