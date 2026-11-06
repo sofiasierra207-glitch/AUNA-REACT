@@ -1,4 +1,9 @@
-
+/*
+   AÚNA - EXPLORE
+   Estilos de la página Explore
+   Cada regla empieza con .explore para que no choque con otras páginas
+   Los colores vienen de assets/colors.css
+*/
 
 /* base */
 .explore a {
@@ -14,7 +19,7 @@
 .explore h1,
 .explore h2,
 .explore h3 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 600;
 }
 
@@ -30,7 +35,7 @@
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.2px;
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .explore .hero h1 {
@@ -41,7 +46,7 @@
 .explore .hero-texto {
     font-size: 16px;
     line-height: 26px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* buscador  */
@@ -52,8 +57,8 @@
 
 .explore .input-buscar {
     flex-grow: 1;
-    background-color: #ffffff;
-    border: 1px solid #f1dfe4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 999px;
     padding: 0 22px;
     display: flex;
@@ -75,21 +80,21 @@
     padding: 17px 0;
     font-family: inherit;
     font-size: 15px;
-    color: #2c1d25;
+    color: var(--text-h);
 }
 
 .explore .input-buscar input::placeholder {
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* borde rosado cuando escribo */
 .explore .input-buscar:focus-within {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
 .explore .btn-principal {
-    background-color: #c2456e;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
     font-size: 15px;
     font-weight: 600;
     padding: 17px 34px;
@@ -108,23 +113,23 @@
 }
 
 .explore .filtro {
-    background-color: #ffffff;
-    border: 1px solid #f1dfe4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 999px;
     padding: 10px 22px;
     font-size: 15px;
     font-weight: 600;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 .explore .filtro:hover {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
 .explore .filtro.filtro-activo {
-    background-color: #c2456e;
-    border-color: #c2456e;
-    color: #ffffff;
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
 }
 
 /*  colecciones*/
@@ -162,7 +167,7 @@
 
 .explore .ordenar {
     font-size: 13px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* flex-wrap hace que la cuarta tarjeta baje a otra fila */
@@ -178,12 +183,12 @@
     flex-wrap: wrap;
     gap: 12px;
     font-size: 14px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* boton de borrar la busqueda, parece un link rosado */
 .explore .btn-limpiar {
-    color: #c2456e;
+    color: var(--accent);
     font-size: 13px;
     font-weight: 600;
     text-decoration: underline;
@@ -191,7 +196,7 @@
 
 .explore .sin-resultados {
     text-align: center;
-    color: #6e5a63;
+    color: var(--text);
     padding: 20px;
 }
 
@@ -202,24 +207,24 @@
 }
 
 .explore .btn-secundario {
-    background-color: #ffffff;
-    border: 1.5px solid #f1dfe4;
+    background-color: var(--white);
+    border: 1.5px solid var(--border);
     border-radius: 999px;
     padding: 15px 30px;
     font-size: 15px;
     font-weight: 600;
-    color: #2c1d25;
+    color: var(--text-h);
 }
 
 .explore .btn-secundario:hover {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
 /* cuando ya no hay mas posts */
 .explore .btn-secundario:disabled {
     cursor: default;
-    color: #6e5a63;
-    border-color: #f1dfe4;
+    color: var(--text);
+    border-color: var(--border);
 }
 
 /*  tablet */

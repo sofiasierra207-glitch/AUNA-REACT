@@ -1,9 +1,15 @@
+/*
+   AÚNA - SAVEDCARD
+   Tarjeta de "Recently saved" en Favorites
+   Los colores vienen de assets/colors.css
+*/
+
 /* tarjeta de guardado de favorites
    32% + 32% + 32% + 2% + 2% = 100%, por eso caben 3
    overflow hidden corta la imagen en las esquinas redondas */
 .guardado {
     width: 32%;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 24px;
     overflow: hidden;
 }
@@ -14,7 +20,7 @@
     height: 110px;
     object-fit: cover;
     display: block;
-    background-color: #fdedf1;
+    background-color: var(--accent-soft);
 }
 
 .guardado-cuerpo {
@@ -28,7 +34,7 @@
 .guardado-tipo {
     font-size: 11px;
     font-weight: 600;
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .guardado-nombre {
@@ -39,7 +45,7 @@
 .guardado-texto {
     font-size: 12px;
     line-height: 17px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* tablet: 2 por fila */

@@ -1,3 +1,9 @@
+/*
+   AÚNA - COLLECTIONCARD
+   Tarjeta de color de una colección (Explore y Favorites)
+   Los colores vienen de assets/colors.css
+*/
+
 /* tarjeta de coleccion: el texto queda pegado abajo */
 .coleccion {
     flex: 1;
@@ -18,13 +24,13 @@
 .coleccion p {
     font-size: 14px;
     line-height: 20px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 .coleccion a {
     font-size: 13px;
     font-weight: 600;
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .coleccion a:hover {
@@ -33,26 +39,26 @@
 
 /* color de fondo de cada coleccion */
 .coleccion-rosa-claro {
-    background-color: #fdedf1;
+    background-color: var(--accent-soft);
 }
 
 .coleccion-rosa {
-    background-color: #f7d9e3;
+    background-color: var(--accent-bg);
 }
 
 /* la oscura lleva los textos claros */
 .coleccion-oscura {
-    background-color: #3b2430;
-    color: #ffffff;
+    background-color: var(--dark-bg);
+    color: var(--white);
 }
 
 .coleccion-oscura p {
-    color: #ffffff;
+    color: var(--white);
     opacity: 0.75;
 }
 
 .coleccion-oscura a {
-    color: #ffffff;
+    color: var(--white);
 }
 
 /* tablet: 2 por fila */
