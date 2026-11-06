@@ -1,5 +1,23 @@
+// Forma que tiene cada lugar o servicio
+export interface HelpResource {
+    category: string;
+    name: string;
+    description: string;
+    details: string;
+    contacted: boolean;
+}
+
+// Forma que tiene cada pregunta frecuente
+export interface HelpQuestion {
+    question: string;
+    answer: string;
+}
+
+// Filtros por categoría
+export const helpCategories = ["All", "Health", "Safe space", "Support", "Legal", "Everyday"];
+
 // Lugares y servicios cercanos (cada uno es un objeto)
-const helpResources = [
+export const helpResources: HelpResource[] = [
     {
         category: "Health",
         name: "Rosa Health Center",
@@ -45,7 +63,7 @@ const helpResources = [
 ];
 
 // Preguntas frecuentes
-const helpQuestions = [
+export const helpQuestions: HelpQuestion[] = [
     {
         question: "How do I know if a resource is verified?",
         answer: "Every profile and place goes through review by the AÚNA team before appearing here. You'll see a verification badge on their profile."
