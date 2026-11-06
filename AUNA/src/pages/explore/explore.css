@@ -1,302 +1,294 @@
-/* estilos de la pagina explore
-   todo va dentro de .explore (css anidado) para que no choque
-   con las clases que tienen el mismo nombre en otras paginas (.hero, .colecciones...)
-   el header y el footer ya no van aqui, ahora son componentes */
-.explore {
 
-    
-    /* ---------- base ----------
-       estilos generales que antes estaban en el css de la pagina
-       los dejo dentro de .explore para no cambiar las otras paginas */
-    a {
-        text-decoration: none;
+
+/* base */
+.explore a {
+    text-decoration: none;
+}
+
+.explore button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+.explore h1,
+.explore h2,
+.explore h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+}
+
+/* hero  */
+.explore .hero {
+    padding: 64px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.explore .etiqueta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #c2456e;
+}
+
+.explore .hero h1 {
+    font-size: 46px;
+    line-height: 54px;
+}
+
+.explore .hero-texto {
+    font-size: 16px;
+    line-height: 26px;
+    color: #6e5a63;
+}
+
+/* buscador  */
+.explore .buscador {
+    display: flex;
+    gap: 12px;
+}
+
+.explore .input-buscar {
+    flex-grow: 1;
+    background-color: #ffffff;
+    border: 1px solid #f1dfe4;
+    border-radius: 999px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.explore .input-buscar img {
+    width: 20px;
+    height: 20px;
+}
+
+/* el borde lo tiene la caja de afuera */
+.explore .input-buscar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 17px 0;
+    font-family: inherit;
+    font-size: 15px;
+    color: #2c1d25;
+}
+
+.explore .input-buscar input::placeholder {
+    color: #6e5a63;
+}
+
+/* borde rosado cuando escribo */
+.explore .input-buscar:focus-within {
+    border-color: #c2456e;
+}
+
+.explore .btn-principal {
+    background-color: #c2456e;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 17px 34px;
+    border-radius: 999px;
+}
+
+.explore .btn-principal:hover {
+    opacity: 0.9;
+}
+
+/*  filtros */
+.explore .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.explore .filtro {
+    background-color: #ffffff;
+    border: 1px solid #f1dfe4;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6e5a63;
+}
+
+.explore .filtro:hover {
+    border-color: #c2456e;
+}
+
+.explore .filtro.filtro-activo {
+    background-color: #c2456e;
+    border-color: #c2456e;
+    color: #ffffff;
+}
+
+/*  colecciones*/
+.explore .colecciones {
+    padding: 0 80px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.explore .colecciones h2,
+.explore .publicaciones h2 {
+    font-size: 30px;
+    line-height: 36px;
+}
+
+.explore .colecciones-lista {
+    display: flex;
+    gap: 24px;
+}
+
+/*  publicaciones */
+.explore .publicaciones {
+    padding: 0 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.explore .publicaciones-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.explore .ordenar {
+    font-size: 13px;
+    color: #6e5a63;
+}
+
+/* flex-wrap hace que la cuarta tarjeta baje a otra fila */
+.explore .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+.explore .resultado-busqueda {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    color: #6e5a63;
+}
+
+/* boton de borrar la busqueda, parece un link rosado */
+.explore .btn-limpiar {
+    color: #c2456e;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.explore .sin-resultados {
+    text-align: center;
+    color: #6e5a63;
+    padding: 20px;
+}
+
+.explore .cargar-mas {
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+}
+
+.explore .btn-secundario {
+    background-color: #ffffff;
+    border: 1.5px solid #f1dfe4;
+    border-radius: 999px;
+    padding: 15px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c1d25;
+}
+
+.explore .btn-secundario:hover {
+    border-color: #c2456e;
+}
+
+/* cuando ya no hay mas posts */
+.explore .btn-secundario:disabled {
+    cursor: default;
+    color: #6e5a63;
+    border-color: #f1dfe4;
+}
+
+/*  tablet */
+@media (max-width: 1024px) {
+    .explore .hero,
+    .explore .colecciones,
+    .explore .publicaciones {
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
-    button {
-        cursor: pointer;
-        border: none;
-        background: none;
+    .explore .hero h1 {
+        font-size: 38px;
+        line-height: 46px;
     }
 
-    h1,
-    h2,
-    h3 {
-        font-family: "Playfair Display", Georgia, serif;
-        font-weight: 600;
-    }
-
-    /* hero  */
-    .hero {
-        padding: 64px 80px 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-    }
-
-    .etiqueta {
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 1.2px;
-        color: #c2456e;
-    }
-
-    .hero h1 {
-        font-size: 46px;
-        line-height: 54px;
-    }
-
-    .hero-texto {
-        font-size: 16px;
-        line-height: 26px;
-        color: #6e5a63;
-    }
-
-    /* buscador  */
-    .buscador {
-        display: flex;
-        gap: 12px;
-    }
-
-    .input-buscar {
-        flex-grow: 1;
-        background-color: #ffffff;
-        border: 1px solid #f1dfe4;
-        border-radius: 999px;
-        padding: 0 22px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .input-buscar img {
-        width: 20px;
-        height: 20px;
-    }
-
-    /* el borde lo tiene la caja de afuera */
-    .input-buscar input {
-        flex-grow: 1;
-        border: none;
-        outline: none;
-        background: none;
-        padding: 17px 0;
-        font-family: inherit;
-        font-size: 15px;
-        color: #2c1d25;
-    }
-
-    .input-buscar input::placeholder {
-        color: #6e5a63;
-    }
-
-    /* borde rosado cuando escribo */
-    .input-buscar:focus-within {
-        border-color: #c2456e;
-    }
-
-    .btn-principal {
-        background-color: #c2456e;
-        color: #ffffff;
-        font-size: 15px;
-        font-weight: 600;
-        padding: 17px 34px;
-        border-radius: 999px;
-    }
-
-    .btn-principal:hover {
-        opacity: 0.9;
-    }
-
-    /*  filtros */
-    .filtros {
-        display: flex;
+    .explore .colecciones-lista {
         flex-wrap: wrap;
-        gap: 12px;
+    }
+}
+
+/*  celular  */
+@media (max-width: 600px) {
+    .explore .hero {
+        padding: 40px 16px 32px;
     }
 
-    .filtro {
-        background-color: #ffffff;
-        border: 1px solid #f1dfe4;
-        border-radius: 999px;
-        padding: 10px 22px;
-        font-size: 15px;
-        font-weight: 600;
-        color: #6e5a63;
+    .explore .colecciones,
+    .explore .publicaciones {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    .filtro:hover {
-        border-color: #c2456e;
-    }
-
-    .filtro.filtro-activo {
-        background-color: #c2456e;
-        border-color: #c2456e;
-        color: #ffffff;
-    }
-
-    /*  colecciones*/
-    .colecciones {
-        padding: 0 80px 56px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .colecciones h2,
-    .publicaciones h2 {
+    .explore .hero h1 {
         font-size: 30px;
-        line-height: 36px;
+        line-height: 38px;
     }
 
-    .colecciones-lista {
-        display: flex;
-        gap: 24px;
-    }
-
-    /*  publicaciones */
-    .publicaciones {
-        padding: 0 80px 64px;
-        display: flex;
+    /* buscador en columna */
+    .explore .buscador {
         flex-direction: column;
-        gap: 24px;
     }
 
-    .publicaciones-titulo {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .explore .btn-principal {
+        padding: 14px;
     }
 
-    .ordenar {
-        font-size: 13px;
-        color: #6e5a63;
+    .explore .colecciones-lista {
+        flex-direction: column;
     }
 
-    /* flex-wrap hace que la cuarta tarjeta baje a otra fila */
-    .grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px 2%;
+    .explore .publicaciones-titulo {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
+/*  pantallas grandes tamaños del figma*/
+@media (min-width: 1360px) {
+    .explore .hero h1 {
+        margin-bottom: 56px;
     }
 
-    .resultado-busqueda {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        font-size: 14px;
-        color: #6e5a63;
+    .explore .hero-texto {
+        margin-bottom: 16px;
     }
 
-    /* boton de borrar la busqueda, parece un link rosado */
-    .btn-limpiar {
-        color: #c2456e;
-        font-size: 13px;
-        font-weight: 600;
-        text-decoration: underline;
-    }
-
-    .sin-resultados {
-        text-align: center;
-        color: #6e5a63;
-        padding: 20px;
-    }
-
-    .cargar-mas {
-        display: flex;
-        justify-content: center;
-        padding-top: 16px;
-    }
-
-    .btn-secundario {
-        background-color: #ffffff;
-        border: 1.5px solid #f1dfe4;
-        border-radius: 999px;
-        padding: 15px 30px;
-        font-size: 15px;
-        font-weight: 600;
-        color: #2c1d25;
-    }
-
-    .btn-secundario:hover {
-        border-color: #c2456e;
-    }
-
-    /* cuando ya no hay mas posts */
-    .btn-secundario:disabled {
-        cursor: default;
-        color: #6e5a63;
-        border-color: #f1dfe4;
-    }
-
-    /*  tablet */
-    @media (max-width: 1024px) {
-        .hero,
-        .colecciones,
-        .publicaciones {
-            padding-left: 32px;
-            padding-right: 32px;
-        }
-
-        .hero h1 {
-            font-size: 38px;
-            line-height: 46px;
-        }
-
-        .colecciones-lista {
-            flex-wrap: wrap;
-        }
-    }
-
-    /*  celular  */
-    @media (max-width: 600px) {
-        .hero {
-            padding: 40px 16px 32px;
-        }
-
-        .colecciones,
-        .publicaciones {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .hero h1 {
-            font-size: 30px;
-            line-height: 38px;
-        }
-
-        /* buscador en columna */
-        .buscador {
-            flex-direction: column;
-        }
-
-        .btn-principal {
-            padding: 14px;
-        }
-
-        .colecciones-lista {
-            flex-direction: column;
-        }
-
-        .publicaciones-titulo {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 6px;
-        }
-    }
-
-    /*  pantallas grandes tamaños del figma*/
-    @media (min-width: 1360px) {
-        .hero h1 {
-            margin-bottom: 56px;
-        }
-
-        .hero-texto {
-            margin-bottom: 16px;
-        }
-
-        .grid {
-            gap: 25px 1.85%;
-        }
+    .explore .grid {
+        gap: 25px 1.85%;
     }
 }

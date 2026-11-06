@@ -1,229 +1,216 @@
-/* estilos de la pagina favorites
-   todo va dentro de .favorites (css anidado) para que no choque con explore,
-   que tambien tiene .hero, .colecciones y .coleccion
-   el header y el footer ya no van aqui, ahora son componentes */
-.favorites {
+/* base */
+.favorites a {
+    text-decoration: none;
+}
 
+.favorites button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
 
-    /* ---------- base ----------
-       estilos generales que antes estaban en el css de la pagina
-       los dejo dentro de .favorites para no cambiar las otras paginas */
-    a {
-        text-decoration: none;
+.favorites h1,
+.favorites h2,
+.favorites h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+}
+
+/* hero  */
+.favorites .hero {
+    padding: 64px 80px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* texto pequeño rosado de arriba */
+.favorites .etiqueta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #c2456e;
+}
+
+.favorites .hero h1 {
+    font-size: 46px;
+    line-height: 54px;
+}
+
+.favorites .hero-texto {
+    font-size: 16px;
+    line-height: 26px;
+    color: #6e5a63;
+}
+
+/*  tabs */
+
+.favorites .tabs {
+    align-self: flex-start;
+    background-color: #ffffff;
+    border: 1px solid #f1dfe4;
+    border-radius: 999px;
+    padding: 6px;
+    display: flex;
+    gap: 6px;
+}
+
+/* cada tab tiene el texto y el numero en fila */
+.favorites .tab {
+    padding: 11px 20px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6e5a63;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.favorites .tab:hover {
+    color: #c2456e;
+}
+
+/* pastilla rosada con el numero */
+.favorites .tab-numero {
+    background-color: #f7d9e3;
+    color: #c2456e;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+/* tab seleccionada */
+.favorites .tab.tab-activa {
+    background-color: #c2456e;
+    color: #ffffff;
+}
+
+/* en la tab activa la pastilla se vuelve blanca */
+.favorites .tab.tab-activa .tab-numero {
+    background-color: #ffffff;
+}
+
+/* mis colecciones */
+.favorites .colecciones {
+    padding: 0 80px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.favorites .colecciones h2 {
+    font-size: 30px;
+    line-height: 36px;
+}
+
+/* cada fila de colecciones */
+.favorites .colecciones-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+/* el CollectionCard */
+.favorites .coleccion {
+    min-width: 220px;
+    height: 150px;
+    padding: 26px;
+    border-radius: 24px;
+    gap: 8px;
+}
+
+.favorites .coleccion h3 {
+    font-size: 22px;
+    line-height: 28px;
+}
+
+.favorites .coleccion p {
+    font-size: 13px;
+    line-height: normal;
+}
+
+.favorites .coleccion-oscura p {
+    color: #e5d9de;
+    opacity: 1;
+}
+
+/* guardado recientemente */
+.favorites .recientes {
+    padding: 0 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.favorites .recientes h2 {
+    font-size: 26px;
+    line-height: 36px;
+}
+
+/* tarjetas en fila, flex-wrap hace que bajen si hay mas de 3 */
+.favorites .recientes-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 2%;
+}
+
+/* mensaje cuando no hay nada guardado en esa tab */
+.favorites .sin-resultados {
+    color: #6e5a63;
+    padding: 20px 0;
+}
+
+/* tablet */
+@media (max-width: 1024px) {
+    .favorites .hero,
+    .favorites .colecciones,
+    .favorites .recientes {
+        padding-left: 32px;
+        padding-right: 32px;
     }
 
-    button {
-        cursor: pointer;
-        border: none;
-        background: none;
+    .favorites .hero h1 {
+        font-size: 38px;
+        line-height: 46px;
+    }
+}
+
+/* celular  */
+@media (max-width: 600px) {
+    .favorites .hero {
+        padding: 40px 16px 32px;
     }
 
-    h1,
-    h2,
-    h3 {
-        font-family: "Playfair Display", Georgia, serif;
-        font-weight: 600;
+    .favorites .colecciones,
+    .favorites .recientes {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-    /* ---------- hero ---------- */
-    .hero {
-        padding: 64px 80px 44px;
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-    }
-
-    /* texto pequeño rosado de arriba */
-    .etiqueta {
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 1.2px;
-        color: #c2456e;
-    }
-
-    .hero h1 {
-        font-size: 46px;
-        line-height: 54px;
-    }
-
-    .hero-texto {
-        font-size: 16px;
-        line-height: 26px;
-        color: #6e5a63;
-    }
-
-    /* ---------- tabs ---------- */
-
-    /* caja blanca redonda donde van las tabs
-       align-self flex-start para que no ocupe todo el ancho */
-    .tabs {
-        align-self: flex-start;
-        background-color: #ffffff;
-        border: 1px solid #f1dfe4;
-        border-radius: 999px;
-        padding: 6px;
-        display: flex;
-        gap: 6px;
-    }
-
-    /* cada tab tiene el texto y el numero en fila */
-    .tab {
-        padding: 11px 20px;
-        border-radius: 999px;
-        font-size: 15px;
-        font-weight: 600;
-        color: #6e5a63;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .tab:hover {
-        color: #c2456e;
-    }
-
-    /* pastilla rosada con el numero */
-    .tab-numero {
-        background-color: #f7d9e3;
-        color: #c2456e;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: 999px;
-    }
-
-    /* tab seleccionada */
-    .tab.tab-activa {
-        background-color: #c2456e;
-        color: #ffffff;
-    }
-
-    /* en la tab activa la pastilla se vuelve blanca */
-    .tab.tab-activa .tab-numero {
-        background-color: #ffffff;
-    }
-
-    /* ---------- mis colecciones ---------- */
-    .colecciones {
-        padding: 0 80px 56px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .colecciones h2 {
+    .favorites .hero h1 {
         font-size: 30px;
-        line-height: 36px;
+        line-height: 38px;
     }
 
-    /* cada fila de colecciones */
-    .colecciones-fila {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 24px;
+    /* las tabs se deslizan de lado si no caben */
+    .favorites .tabs {
+        align-self: stretch;
+        overflow-x: auto;
     }
 
-    /* el CollectionCard ya trae sus estilos,
-       aqui solo cambio lo que es distinto en favorites (son mas bajitas, figma) */
-    .coleccion {
-        min-width: 220px;
-        height: 150px;
-        padding: 26px;
-        border-radius: 24px;
-        gap: 8px;
+    .favorites .tab {
+        padding: 9px 14px;
+        white-space: nowrap;
     }
 
-    .coleccion h3 {
-        font-size: 22px;
-        line-height: 28px;
-    }
-
-    .coleccion p {
-        font-size: 13px;
-        line-height: normal;
-    }
-
-    .coleccion-oscura p {
-        color: #e5d9de;
-        opacity: 1;
-    }
-
-    /* ---------- guardado recientemente ---------- */
-    .recientes {
-        padding: 0 80px 64px;
-        display: flex;
+    /* colecciones una debajo de la otra */
+    .favorites .colecciones-fila {
         flex-direction: column;
-        gap: 20px;
     }
 
-    .recientes h2 {
-        font-size: 26px;
-        line-height: 36px;
-    }
-
-    /* tarjetas en fila, flex-wrap hace que bajen si hay mas de 3 */
-    .recientes-lista {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px 2%;
-    }
-
-    /* mensaje cuando no hay nada guardado en esa tab */
-    .sin-resultados {
-        color: #6e5a63;
-        padding: 20px 0;
-    }
-
-    /* ---------- tablet ---------- */
-    @media (max-width: 1024px) {
-        .hero,
-        .colecciones,
-        .recientes {
-            padding-left: 32px;
-            padding-right: 32px;
-        }
-
-        .hero h1 {
-            font-size: 38px;
-            line-height: 46px;
-        }
-    }
-
-    /* ---------- celular ---------- */
-    @media (max-width: 600px) {
-        .hero {
-            padding: 40px 16px 32px;
-        }
-
-        .colecciones,
-        .recientes {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .hero h1 {
-            font-size: 30px;
-            line-height: 38px;
-        }
-
-        /* las tabs se deslizan de lado si no caben */
-        .tabs {
-            align-self: stretch;
-            overflow-x: auto;
-        }
-
-        .tab {
-            padding: 9px 14px;
-            white-space: nowrap;
-        }
-
-        /* colecciones una debajo de la otra */
-        .colecciones-fila {
-            flex-direction: column;
-        }
-
-        .coleccion {
-            height: 130px;
-        }
+    .favorites .coleccion {
+        height: 130px;
     }
 }
