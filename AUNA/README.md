@@ -45,3 +45,14 @@ src/
 ```
 
 **Global state:** `App.tsx` keeps the session with `useLocalStorage` and passes it down with props, so it is shared by every page and is not lost when the page reloads.
+
+
+## Team
+
+| | Ana Sofía Sierra | Camila Martínez |
+|
+| Pages | Home, Community, Help, Login | Explore, Favorites |
+| Layout | Header, BottomNav, Footer, MainLayout, React Router | — |
+| Components | FeedCard, CircleCard, ProfessionalCard, ResourceCard | PostCard, CollectionCard, SavedCard |
+| Modals | Posted, Profile, Language | Search, Verified, CommunityHelp, ForgotPassword, CreateProfile, Configuration, MiniProfile |
+| State and hooks | Global session state in App | Custom hook `useLocalStorage` |
