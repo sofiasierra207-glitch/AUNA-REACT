@@ -3,8 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.css';
 
+// Datos que recibe la página desde App
+interface LoginProps {
+    onLogin: (email: string) => void; // guarda la sesión en el estado global
+}
+
 // Página para iniciar sesión (no lleva header ni footer)
-function Login() {
+function Login({ onLogin }: LoginProps) {
 
     // Lo que la usuaria escribe en el formulario
     const [email, setEmail] = useState("");
@@ -34,8 +39,8 @@ function Login() {
             setMessage("Write your password.");
             setErrorField("password");
         } else {
-            // Guarda el correo de la sesión y entra al inicio
-            localStorage.setItem("aunaSession", cleanEmail);
+            // Le pasa el correo a App (estado global) y entra al inicio
+            onLogin(cleanEmail);
             navigate("/");
         }
     }
