@@ -30,3 +30,18 @@ Other commands:
 - React Router (pages and navigation)
 - CSS (one file per page and per component, colors in `src/assets/colors.css`)
 - localStorage through the custom hook `useLocalStorage`
+
+
+## Project structure
+
+```
+src/
+├── assets/       images, icons, fonts and the color palette
+├── components/   reusable pieces and modals (one folder each)
+├── hooks/        custom hooks (useLocalStorage)
+├── pages/        the 6 pages (index, explore, community, favorites, help, login)
+├── App.tsx       routes and global state (session)
+└── main.tsx      starts the app with BrowserRouter
+```
+
+**Global state:** `App.tsx` keeps the session with `useLocalStorage` and passes it down with props, so it is shared by every page and is not lost when the page reloads.
