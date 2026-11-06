@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './index.css';
 
 import FeedCard from '../../components/feedcard/FeedCard';
+import Posted from '../../components/posted/Posted';
 import { currentUser, posts, resources } from './data';
 import type { Post } from './data';
 
@@ -46,6 +47,9 @@ function Index({ session }: IndexProps) {
     const [topic, setTopic] = useState("");
     const [cover, setCover] = useState(0); // número de la portada elegida
 
+    // ¿Está abierta la ventana de "Posted successfully"?
+    const [postedOpen, setPostedOpen] = useState(false);
+
     // Botón Post: publica si hay sesión y texto
     function handlePost() {
         // Revisa si la usuaria inició sesión (la sesión viene de App)
@@ -85,7 +89,8 @@ function Index({ session }: IndexProps) {
             setType("");
             setTopic("");
 
-            // Aquí se abre el componente posted
+            // Abre la ventana de "Posted successfully"
+            setPostedOpen(true);
         }
     }
 
@@ -282,6 +287,9 @@ function Index({ session }: IndexProps) {
                 </ul>
 
             </section>
+
+            {/* Ventana que aparece al publicar */}
+            <Posted open={postedOpen} onClose={() => setPostedOpen(false)} />
 
         </main>
     );
