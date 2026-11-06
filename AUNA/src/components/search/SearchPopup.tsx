@@ -74,7 +74,7 @@ function SearchPopup({ abierto, onCerrar }: SearchPopupProps) {
         cerrar();
     }
 
-    // Enter en el buscador
+    // Enter o click en el boton Search
     function alEnviar(evento: FormEvent<HTMLFormElement>) {
         evento.preventDefault(); // evito que la pagina se recargue
         buscar(texto);
@@ -107,6 +107,8 @@ function SearchPopup({ abierto, onCerrar }: SearchPopupProps) {
                         onChange={(evento) => setTexto(evento.target.value)}
                         autoFocus
                     />
+                    {/* boton para buscar con click (Enter tambien funciona) */}
+                    <button type="submit" className="buscar-boton">Search</button>
                 </form>
 
                 <p className="buscar-subtitulo">Suggestions</p>
