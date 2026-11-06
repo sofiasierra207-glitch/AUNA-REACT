@@ -9,17 +9,19 @@ import saveIcon from '../../assets/icons/save.svg';
 import saveFilledIcon from '../../assets/icons/save-filled.svg';
 
 // Datos que recibe la tarjeta
+// saved y onSave vienen del estado global de App (pasan por el Home)
 interface FeedCardProps {
     post: Post;
+    saved: boolean;      // ¿este post está guardado?
+    onSave: () => void;  // guarda o quita el post
 }
 
 // Tarjeta de un post del feed del Home
-function FeedCard({ post }: FeedCardProps) {
+function FeedCard({ post, saved, onSave }: FeedCardProps) {
 
     // Estados de la tarjeta (como el contador de clase)
     const [liked, setLiked] = useState(post.liked);
     const [likes, setLikes] = useState(post.likes);
-    const [saved, setSaved] = useState(post.saved);
     const [comments, setComments] = useState(post.comments);
     const [commentOpen, setCommentOpen] = useState(false);
     const [commentText, setCommentText] = useState("");
@@ -80,7 +82,7 @@ function FeedCard({ post }: FeedCardProps) {
 
                     {/* Guardar */}
                     <button type="button" className={saved ? "action-button save-button saved" : "action-button save-button"}
-                        onClick={() => setSaved(!saved)}>
+                        onClick={onSave}>
                         <img src={saved ? saveFilledIcon : saveIcon} alt="" className="save-icon" />
                         <span className="save-text">{saved ? "Saved" : "Save"}</span>
                     </button>
