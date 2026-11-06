@@ -150,6 +150,90 @@
 }
 
 
+/* Formulario seguro para cambiar el correo o la contraseña */
+
+/* Caja blanca con borde, debajo de las filas */
+.settings-secure {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-secure-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Campos uno debajo de otro */
+.settings-secure-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+
+.settings-secure-input:focus {
+    border-color: var(--accent);
+}
+
+/* Mensaje de error en rojo */
+.settings-secure-error {
+    min-height: 18px;
+    color: #D14B5A;
+    font-size: 12px;
+}
+
+/* Cancel y Save a la derecha */
+.settings-secure-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.settings-secure-cancel,
+.settings-secure-save {
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Cancel: blanco con borde */
+.settings-secure-cancel {
+    border: 1px solid var(--border);
+    background-color: var(--white);
+    color: var(--text-h);
+}
+
+/* Save: rosado */
+.settings-secure-save {
+    border: none;
+    background-color: var(--accent);
+    color: var(--white);
+}
+
+.settings-secure-save:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Mensaje cuando el cambio sale bien */
+.settings-secure-ok {
+    background-color: var(--accent-soft);
+    color: var(--text-h);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+}
+
+
 /* Interruptores */
 
 .settings-switches {
