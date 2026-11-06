@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.css';
 
+import ForgotPassword from '../../components/forgotpassword/ForgotPassword';
+
 // Datos que recibe la página desde App
 interface LoginProps {
     onLogin: (email: string) => void; // guarda la sesión en el estado global
@@ -18,6 +20,10 @@ function Login({ onLogin }: LoginProps) {
     // Mensaje de error y campo que tiene el error ("email", "password" o "")
     const [message, setMessage] = useState("");
     const [errorField, setErrorField] = useState("");
+
+
+    // Si el modal de olvidé mi contraseña está abierto o cerrado
+    const [forgotOpen, setForgotOpen] = useState(false);
 
     // Para ir a otra página desde el código
     const navigate = useNavigate();
@@ -96,7 +102,9 @@ function Login({ onLogin }: LoginProps) {
                         }} />
 
                     {/* Aquí se conecta forgotpassword de Cami */}
-                    <button type="button" className="login-forgot">Forgot your password?</button>
+                    <button type="button" className="login-forgot" onClick={() => setForgotOpen(true)}>
+                        Forgot your password?
+                    </button>
 
                     {/* Mensaje de error */}
                     <p className="login-message" role="status">{message}</p>
@@ -120,6 +128,9 @@ function Login({ onLogin }: LoginProps) {
                 </form>
 
             </section>
+
+            {/* Modal de Cami: le paso si está abierto y cómo cerrarlo */}
+            <ForgotPassword abierto={forgotOpen} onCerrar={() => setForgotOpen(false)} />
 
         </main>
     );
