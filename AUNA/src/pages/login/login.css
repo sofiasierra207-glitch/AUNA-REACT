@@ -1,43 +1,9 @@
 /*
-   AÚNA - PÁGINA DE INICIO DE SESIÓN
+   AÚNA - LOGIN
+   Página para iniciar sesión: columna oscura y formulario
+   Los colores vienen de assets/colors.css
+   Los estilos generales (body, botones, .dot) vienen de pages/index/index.css
 */
-
-/* Quita los espacios que pone el navegador por defecto */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
-    background-color: #FFF7F3;
-    color: #2C1D25;
-    line-height: 1.5;
-}
-
-/* Los botones y campos usan la misma fuente de la página */
-button,
-input {
-    font-family: inherit;
-}
-
-/* Borde visible al navegar con el teclado */
-button:focus-visible,
-input:focus-visible {
-    outline: 2px solid #C2456E;
-    outline-offset: 3px;
-}
-
-/* Punto rosado */
-.dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #C2456E;
-    flex-shrink: 0;
-}
-
 
 /*
    Dos columnas que ocupan toda la pantalla
@@ -55,8 +21,8 @@ input:focus-visible {
 
 .login-intro {
     width: 45%;
-    background-color: #3B2430;
-    color: #FFFFFF;
+    background-color: var(--dark-bg);
+    color: var(--white);
     padding: 64px 80px;
     display: flex;
     flex-direction: column;
@@ -73,8 +39,8 @@ input:focus-visible {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: #C2456E;
-    font-family: "Playfair Display", Georgia, serif;
+    background-color: var(--accent);
+    font-family: var(--heading);
     font-size: 18px;
     display: flex;
     align-items: center;
@@ -82,7 +48,7 @@ input:focus-visible {
 }
 
 .login-logo-name {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-size: 20px;
     font-weight: 500;
 }
@@ -93,7 +59,7 @@ input:focus-visible {
 }
 
 .login-intro h1 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-size: 44px;
     font-weight: 500;
     line-height: 1.15;
@@ -141,14 +107,14 @@ input:focus-visible {
 }
 
 .login-form h2 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-size: 34px;
     font-weight: 500;
     line-height: 1.2;
 }
 
 .login-subtitle {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 15px;
     margin-bottom: 28px;
 }
@@ -163,17 +129,17 @@ input:focus-visible {
 .login-input {
     width: 100%;
     border: 1px solid #EBD9DE;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 16px;
     padding: 11px 18px;
     font-size: 15px;
-    color: #2C1D25;
+    color: var(--text-h);
     outline: none;
     margin-bottom: 16px;
 }
 
 .login-input:focus {
-    border-color: #C2456E;
+    border-color: var(--accent);
 }
 
 /* Campo con error: borde rojo */
@@ -186,7 +152,7 @@ input:focus-visible {
     align-self: flex-end;
     border: none;
     background: none;
-    color: #C2456E;
+    color: var(--accent);
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -203,15 +169,15 @@ input:focus-visible {
 
 /* Mensaje de aviso en gris */
 .login-message.info {
-    color: #6E5A63;
+    color: var(--text);
 }
 
 /* Botón ancho rosado */
 .login-button {
     width: 100%;
     border: none;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
     padding: 14px;
     border-radius: 999px;
     font-size: 16px;
@@ -220,7 +186,7 @@ input:focus-visible {
 }
 
 .login-button:hover {
-    background-color: #A93A5E;
+    background-color: var(--accent-hover);
 }
 
 /* Línea con "or" en el medio */
@@ -228,7 +194,7 @@ input:focus-visible {
     display: flex;
     align-items: center;
     gap: 20px;
-    color: #6E5A63;
+    color: var(--text);
     font-size: 13px;
     margin: 20px 0;
 }
@@ -242,7 +208,7 @@ input:focus-visible {
 
 .login-create {
     text-align: center;
-    color: #6E5A63;
+    color: var(--text);
     font-size: 14px;
 }
 
@@ -250,7 +216,7 @@ input:focus-visible {
 .login-create-button {
     border: none;
     background: none;
-    color: #C2456E;
+    color: var(--accent);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
