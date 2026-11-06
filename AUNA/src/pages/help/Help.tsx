@@ -67,7 +67,7 @@ function Help() {
                     <p>Tell the community what you need today. Your message only reaches verified users nearby.</p>
                 </div>
 
-                {/* Aquí se conecta communityhelp de Cami */}
+                {/* Abre el modal de pedir ayuda (componente CommunityHelp) */}
                 <button type="button" className="ask-help-button" onClick={() => setHelpOpen(true)}>
                     Ask the community for help
                 </button>
