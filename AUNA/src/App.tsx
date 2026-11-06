@@ -22,7 +22,8 @@ function App() {
     return (
         <Routes>
             {/* Páginas que llevan header, menú de celular y footer */}
-            <Route element={<MainLayout />}>
+            {/* MainLayout recibe la sesión para el perfil del Header; Log out la deja vacía */}
+            <Route element={<MainLayout session={session} onLogout={() => setSession("")} />}>
                 <Route path="/" element={<Index session={session} />} />
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/favorites" element={<Favorites />} />
