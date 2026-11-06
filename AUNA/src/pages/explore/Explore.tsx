@@ -75,7 +75,6 @@ function Explore({ guardados, onGuardar }: ExploreProps) {
 
         // pongo la palabra en la url, si esta vacio la quito
         setSearchParams(limpio === '' ? {} : { q: limpio });
-
     }
 
     // boton "Clear search"
@@ -133,23 +132,8 @@ function Explore({ guardados, onGuardar }: ExploreProps) {
                 </div>
             </section>
 
-            <section className="colecciones">
-                <h2>This week's collections</h2>
-
-                {/* "View collection" lleva a favorites, donde estan las colecciones */}
-                <div className="colecciones-lista">
-                    {coleccionesSemana.map((coleccion) => (
-                        <CollectionCard
-                            key={coleccion.titulo}
-                            titulo={coleccion.titulo}
-                            texto={coleccion.texto}
-                            color={coleccion.color}
-                            link="/favorites"
-                        />
-                    ))}
-                </div>
-            </section>
-
+            {/* las publicaciones van justo debajo de los filtros:
+                asi al cambiar de filtro se ve de una que la lista cambia */}
             <section className="publicaciones">
                 <div className="publicaciones-titulo">
                     <h2>{textoBuscado ? 'Search results' : 'Recent posts'}</h2>
@@ -197,6 +181,23 @@ function Explore({ guardados, onGuardar }: ExploreProps) {
                     >
                         {todoCargado ? "You're all caught up" : 'Load more posts'}
                     </button>
+                </div>
+            </section>
+
+            <section className="colecciones">
+                <h2>This week's collections</h2>
+
+                {/* "View collection" lleva a favorites, donde estan las colecciones */}
+                <div className="colecciones-lista">
+                    {coleccionesSemana.map((coleccion) => (
+                        <CollectionCard
+                            key={coleccion.titulo}
+                            titulo={coleccion.titulo}
+                            texto={coleccion.texto}
+                            color={coleccion.color}
+                            link="/favorites"
+                        />
+                    ))}
                 </div>
             </section>
         </main>

@@ -272,6 +272,19 @@
         padding: 14px;
     }
 
+    /* filtros en una sola fila alineada a la izquierda
+       si no caben se deslizan de lado, asi no quedan desordenados */
+    .explore .filtros {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+
+    .explore .filtro {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
     .explore .colecciones-lista {
         flex-direction: column;
     }
