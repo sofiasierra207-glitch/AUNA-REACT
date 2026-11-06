@@ -10,8 +10,14 @@ import './explore.css';
 
 const cantidadInicial = 6; // cuantos posts muestro al inicio
 
+// tipado de las props: los guardados vienen del estado global de App
+interface ExploreProps {
+    guardados: number[];
+    onGuardar: (id: number) => void;
+}
+
 // pagina de Explore
-function Explore() {
+function Explore({ guardados, onGuardar }: ExploreProps) {
     // la busqueda vive en la url (/explore?q=park)
     // asi el popup de buscar me puede mandar una palabra desde cualquier pagina
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,10 +37,9 @@ function Explore() {
         setCantidadVisible(cantidadInicial);
     }
 
-    // likes y guardados con mi custom hook, se guardan en localStorage
-    // "aunaGuardados" es la misma clave que lee Favorites
+    // likes con mi custom hook, se guardan en localStorage
+    // los guardados ya no van aqui: vienen de App por props (estado global)
     const [likes, setLikes] = useLocalStorage<number[]>('aunaLikes', []);
-    const [guardados, setGuardados] = useLocalStorage<number[]>('aunaGuardados', []);
 
     // filtro los posts por tema y por texto
     const filtradas = publicaciones.filter((post) => {
@@ -52,7 +57,7 @@ function Explore() {
     const visibles = filtradas.slice(0, cantidadVisible);
     const todoCargado = cantidadVisible >= filtradas.length;
 
-    // agrega o quita un id de un array (lo uso para likes y para guardados)
+    // agrega o quita un id de un array (lo uso para los likes)
     // includes revisa si ya esta, filter crea un array nuevo sin ese id
     function alternar(lista: number[], id: number) {
         return lista.includes(id) ? lista.filter((item) => item !== id) : [...lista, id];
@@ -173,7 +178,7 @@ function Explore() {
                             tieneLike={likes.includes(post.id)}
                             estaGuardado={guardados.includes(post.id)}
                             onLike={(id) => setLikes(alternar(likes, id))}
-                            onGuardar={(id) => setGuardados(alternar(guardados, id))}
+                            onGuardar={onGuardar}
                         />
                     ))}
                 </div>

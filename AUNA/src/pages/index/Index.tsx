@@ -29,11 +29,13 @@ const covers = [
 
 // Datos que recibe la página desde App
 interface IndexProps {
-    session: string; // correo con la sesión abierta ("" si no hay sesión)
+    session: string;               // correo con la sesión abierta ("" si no hay sesión)
+    saved: number[];               // ids de los posts guardados (estado global)
+    onSave: (id: number) => void;  // guarda o quita un post
 }
 
 // Página de inicio de AÚNA (index)
-function Index({ session }: IndexProps) {
+function Index({ session, saved, onSave }: IndexProps) {
 
     // Posts que se ven en la página
     const [feed, setFeed] = useState(posts);
@@ -71,6 +73,7 @@ function Index({ session }: IndexProps) {
 
             // Post nuevo
             const newPost: Post = {
+                id: Date.now(), // número que no se repite
                 user: currentUser.user,
                 initial: currentUser.initial,
                 role: currentUser.role,
@@ -81,8 +84,7 @@ function Index({ session }: IndexProps) {
                 imageAlt: covers[cover].alt,
                 comments: 0,
                 likes: 0,
-                liked: false,
-                saved: false
+                liked: false
             };
 
             // Pone el post nuevo de primero
@@ -236,7 +238,8 @@ function Index({ session }: IndexProps) {
                 {/* Una tarjeta por cada post */}
                 <div className="posts-grid">
                     {feed.map((post) => (
-                        <FeedCard key={post.user + post.time + post.text} post={post} />
+                        <FeedCard key={post.id} post={post}
+                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)} />
                     ))}
                 </div>
 

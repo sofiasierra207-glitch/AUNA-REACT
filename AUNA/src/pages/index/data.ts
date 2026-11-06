@@ -7,6 +7,7 @@ import amigashablando from '../../assets/images/amigashablando.png'
 
 // Forma que tiene cada post
 export interface Post {
+    id: number;           // número para identificar el post (los guardados usan este id)
     user: string;
     initial: string;
     role: string;
@@ -18,7 +19,6 @@ export interface Post {
     comments: number;
     likes: number;
     liked: boolean;
-    saved: boolean;
 }
 
 // Forma que tiene cada lugar de AÚNA Help
@@ -38,6 +38,7 @@ export const currentUser = {
 // Lista de posts del feed (cada post es un objeto)
 export const posts: Post[] = [
     {
+        id: 101,
         user: "@mara.arte",
         initial: "M",
         role: "Verified creator",
@@ -48,10 +49,10 @@ export const posts: Post[] = [
         imageAlt: "Colorful flowers illustration",
         comments: 48,
         likes: 312,
-        liked: false,
-        saved: false
+        liked: false
     },
     {
+        id: 102,
         user: "@sofia.caminata",
         initial: "S",
         role: "Wellness Community",
@@ -62,10 +63,10 @@ export const posts: Post[] = [
         imageAlt: "Green park with tall trees",
         comments: 33,
         likes: 507,
-        liked: false,
-        saved: false
+        liked: false
     },
     {
+        id: 103,
         user: "@valen.creativa",
         initial: "V",
         role: "Verified creator",
@@ -76,10 +77,10 @@ export const posts: Post[] = [
         imageAlt: "Two coffee cups on a wooden table",
         comments: 19,
         likes: 244,
-        liked: false,
-        saved: false
+        liked: false
     },
     {
+        id: 104,
         user: "@lucia.lee",
         initial: "L",
         role: "Book club",
@@ -90,10 +91,10 @@ export const posts: Post[] = [
         imageAlt: "Cozy reading room with plants",
         comments: 74,
         likes: 631,
-        liked: false,
-        saved: false
+        liked: false
     },
     {
+        id: 105,
         user: "@circulo.aúna",
         initial: "C",
         role: "Monthly meetup",
@@ -104,8 +105,7 @@ export const posts: Post[] = [
         imageAlt: "Friends talking around a table",
         comments: 121,
         likes: 892,
-        liked: false,
-        saved: false
+        liked: false
     }
 ];
 
