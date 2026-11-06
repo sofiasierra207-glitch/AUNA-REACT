@@ -137,11 +137,11 @@ function Login({ onLogin }: LoginProps) {
             </section>
 
             {/* Modal de Cami: le paso si está abierto y cómo cerrarlo */}
-            <ForgotPassword abierto={forgotOpen} onCerrar={() => setForgotOpen(false)} />
+            <ForgotPassword open={forgotOpen} onClose={() => setForgotOpen(false)} />
 
             
-            {/* onCrear usa onLogin: al crear la cuenta queda la sesión iniciada (estado global) */}
-            <CreateProfile abierto={createOpen} onCerrar={() => setCreateOpen(false)} onCrear={onLogin} />
+            {/* onCreate usa onLogin: al crear la cuenta queda la sesión iniciada (estado global) */}
+            <CreateProfile open={createOpen} onClose={() => setCreateOpen(false)} onCreate={onLogin} />
 
         </main>
     );
