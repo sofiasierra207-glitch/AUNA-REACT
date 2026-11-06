@@ -1,3 +1,9 @@
+/*
+   AÚNA - INDEX
+   Estilos generales y estilos del Home
+   Los colores vienen de assets/colors.css
+*/
+
 /* Quita los espacios que pone el navegador por defecto */
 * {
     margin: 0;
@@ -11,9 +17,9 @@ html {
 }
 
 body {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
-    background-color: #FFF7F3;
-    color: #2C1D25;
+    font-family: var(--sans);
+    background-color: var(--bg);
+    color: var(--text-h);
     line-height: 1.5;
 }
 
@@ -34,106 +40,30 @@ a:focus-visible,
 button:focus-visible,
 textarea:focus-visible,
 input:focus-visible {
-    outline: 2px solid #C2456E;
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
 }
 
-
-/*
-   Header
- */
-
-/* Barra blanca de arriba; se va al bajar la página */
-header {
-    width: 100%;
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #F1DFE4;
-}
-
-/* Logo a la izquierda, menú al centro, íconos a la derecha */
-.header {
-    height: 96px;
-    padding: 0 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo img {
-    height: 56px;
-    width: auto;
-    display: block;
-}
-
-/* Links del menú en fila */
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Cada link es un cuadrito redondo */
-.nav-link {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 999px;
-    color: #6E5A63;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.nav-link:hover {
-    color: #C2456E;
-}
-
-/* Página actual: cuadradito redondo rosado */
-.nav-link.active {
-    background-color: #F7D9E3;
-    color: #C2456E;
-}
-
-/* Grupo de botones redondos */
-.header-actions {
-    display: flex;
-    gap: 12px;
-}
-
-/* Botón redondo con borde fino */
-.icon-button {
-    width: 48px;
-    height: 48px;
+/* Punto redondo (se usa en varias partes) */
+.dot {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    border: 1px solid #D8CCD0;
-    background-color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.icon-button:hover {
-    background-color: #F7D9E3;
-    border-color: #F7D9E3;
-}
-
-/* Tamaño de los íconos */
-.icon-button img {
-    width: 22px;
-    height: 22px;
+    background-color: var(--accent);
+    flex-shrink: 0;
 }
 
 
 /* 
-   Menu inferior (mobile)
-*/
+   Mobile
+  */
+@media (max-width: 700px) {
 
-/* Oculto en computador; se muestra en la parte de celular */
-.bottom-nav {
-    display: none;
+    /* Espacio para que el menú no tape el final
+       (en iPhone la barra de Safari también ocupa espacio) */
+    body {
+        padding-bottom: 96px;
+    }
 }
 
 
@@ -142,7 +72,7 @@ header {
 */
 
 /* Dos columnas: tarjeta a la izquierda y texto a la derecha */
-.hero {
+.home-hero {
     padding: 56px 80px 80px;
     display: flex;
     align-items: center;
@@ -153,10 +83,10 @@ header {
 .hero-card {
     width: 390px;
     flex-shrink: 0;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 28px;
     padding: 24px 32px 20px;
-    box-shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+    box-shadow: var(--shadow);
 }
 
 /* Foto de la tarjeta */
@@ -185,8 +115,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F7D9E3;
-    color: #C2456E;
+    background-color: var(--accent-bg);
+    color: var(--accent);
     border-radius: 50%;
     font-size: 13px;
     font-weight: 600;
@@ -206,16 +136,16 @@ header {
 
 .hero-card-info span {
     font-size: 11px;
-    color: #6E5A63;
+    color: var(--text);
 }
 
 /* Botón Follow pequeño, empujado a la derecha */
 .follow-button {
     margin-left: auto;
     margin-right: 12px;
-    border: 1px solid #C2456E;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    border: 1px solid var(--accent);
+    background-color: var(--accent);
+    color: var(--white);
     padding: 4px 14px;
     border-radius: 999px;
     font-size: 11px;
@@ -226,14 +156,14 @@ header {
 
 /* Estado Following: blanco con borde rosado */
 .follow-button.following {
-    background-color: #FFFFFF;
-    color: #C2456E;
+    background-color: var(--white);
+    color: var(--accent);
 }
 
 /* Texto de likes y comentarios */
 .hero-card-stats {
     font-size: 11px;
-    color: #6E5A63;
+    color: var(--text);
     margin-top: 8px;
     padding-left: 12px;
 }
@@ -249,26 +179,17 @@ header {
     align-items: center;
     gap: 8px;
     padding: 6px 12px;
-    background-color: #FFFFFF;
-    border: 1px solid #F1DFE4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 999px;
     font-size: 11px;
     font-weight: 500;
     margin-bottom: 20px;
 }
 
-/* Punto redondo (se usa en varias partes) */
-.dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #C2456E;
-    flex-shrink: 0;
-}
-
 /* Título grande con letra serif */
 .hero-content h1 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 600;
     font-size: 48px;
     line-height: 1.1;
@@ -276,7 +197,7 @@ header {
 }
 
 .hero-content p {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 40px;
@@ -285,9 +206,9 @@ header {
 /* Botón blanco con borde fino */
 .hero-button {
     display: inline-block;
-    background-color: #FFFFFF;
-    color: #2C1D25;
-    border: 1px solid #F1DFE4;
+    background-color: var(--white);
+    color: var(--text-h);
+    border: 1px solid var(--border);
     padding: 12px 22px;
     border-radius: 999px;
     text-decoration: none;
@@ -297,7 +218,7 @@ header {
 }
 
 .hero-button:hover {
-    background-color: #F7D9E3;
+    background-color: var(--accent-bg);
 }
 
 /* Datos cortos en fila */
@@ -313,7 +234,7 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #6E5A63;
+    color: var(--text);
     font-size: 11px;
 }
 
@@ -346,21 +267,21 @@ header {
 /* Texto pequeño en mayúsculas */
 .section-heading>span {
     width: 100%;
-    color: #C2456E;
+    color: var(--accent);
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.1em;
 }
 
 .section-heading h2 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 500;
     font-size: 34px;
     line-height: 1.2;
 }
 
 .section-heading>a {
-    color: #C2456E;
+    color: var(--accent);
     font-size: 12px;
     font-weight: 500;
     text-decoration: none;
@@ -378,21 +299,21 @@ header {
 
 /* Caja blanca del formulario */
 .create-post {
-    background-color: #FFFFFF;
-    border: 1px solid #F1DFE4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 28px 24px 24px;
     margin-bottom: 40px;
 }
 
 .create-post h3 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 500;
     font-size: 20px;
 }
 
 .create-post>p {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 11px;
     margin-bottom: 20px;
 }
@@ -402,16 +323,16 @@ header {
     width: 100%;
     min-height: 68px;
     resize: vertical;
-    border: 1px solid #F1DFE4;
+    border: 1px solid var(--border);
     border-radius: 16px;
-    background-color: #FFF7F3;
+    background-color: var(--bg);
     padding: 14px;
     font-size: 12px;
-    color: #2C1D25;
+    color: var(--text-h);
 }
 
 .create-post textarea:focus {
-    border-color: #C2456E;
+    border-color: var(--accent);
     outline: none;
 }
 
@@ -419,13 +340,13 @@ header {
 .form-error {
     min-height: 18px;
     margin: 4px 0 6px;
-    color: #C2456E;
+    color: var(--accent);
     font-size: 11px;
 }
 
 /* Link "Log in" dentro del mensaje de error */
 .form-error a {
-    color: #C2456E;
+    color: var(--accent);
     font-weight: 600;
 }
 
@@ -459,8 +380,8 @@ header {
 /* Chip: cuadradito redondo rosado muy claro */
 .chip {
     border: none;
-    background-color: #FDEEF1;
-    color: #6E5A63;
+    background-color: var(--accent-soft);
+    color: var(--text);
     padding: 6px 12px;
     border-radius: 999px;
     font-size: 11px;
@@ -475,13 +396,13 @@ header {
 }
 
 .chip:hover {
-    background-color: #F7D9E3;
+    background-color: var(--accent-bg);
 }
 
 /* Chip activo: rosado fuerte con texto blanco */
 .chip.active {
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
 }
 
 /* Portadas en fila */
@@ -510,7 +431,7 @@ header {
 
 /* Portada elegida: borde rosado */
 .cover.active {
-    border-color: #C2456E;
+    border-color: var(--accent);
 }
 
 /* Botón Post a la derecha */
@@ -521,8 +442,8 @@ header {
 
 .post-button {
     border: none;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
     padding: 10px 24px;
     border-radius: 999px;
     font-size: 12px;
@@ -531,7 +452,7 @@ header {
 }
 
 .post-button:hover {
-    background-color: #A93A5E;
+    background-color: var(--accent-hover);
 }
 
 
@@ -546,156 +467,14 @@ header {
     gap: 16px 2%;
 }
 
-/* Tarjeta blanca */
-.post-card {
-    width: 32%;
-    background-color: #FFFFFF;
-    border: 1px solid #F1DFE4;
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Foto de la tarjeta */
-.post-card>img {
-    width: 100%;
-    height: 176px;
-    object-fit: cover;
-    display: block;
-}
-
-/* Contenido de la tarjeta */
-.post-content {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-/* Avatar, usuario y rol en fila */
-.post-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.post-user strong {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.post-meta {
-    font-size: 10px;
-    color: #6E5A63;
-}
-
-/* Tema del post con forma de cuadradito redondo con borde */
-.post-tag {
-    align-self: flex-start;
-    padding: 3px 10px;
-    border: 1px solid #F7D9E3;
-    border-radius: 999px;
-    color: #C2456E;
-    font-size: 10px;
-    font-weight: 500;
-    margin-bottom: 14px;
-}
-
-.post-text {
-    font-size: 12px;
-    line-height: 1.6;
-    color: #6E5A63;
-    margin-bottom: 14px;
-}
-
-/* Botones abajo: comentar y like a la izquierda, guardar a la derecha */
-.post-interactions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: auto;
-}
-
-/* Botón sin fondo con ícono y número */
-.action-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0;
-    border: none;
-    background: none;
-    color: #6E5A63;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.action-button:hover {
-    color: #C2456E;
-}
-
-/* Tamaño de los íconos de la tarjeta */
-.action-button img {
-    width: 15px;
-    height: 15px;
-}
-
-/* margin-left auto empuja Guardar a la derecha */
-.save-button {
-    margin-left: auto;
-    font-weight: 500;
-}
-
-/* Like y guardado activos: rosado y relleno */
-.like-button.liked,
-.save-button.saved {
-    color: #C2456E;
-}
-
-
-/* Caja para comentar, oculta al inicio */
-.comment-box {
-    display: none;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-/* Se muestra cuando JS le pone la clase "open" */
-.comment-box.open {
-    display: flex;
-}
-
-.comment-box input {
-    flex: 1;
-    min-width: 0;
-    padding: 8px 12px;
-    border: 1px solid #F1DFE4;
-    border-radius: 999px;
-    background-color: #FFF7F3;
-    font-size: 12px;
-}
-
-.comment-box button {
-    border: none;
-    background-color: #C2456E;
-    color: #FFFFFF;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
 /* 
    Estadisticas
 */
 
 /* Caja blanca con tres números */
 .community-stats {
-    background-color: #FFFFFF;
-    border: 1px solid #F1DFE4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 20px;
     margin-top: 48px;
     padding: 28px 32px;
@@ -721,14 +500,14 @@ header {
 }
 
 .stat strong {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 500;
     font-size: 28px;
-    color: #C2456E;
+    color: var(--accent);
 }
 
 .stat span {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 11px;
 }
 
@@ -741,7 +520,7 @@ header {
 .auna-help {
     margin: 0 80px 80px;
     padding: 48px;
-    background-color: #3B2430;
+    background-color: var(--dark-bg);
     border-radius: 28px;
     display: flex;
     gap: 48px;
@@ -758,8 +537,8 @@ header {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -768,10 +547,10 @@ header {
 }
 
 .help-content h2 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 500;
     font-size: 34px;
-    color: #FFFFFF;
+    color: var(--white);
     line-height: 1.1;
 }
 
@@ -780,7 +559,7 @@ header {
     display: block;
     font-size: 10px;
     letter-spacing: 0.12em;
-    color: #FFFFFF;
+    color: var(--white);
     margin: 4px 0 16px;
 }
 
@@ -793,8 +572,8 @@ header {
 /* Botón blanco con texto rosado */
 .help-button {
     border: none;
-    background-color: #FFFFFF;
-    color: #C2456E;
+    background-color: var(--white);
+    color: var(--accent);
     padding: 12px 22px;
     border-radius: 999px;
     font-size: 12px;
@@ -803,7 +582,7 @@ header {
 }
 
 .help-button:hover {
-    background-color: #F7D9E3;
+    background-color: var(--accent-bg);
 }
 
 /* Lista de lugares, uno debajo del otro */
@@ -821,7 +600,7 @@ header {
     display: flex;
     align-items: center;
     gap: 14px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 14px;
     padding: 12px 16px;
     text-decoration: none;
@@ -829,7 +608,7 @@ header {
 }
 
 .resource-card:hover {
-    background-color: #FDEEF1;
+    background-color: var(--accent-soft);
 }
 
 /* Nombre y distancia uno debajo del otro */
@@ -841,12 +620,12 @@ header {
 .resource-info strong {
     font-size: 12px;
     font-weight: 600;
-    color: #2C1D25;
+    color: var(--text-h);
 }
 
 .resource-info span {
     font-size: 10px;
-    color: #6E5A63;
+    color: var(--text);
 }
 
 
@@ -860,8 +639,8 @@ header {
     left: 50%;
     bottom: 24px;
     transform: translate(-50%, 20px);
-    background-color: #2C1D25;
-    color: #FFFFFF;
+    background-color: var(--text-h);
+    color: var(--white);
     padding: 10px 18px;
     border-radius: 999px;
     font-size: 12px;
@@ -878,54 +657,13 @@ header {
 
 
 /* 
-   Footer
-*/
-
-/* Pie de página blanco */
-footer {
-    background-color: #FFFFFF;
-    border-top: 1px solid #F1DFE4;
-    padding: 32px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-brand strong {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-}
-
-.footer-brand p {
-    color: #6E5A63;
-    font-size: 12px;
-}
-
-.footer-navigation {
-    display: flex;
-    gap: 24px;
-}
-
-.footer-navigation a {
-    color: #6E5A63;
-    text-decoration: none;
-    font-size: 12px;
-}
-
-.footer-navigation a:hover {
-    color: #C2456E;
-}
-
-
-/* 
    Pantallas grandes
 */
 
 /* Hero en pantallas grandes (tamaños del Figma) */
 @media (min-width: 1360px) {
 
-    .hero {
+    .home-hero {
         padding: 73px 80px 80px 104px;
         gap: 94px;
     }
@@ -1014,7 +752,6 @@ footer {
     .hero-features li {
         font-size: 13px;
     }
-
 }
 
 
@@ -1109,7 +846,6 @@ footer {
         padding: 14px 28px;
         font-size: 16px;
     }
-
 }
 
 
@@ -1119,58 +855,6 @@ footer {
     .posts-grid {
         gap: 25px 1.85%;
     }
-
-    .post-card {
-        width: 30.25%;
-        border-radius: 18px;
-    }
-
-    .post-card>img {
-        height: 230px;
-    }
-
-    .post-content {
-        padding: 22px;
-    }
-
-    .post-user {
-        gap: 12px;
-        margin-bottom: 14px;
-    }
-
-    .post-user strong {
-        font-size: 15px;
-    }
-
-    .post-meta {
-        font-size: 12px;
-    }
-
-    .post-tag {
-        padding: 4px 12px;
-        font-size: 13px;
-    }
-
-    .post-text {
-        font-size: 14px;
-        line-height: 1.6;
-        margin-bottom: 4px;
-    }
-
-    .post-interactions {
-        gap: 20px;
-    }
-
-    .action-button {
-        gap: 8px;
-        font-size: 13px;
-    }
-
-    .action-button img {
-        width: 17px;
-        height: 17px;
-    }
-
 }
 
 
@@ -1245,44 +929,6 @@ footer {
     .resource-info span {
         font-size: 12px;
     }
-
-}
-
-
-/* Header y footer en pantallas grandes */
-@media (min-width: 1360px) {
-
-    /* Botones redondos más grandes */
-    .header-actions {
-        gap: 10px;
-    }
-
-    .icon-button {
-        width: 58px;
-        height: 58px;
-    }
-
-    .icon-button img {
-        width: 24px;
-        height: 24px;
-    }
-
-    footer {
-        padding: 40px 80px;
-    }
-
-    .footer-brand strong {
-        font-size: 18px;
-    }
-
-    .footer-brand p {
-        font-size: 14px;
-    }
-
-    .footer-navigation a {
-        font-size: 14px;
-    }
-
 }
 
 
@@ -1292,28 +938,8 @@ footer {
 
 @media (max-width: 1000px) {
 
-    /* Header más compacto */
-    .header {
-        height: 80px;
-        padding: 0 32px;
-    }
-
-    .logo img {
-        height: 46px;
-    }
-
-    .nav-link {
-        padding: 6px 10px;
-        font-size: 13px;
-    }
-
-    .icon-button {
-        width: 40px;
-        height: 40px;
-    }
-
     /* Hero con la tarjeta más pequeña */
-    .hero {
+    .home-hero {
         padding: 48px 32px;
         gap: 40px;
     }
@@ -1339,10 +965,6 @@ footer {
         max-width: none;
     }
 
-    .post-card {
-        width: 49%;
-    }
-
     /* AÚNA Help con márgenes a los lados */
     .auna-help {
         margin: 0 32px 64px;
@@ -1352,11 +974,6 @@ footer {
     .help-resources {
         width: 300px;
     }
-
-    footer {
-        padding: 28px 32px;
-    }
-
 }
 
 
@@ -1365,85 +982,8 @@ footer {
   */
 @media (max-width: 700px) {
 
-    /* Header solo con logo, búsqueda y perfil */
-    .header {
-        height: 64px;
-        padding: 0 20px;
-    }
-
-    .logo img {
-        height: 36px;
-    }
-
-    /* El menú pasa abajo y se oculta el idioma */
-    .main-nav,
-    #language-button {
-        display: none;
-    }
-
-    .header-actions {
-        gap: 8px;
-    }
-
-    .icon-button {
-        width: 28px;
-        height: 28px;
-    }
-
-    .icon-button img {
-        width: 14px;
-        height: 14px;
-    }
-
-    /* Menú fijo en la parte de abajo */
-    .bottom-nav {
-        display: flex;
-        justify-content: space-around;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background-color: #FFFFFF;
-        border-top: 1px solid #F1DFE4;
-        padding: 10px 0 14px;
-    }
-
-    /* Cada link con un punto arriba y el texto abajo */
-    .bottom-link {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        color: #6E5A63;
-        text-decoration: none;
-        font-size: 12px;
-    }
-
-    .bottom-link .dot {
-        width: 5px;
-        height: 5px;
-        background-color: #F7D9E3;
-    }
-
-    /* Página actual en rosado */
-    .bottom-link.active {
-        color: #C2456E;
-        font-weight: 600;
-    }
-
-    .bottom-link.active .dot {
-        background-color: #C2456E;
-    }
-
-    /* Espacio para que el menú no tape el final
-       (en iPhone la barra de Safari también ocupa espacio) */
-    body {
-        padding-bottom: 96px;
-    }
-
     /* Hero en una columna */
-    .hero {
+    .home-hero {
         flex-direction: column;
         align-items: stretch;
         padding: 20px 20px 40px;
@@ -1510,11 +1050,6 @@ footer {
         height: 52px;
     }
 
-    /* Una tarjeta por fila */
-    .post-card {
-        width: 100%;
-    }
-
     /* Estadísticas una debajo de otra */
     .community-stats {
         flex-direction: column;
@@ -1540,19 +1075,10 @@ footer {
         width: 100%;
     }
 
-    /* Footer en columna */
-    footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 24px 20px;
-    }
-
     /* El toast queda encima del menú inferior */
     .toast {
         bottom: 84px;
     }
-
 }
 
 
@@ -1569,5 +1095,4 @@ footer {
     .auna-help {
         border-radius: 20px;
     }
-
-}
+}
