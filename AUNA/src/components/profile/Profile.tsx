@@ -115,7 +115,7 @@ function Profile({ open, session, onClose, onLogout, onEdit }: ProfileProps) {
                     ))}
                 </div>
 
-                {/* Aquí se conecta configuration de Cami */}
+                {/* Abre la ventana de Settings (componente Configuration) */}
                 <button type="button" className="profile-edit" onClick={onEdit}>Edit profile</button>
 
                 <button type="button" className="profile-logout" onClick={onLogout}>Log out</button>
