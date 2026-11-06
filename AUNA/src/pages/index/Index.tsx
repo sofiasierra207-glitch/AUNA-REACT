@@ -25,8 +25,13 @@ const covers = [
     { image: libro, alt: "Open book" }
 ];
 
+// Datos que recibe la página desde App
+interface IndexProps {
+    session: string; // correo con la sesión abierta ("" si no hay sesión)
+}
+
 // Página de inicio de AÚNA (index)
-function Index() {
+function Index({ session }: IndexProps) {
 
     // Posts que se ven en la página
     const [feed, setFeed] = useState(posts);
@@ -43,10 +48,8 @@ function Index() {
 
     // Botón Post: publica si hay sesión y texto
     function handlePost() {
-        // Revisa si la usuaria inició sesión
-        const session = localStorage.getItem("aunaSession");
-
-        if (session === null) {
+        // Revisa si la usuaria inició sesión (la sesión viene de App)
+        if (session === "") {
             setPostError("login");
         } else if (postText.trim() === "") {
             setPostError("Write something before posting.");
