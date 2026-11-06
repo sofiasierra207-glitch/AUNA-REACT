@@ -87,6 +87,24 @@ function Favorites({ idsGuardados }: FavoritesProps) {
                 </div>
             </section>
 
+            {/* Recently saved va justo debajo de las tabs:
+                asi al cambiar de tab se ve de una que la lista cambia */}
+            <section className="recientes">
+                <h2>Recently saved</h2>
+
+                {/* una SavedCard por cada guardado */}
+                <div className="recientes-lista">
+                    {filtrados.map((item) => (
+                        <SavedCard key={`${item.tipo}-${item.nombre}`} item={item} />
+                    ))}
+                </div>
+
+                {/* si en esa tab no hay nada muestro el mensaje */}
+                {filtrados.length === 0 && (
+                    <p className="sin-resultados">You haven't saved anything here yet.</p>
+                )}
+            </section>
+
             <section className="colecciones">
                 <h2>My collections</h2>
 
@@ -104,22 +122,6 @@ function Favorites({ idsGuardados }: FavoritesProps) {
                         ))}
                     </div>
                 ))}
-            </section>
-
-            <section className="recientes">
-                <h2>Recently saved</h2>
-
-                {/* una SavedCard por cada guardado */}
-                <div className="recientes-lista">
-                    {filtrados.map((item) => (
-                        <SavedCard key={`${item.tipo}-${item.nombre}`} item={item} />
-                    ))}
-                </div>
-
-                {/* si en esa tab no hay nada muestro el mensaje */}
-                {filtrados.length === 0 && (
-                    <p className="sin-resultados">You haven't saved anything here yet.</p>
-                )}
             </section>
         </main>
     );
