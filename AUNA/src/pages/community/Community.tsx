@@ -5,6 +5,7 @@ import './community.css';
 
 import ProfessionalCard from '../../components/professionalcard/ProfessionalCard';
 import CircleCard from '../../components/circlecard/CircleCard';
+import Verified from '../../components/verified/Verified';
 import { categories, professionals, circles } from './data';
 
 // Página de comunidad
@@ -15,6 +16,9 @@ function Community() {
 
     // Mensaje de abajo; si está vacío no se ve
     const [toast, setToast] = useState("");
+
+    // Si el modal de verificación está abierto o cerrado
+    const [verifiedOpen, setVerifiedOpen] = useState(false);
 
     // Muestra el mensaje y lo borra después de 2,5 segundos
     function showToast(message: string) {
@@ -112,13 +116,18 @@ function Community() {
                     <p>Apply to get verified and support the community with your experience.</p>
                 </div>
 
-                {/* Aquí se conecta verified de Cami */}
-                <button type="button" className="verify-button">I want to get verified</button>
+                {/* Abre el modal de verificación (componente Verified de Cami) */}
+                <button type="button" className="verify-button" onClick={() => setVerifiedOpen(true)}>
+                    I want to get verified
+                </button>
 
             </section>
 
             {/* Mensaje corto de abajo */}
             <div className={toast !== "" ? "toast visible" : "toast"} role="status">{toast}</div>
+
+            {/* Modal de verificación: le paso si está abierto y cómo cerrarlo */}
+            <Verified abierto={verifiedOpen} onCerrar={() => setVerifiedOpen(false)} />
 
         </main>
     );
