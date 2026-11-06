@@ -8,6 +8,7 @@ import Favorites from './pages/favorites/Favorites';
 import Community from './pages/community/Community';
 import Login from './pages/login/Login';
 import Help from './pages/help/Help';
+import NotFound from './pages/notfound/NotFound';
 
 // Rutas de AÚNA: cada path muestra una página
 function App() {
@@ -41,6 +42,9 @@ function App() {
                 <Route path="/favorites" element={<Favorites idsGuardados={saved} />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/help" element={<Help />} />
+
+                {/* "*" atrapa cualquier dirección que no existe (página 404) */}
+                <Route path="*" element={<NotFound />} />
             </Route>
 
             {/* Login va sin header ni footer, por eso está fuera de MainLayout */}

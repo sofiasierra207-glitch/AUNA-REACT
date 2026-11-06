@@ -1,0 +1,76 @@
+/*
+   AÚNA - NOTFOUND
+   Página 404: aparece cuando la dirección no existe
+   Los colores vienen de assets/colors.css
+*/
+
+
+/* Todo centrado en el medio de la página */
+.notfound-page {
+    min-height: 60vh;
+    padding: 64px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Número grande en rosado */
+.notfound-code {
+    font-family: var(--heading);
+    font-size: 72px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.notfound-page h1 {
+    font-family: var(--heading);
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.notfound-page p {
+    color: var(--text);
+    font-size: 16px;
+    margin-bottom: 28px;
+}
+
+/* Botón rosado para volver al inicio */
+.notfound-button {
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.notfound-button:hover {
+    background-color: var(--accent-hover);
+}
+
+
+/*
+   Mobile
+*/
+
+@media (max-width: 700px) {
+
+    .notfound-page {
+        padding: 48px 20px;
+    }
+
+    .notfound-code {
+        font-size: 56px;
+    }
+
+    .notfound-page h1 {
+        font-size: 30px;
+    }
+
+}
