@@ -1,3 +1,9 @@
+/*
+   AÚNA - COMMUNITYHELP
+   Modal para pedir ayuda a la comunidad (se abre desde Home y Help)
+   Los colores vienen de assets/colors.css
+*/
+
 /* fondo oscuro que tapa la pagina cuando abro el modal
    position fixed hace que quede pegado a la pantalla aunque haga scroll
    empieza escondido con display none
@@ -14,11 +20,11 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    /* 3000 para que quede encima del menu de abajo en celular (igual que las ventanas de Sofía) */
+    /* 3000 para que quede encima del menu de abajo en celular */
     z-index: 3000;
 }
 
-/* cuando el js le pone la clase abierto se muestra
+/* cuando el componente le pone la clase abierto se muestra
    flex lo centra en la mitad de la pantalla */
 .ayuda-fondo.abierto {
     display: flex;
@@ -34,8 +40,8 @@
     background-color: #fff1e8;
     border-radius: 32px;
     padding: 44px 48px;
-    font-family: "Inter", Arial, sans-serif;
-    color: #2c1d25;
+    font-family: var(--sans);
+    color: var(--text-h);
     display: flex;
     flex-direction: column;
     gap: 22px;
@@ -58,7 +64,7 @@
 }
 
 .ayuda-header h3 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-size: 28px;
     font-weight: 600;
     line-height: 34px;
@@ -71,21 +77,21 @@
     flex-shrink: 0;
     border: none;
     border-radius: 50%;
-    background-color: #ffffff;
-    color: #2c1d25;
+    background-color: var(--white);
+    color: var(--text-h);
     font-size: 18px;
     cursor: pointer;
 }
 
 .ayuda-cerrar:hover {
-    background-color: #f7d9e3;
+    background-color: var(--accent-bg);
 }
 
 /* texto de explicacion */
 .ayuda-texto {
     font-size: 15px;
     line-height: 24px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* el form pone los campos uno debajo del otro */
@@ -113,32 +119,32 @@
     width: 100%;
     height: 110px;
     padding: 18px 20px;
-    border: 1px solid #f1dfe4;
+    border: 1px solid var(--border);
     border-radius: 16px;
-    background-color: #ffffff;
+    background-color: var(--white);
     font-family: inherit;
     font-size: 15px;
     line-height: 24px;
-    color: #2c1d25;
+    color: var(--text-h);
     resize: vertical;
     outline: none;
 }
 
 .ayuda-textarea:focus {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
-/* cuando intento enviar vacio el js le pone esta clase */
+/* cuando intento enviar vacio el componente le pone esta clase */
 .ayuda-textarea.ayuda-error {
-    border-color: #c2456e;
-    background-color: #fdedf1;
+    border-color: var(--accent);
+    background-color: var(--accent-soft);
 }
 
 /* mensaje de error, empieza escondido */
 .ayuda-mensaje-error {
     display: none;
     font-size: 12px;
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .ayuda-mensaje-error.visible {
@@ -158,18 +164,18 @@
 .ayuda-select {
     width: 220px;
     padding: 13px 16px;
-    border: 1px solid #f1dfe4;
+    border: 1px solid var(--border);
     border-radius: 16px;
-    background-color: #ffffff;
+    background-color: var(--white);
     font-family: inherit;
     font-size: 15px;
-    color: #2c1d25;
+    color: var(--text-h);
     cursor: pointer;
     outline: none;
 }
 
 .ayuda-select:focus {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
 /* checkbox con su texto al lado
@@ -187,7 +193,7 @@
 .ayuda-check input {
     width: 20px;
     height: 20px;
-    accent-color: #c2456e;
+    accent-color: var(--accent);
     cursor: pointer;
 }
 
@@ -195,8 +201,8 @@
 .ayuda-enviar {
     align-self: flex-start;
     border: none;
-    background-color: #c2456e;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
     font-family: inherit;
     font-size: 15px;
     font-weight: 600;
