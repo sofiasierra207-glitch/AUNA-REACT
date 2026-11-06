@@ -28,10 +28,11 @@ interface ProfileProps {
     session: string;        // correo con la sesión abierta
     onClose: () => void;
     onLogout: () => void;   // borra la sesión del estado global
+    onEdit: () => void;     // abre la ventana de Settings 
 }
 
 // Ventana con el perfil de la usuaria
-function Profile({ open, session, onClose, onLogout }: ProfileProps) {
+function Profile({ open, session, onClose, onLogout, onEdit }: ProfileProps) {
 
     // Colección elegida ("" si no hay ninguna)
     const [activeCollection, setActiveCollection] = useState("");
@@ -115,7 +116,7 @@ function Profile({ open, session, onClose, onLogout }: ProfileProps) {
                 </div>
 
                 {/* Aquí se conecta configuration de Cami */}
-                <button type="button" className="profile-edit">Edit profile</button>
+                <button type="button" className="profile-edit" onClick={onEdit}>Edit profile</button>
 
                 <button type="button" className="profile-logout" onClick={onLogout}>Log out</button>
 

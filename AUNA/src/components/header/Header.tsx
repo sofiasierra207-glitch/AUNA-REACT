@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import SearchPopup from '../search/SearchPopup';
 import Profile from '../profile/Profile';
 import Language from '../language/Language';
+import Configuration from '../configuration/Configuration';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -27,6 +28,9 @@ function Header({ session, onLogout }: HeaderProps) {
     // ¿Está abierto el menú de idiomas?
     const [languageOpen, setLanguageOpen] = useState(false);
 
+    // ¿Está abierta la ventana de Settings? (configuration de Cami)
+    const [settingsOpen, setSettingsOpen] = useState(false);
+
     // Para ir a otra página desde el código
     const navigate = useNavigate();
 
@@ -43,7 +47,14 @@ function Header({ session, onLogout }: HeaderProps) {
     function handleLogout() {
         onLogout();
         setProfileOpen(false);
+        setSettingsOpen(false);
         navigate("/login");
+    }
+
+    // Edit profile: cierra el perfil y abre Settings
+    function handleEdit() {
+        setProfileOpen(false);
+        setSettingsOpen(true);
     }
 
     return (
@@ -109,7 +120,11 @@ function Header({ session, onLogout }: HeaderProps) {
 
             {/* Ventana del perfil */}
             <Profile open={profileOpen} session={session}
-                onClose={() => setProfileOpen(false)} onLogout={handleLogout} />
+                onClose={() => setProfileOpen(false)} onLogout={handleLogout} onEdit={handleEdit} />
+
+            {/* Ventana de Settings (configuration de Cami) */}
+            <Configuration abierto={settingsOpen}
+                onCerrar={() => setSettingsOpen(false)} onLogout={handleLogout} />
 
         </header>
     );
