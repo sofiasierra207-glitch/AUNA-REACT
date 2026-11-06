@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './index.css';
 
 import FeedCard from '../../components/feedcard/FeedCard';
+import CommunityHelp from '../../components/communityhelp/CommunityHelp';
 import Posted from '../../components/posted/Posted';
 import { currentUser, posts, resources } from './data';
 import type { Post } from './data';
@@ -39,6 +40,10 @@ function Index({ session }: IndexProps) {
 
     // ¿Ya sigue a la creadora de arriba?
     const [following, setFollowing] = useState(false);
+
+
+    // Si el modal de pedir ayuda está abierto o cerrado
+    const [helpOpen, setHelpOpen] = useState(false);
 
     // Lo que la usuaria llena en el formulario
     const [postText, setPostText] = useState("");
@@ -268,7 +273,9 @@ function Index({ session }: IndexProps) {
                     <span className="help-label">RESOURCES NEAR YOU</span>
                     <p>Need to sort something out today? Find health centers, services, and support nearby in seconds.</p>
                     {/* Aquí se conecta communityhelp de Cami */}
-                    <button type="button" className="help-button">Ask the community for help</button>
+                    <button type="button" className="help-button" onClick={() => setHelpOpen(true)}>
+                        Ask the community for help
+                    </button>
                 </div>
 
                 {/* Una tarjeta por cada lugar */}
@@ -291,6 +298,9 @@ function Index({ session }: IndexProps) {
             {/* Ventana que aparece al publicar */}
             <Posted open={postedOpen} onClose={() => setPostedOpen(false)} />
 
+
+            {/* Modal de pedir ayuda: le paso si está abierto y cómo cerrarlo */}
+            <CommunityHelp abierto={helpOpen} onCerrar={() => setHelpOpen(false)} />
         </main>
     );
 }

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import './help.css';
 
 import ResourceCard from '../../components/resourcecard/ResourceCard';
+import CommunityHelp from '../../components/communityhelp/CommunityHelp';
 import { helpCategories, helpResources, helpQuestions } from './data';
 
 // Página de AÚNA Help: lugares cercanos, pedir ayuda y preguntas frecuentes
@@ -14,6 +15,10 @@ function Help() {
 
     // Mensaje de abajo; si está vacío no se ve
     const [toast, setToast] = useState("");
+
+
+    // Si el modal de pedir ayuda está abierto o cerrado
+    const [helpOpen, setHelpOpen] = useState(false);
 
     // Muestra el mensaje y lo borra después de 2,5 segundos
     function showToast(message: string) {
@@ -63,7 +68,9 @@ function Help() {
                 </div>
 
                 {/* Aquí se conecta communityhelp de Cami */}
-                <button type="button" className="ask-help-button">Ask the community for help</button>
+                <button type="button" className="ask-help-button" onClick={() => setHelpOpen(true)}>
+                    Ask the community for help
+                </button>
             </section>
 
             {/* ===== Preguntas frecuentes ===== */}
@@ -81,6 +88,9 @@ function Help() {
 
             {/* Mensaje corto de abajo */}
             <div className={toast !== "" ? "toast visible" : "toast"} role="status">{toast}</div>
+
+            {/* Modal de pedir ayuda: le paso si está abierto y cómo cerrarlo */}
+            <CommunityHelp abierto={helpOpen} onCerrar={() => setHelpOpen(false)} />
 
         </main>
     );
