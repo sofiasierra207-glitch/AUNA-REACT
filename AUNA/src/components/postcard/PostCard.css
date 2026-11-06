@@ -1,7 +1,14 @@
+/*
+   AÚNA - POSTCARD
+   Tarjeta de publicación de Explore
+   Cada regla empieza con .explore para que no choque con la FeedCard del Home
+   Los colores vienen de assets/colors.css
+*/
+
 .explore .post {
     width: 32%;
-    background-color: #ffffff;
-    border: 1px solid #f1dfe4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
     display: flex;
@@ -37,8 +44,8 @@
     height: 32px;
     flex-shrink: 0;
     border-radius: 50%;
-    background-color: #f7d9e3;
-    color: #c2456e;
+    background-color: var(--accent-bg);
+    color: var(--accent);
     font-size: 13px;
     font-weight: 600;
     display: flex;
@@ -53,14 +60,14 @@
 
 .explore .post-meta {
     font-size: 10px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 .explore .post-tag {
     padding: 3px 10px;
-    border: 1px solid #f7d9e3;
+    border: 1px solid var(--accent-bg);
     border-radius: 999px;
-    color: #c2456e;
+    color: var(--accent);
     font-size: 10px;
     font-weight: 500;
     margin-bottom: 14px;
@@ -69,7 +76,7 @@
 .explore .post-texto {
     font-size: 12px;
     line-height: 1.6;
-    color: #6e5a63;
+    color: var(--text);
     margin-bottom: 14px;
 }
 
@@ -94,7 +101,7 @@
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 .explore .post-accion img {
@@ -105,7 +112,7 @@
 .btn-comentar:hover,
 .btn-like:hover,
 .explore .btn-guardar:hover {
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .explore .btn-guardar {
@@ -115,7 +122,7 @@
 /* like o guardado activo */
 .explore .btn-like.activo,
 .explore .btn-guardar.activo {
-    color: #c2456e;
+    color: var(--accent);
 }
 
 /* caja de comentario */
@@ -130,22 +137,22 @@
     flex: 1;
     min-width: 0;
     padding: 8px 12px;
-    border: 1px solid #f1dfe4;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    background-color: #fff7f3;
+    background-color: var(--bg);
     font-family: inherit;
     font-size: 12px;
     outline: none;
 }
 
 .explore .caja-comentario input:focus {
-    border-color: #c2456e;
+    border-color: var(--accent);
 }
 
 /* boton rosado de Send */
 .explore .btn-enviar {
-    background-color: #c2456e;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
     padding: 8px 14px;
     border-radius: 999px;
     font-size: 11px;

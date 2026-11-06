@@ -1,3 +1,10 @@
+/*
+   AÚNA - FAVORITES
+   Estilos de la página Favorites
+   Cada regla empieza con .favorites para que no choque con otras páginas
+   Los colores vienen de assets/colors.css
+*/
+
 /* base */
 .favorites a {
     text-decoration: none;
@@ -12,7 +19,7 @@
 .favorites h1,
 .favorites h2,
 .favorites h3 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-weight: 600;
 }
 
@@ -29,7 +36,7 @@
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.2px;
-    color: #c2456e;
+    color: var(--accent);
 }
 
 .favorites .hero h1 {
@@ -40,15 +47,15 @@
 .favorites .hero-texto {
     font-size: 16px;
     line-height: 26px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /*  tabs */
 
 .favorites .tabs {
     align-self: flex-start;
-    background-color: #ffffff;
-    border: 1px solid #f1dfe4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 999px;
     padding: 6px;
     display: flex;
@@ -61,20 +68,20 @@
     border-radius: 999px;
     font-size: 15px;
     font-weight: 600;
-    color: #6e5a63;
+    color: var(--text);
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .favorites .tab:hover {
-    color: #c2456e;
+    color: var(--accent);
 }
 
 /* pastilla rosada con el numero */
 .favorites .tab-numero {
-    background-color: #f7d9e3;
-    color: #c2456e;
+    background-color: var(--accent-bg);
+    color: var(--accent);
     font-size: 12px;
     font-weight: 600;
     padding: 2px 8px;
@@ -83,13 +90,13 @@
 
 /* tab seleccionada */
 .favorites .tab.tab-activa {
-    background-color: #c2456e;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
 }
 
 /* en la tab activa la pastilla se vuelve blanca */
 .favorites .tab.tab-activa .tab-numero {
-    background-color: #ffffff;
+    background-color: var(--white);
 }
 
 /* mis colecciones */
@@ -158,7 +165,7 @@
 
 /* mensaje cuando no hay nada guardado en esa tab */
 .favorites .sin-resultados {
-    color: #6e5a63;
+    color: var(--text);
     padding: 20px 0;
 }
 
