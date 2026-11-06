@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import SearchPopup from '../search/SearchPopup';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -8,6 +10,9 @@ import languageIcon from '../../assets/icons/language.svg';
 
 // Barra de arriba: logo, menú y botones redondos
 function Header() {
+    // estado para saber si el popup de buscar esta abierto o cerrado
+    const [buscarAbierto, setBuscarAbierto] = useState(false);
+
     return (
         <header>
 
@@ -32,7 +37,14 @@ function Header() {
                 {/* Botones de buscar, perfil e idioma; aquí se conectan sus componentes */}
                 <div className="header-actions">
 
-                    <button type="button" className="icon-button" id="search-button" aria-label="Search">
+                    {/* la lupa abre el popup de buscar (componente SearchPopup) */}
+                    <button
+                        type="button"
+                        className="icon-button"
+                        id="search-button"
+                        aria-label="Search"
+                        onClick={() => setBuscarAbierto(true)}
+                    >
                         <img src={searchIcon} alt="" />
                     </button>
 
@@ -47,6 +59,12 @@ function Header() {
                 </div>
 
             </div>
+
+            {/* popup de buscar: le paso si esta abierto y la funcion para cerrarlo */}
+            <SearchPopup
+                abierto={buscarAbierto}
+                onCerrar={() => setBuscarAbierto(false)}
+            />
 
         </header>
     );
