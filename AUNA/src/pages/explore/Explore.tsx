@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-// el PostCard lo hace Anny, si ella lo pone en otra carpeta cambio esta ruta
 import PostCard from '../../components/postcard/PostCard';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -36,9 +35,6 @@ function Explore() {
     // "aunaGuardados" es la misma clave que lee Favorites
     const [likes, setLikes] = useLocalStorage<number[]>('aunaLikes', []);
     const [guardados, setGuardados] = useLocalStorage<number[]>('aunaGuardados', []);
-
-    // useRef me deja apuntar a la seccion de publicaciones para bajar hasta ella
-    const seccionPublicaciones = useRef<HTMLElement>(null);
 
     // filtro los posts por tema y por texto
     const filtradas = publicaciones.filter((post) => {
@@ -75,8 +71,6 @@ function Explore() {
         // pongo la palabra en la url, si esta vacio la quito
         setSearchParams(limpio === '' ? {} : { q: limpio });
 
-        // bajo suave hasta los resultados
-        seccionPublicaciones.current?.scrollIntoView({ behavior: 'smooth' });
     }
 
     // boton "Clear search"
@@ -151,7 +145,7 @@ function Explore() {
                 </div>
             </section>
 
-            <section className="publicaciones" ref={seccionPublicaciones}>
+            <section className="publicaciones">
                 <div className="publicaciones-titulo">
                     <h2>{textoBuscado ? 'Search results' : 'Recent posts'}</h2>
                     <span className="ordenar">Sort by: most recent</span>
