@@ -1,49 +1,63 @@
 import { useState } from 'react';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
 import SavedCard from '../../components/savedcard/SavedCard';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { publicaciones } from '../explore/data';
-import { guardadosFigma, misColecciones, tabs } from './data';
-import type { Guardado, TipoGuardado } from './data';
+import { explorePosts } from '../explore/data';
+import { posts } from '../index/data';
+import { figmaSaved, myCollections, tabs } from './data';
+import type { SavedItem, SavedType } from './data';
 import './favorites.css';
 
+// tipado de las props: los ids guardados vienen del estado global de App
+// son los que guarde con el boton "Save" en Explore o en el Home
+interface FavoritesProps {
+    savedIds: number[];
+}
+
 // pagina de Favorites
-function Favorites() {
-    // leo los ids que guarde en explore con el boton "Save"
-    // es la misma clave "aunaGuardados" que usa Explore
-    const [idsGuardados] = useLocalStorage<number[]>('aunaGuardados', []);
+function Favorites({ savedIds }: FavoritesProps) {
 
     // la tab seleccionada, empieza en All
-    const [tipoActual, setTipoActual] = useState<'All' | TipoGuardado>('All');
+    const [currentType, setCurrentType] = useState<'All' | SavedType>('All');
 
     // busco los posts de explore que tienen el id guardado
     // y los convierto al mismo formato de los guardados del figma
     // ya no copio los posts en otro archivo: los importo de explore/data.ts
-    const deExplore: Guardado[] = publicaciones
-        .filter((post) => idsGuardados.includes(post.id))
+    const fromExplore: SavedItem[] = explorePosts
+        .filter((post) => savedIds.includes(post.id))
         .map((post) => ({
-            tipo: 'Post',
-            nombre: post.usuario,
-            texto: post.texto,
-            imagen: post.imagen,
-            idExplore: post.id,
+            type: 'Post',
+            name: post.user,
+            text: post.text,
+            image: post.image,
+            exploreId: post.id,
+        }));
+
+    // lo mismo con los posts del Home que guarde
+    const fromHome: SavedItem[] = posts
+        .filter((post) => savedIds.includes(post.id))
+        .map((post) => ({
+            type: 'Post',
+            name: post.user,
+            text: post.text,
+            image: post.image,
+            exploreId: 0,
         }));
 
     // quito del figma los que ya guarde en explore, asi no sale el mismo post dos veces
-    const delFigma = guardadosFigma.filter((item) => !idsGuardados.includes(item.idExplore));
+    const fromFigma = figmaSaved.filter((item) => !savedIds.includes(item.exploreId));
 
-    // primero los del figma y al final los que guarde en explore
-    const todosLosGuardados = [...delFigma, ...deExplore];
+    // primero los del figma y al final los que guarde en explore y en el home
+    const allSaved = [...fromFigma, ...fromExplore, ...fromHome];
 
     // cuantos hay de cada tipo, para la pastilla de cada tab
-    function contar(tipo: 'All' | TipoGuardado) {
-        if (tipo === 'All') return todosLosGuardados.length;
-        return todosLosGuardados.filter((item) => item.tipo === tipo).length;
+    function count(type: 'All' | SavedType) {
+        if (type === 'All') return allSaved.length;
+        return allSaved.filter((item) => item.type === type).length;
     }
 
     // si la tab es All muestro todo, si no solo los de ese tipo
-    const filtrados = todosLosGuardados.filter(
-        (item) => tipoActual === 'All' || item.tipo === tipoActual,
+    const filteredItems = allSaved.filter(
+        (item) => currentType === 'All' || item.type === currentType,
     );
 
     return (
@@ -62,15 +76,33 @@ function Favorites() {
                 <div className="tabs">
                     {tabs.map((tab) => (
                         <button
-                            key={tab.valor}
+                            key={tab.value}
                             type="button"
-                            className={`tab ${tipoActual === tab.valor ? 'tab-activa' : ''}`}
-                            onClick={() => setTipoActual(tab.valor)}
+                            className={`tab ${currentType === tab.value ? 'tab-activa' : ''}`}
+                            onClick={() => setCurrentType(tab.value)}
                         >
-                            {tab.texto} <span className="tab-numero">{contar(tab.valor)}</span>
+                            {tab.text} <span className="tab-numero">{count(tab.value)}</span>
                         </button>
                     ))}
                 </div>
+            </section>
+
+            {/* Recently saved va justo debajo de las tabs:
+                asi al cambiar de tab se ve de una que la lista cambia */}
+            <section className="recientes">
+                <h2>Recently saved</h2>
+
+                {/* una SavedCard por cada guardado */}
+                <div className="recientes-lista">
+                    {filteredItems.map((item) => (
+                        <SavedCard key={`${item.type}-${item.name}`} item={item} />
+                    ))}
+                </div>
+
+                {/* si en esa tab no hay nada muestro el mensaje */}
+                {filteredItems.length === 0 && (
+                    <p className="sin-resultados">You haven't saved anything here yet.</p>
+                )}
             </section>
 
             <section className="colecciones">
@@ -78,34 +110,18 @@ function Favorites() {
 
                 {/* dos map: uno para las filas y otro para las colecciones de cada fila
                     reuso el mismo componente CollectionCard de Explore, aqui sin link */}
-                {misColecciones.map((fila, indice) => (
-                    <div className="colecciones-fila" key={indice}>
-                        {fila.map((coleccion) => (
+                {myCollections.map((row, index) => (
+                    <div className="colecciones-fila" key={index}>
+                        {row.map((collection) => (
                             <CollectionCard
-                                key={coleccion.titulo}
-                                titulo={coleccion.titulo}
-                                texto={coleccion.texto}
-                                color={coleccion.color}
+                                key={collection.title}
+                                title={collection.title}
+                                text={collection.text}
+                                color={collection.color}
                             />
                         ))}
                     </div>
                 ))}
-            </section>
-
-            <section className="recientes">
-                <h2>Recently saved</h2>
-
-                {/* una SavedCard por cada guardado */}
-                <div className="recientes-lista">
-                    {filtrados.map((item) => (
-                        <SavedCard key={`${item.tipo}-${item.nombre}`} item={item} />
-                    ))}
-                </div>
-
-                {/* si en esa tab no hay nada muestro el mensaje */}
-                {filtrados.length === 0 && (
-                    <p className="sin-resultados">You haven't saved anything here yet.</p>
-                )}
             </section>
         </main>
     );

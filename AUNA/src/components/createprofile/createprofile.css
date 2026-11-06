@@ -1,4 +1,8 @@
-/* Ventana para crear un perfil */
+/*
+   AÚNA - CREATEPROFILE
+   Modal para crear una cuenta (se abre desde Login)
+   Los colores vienen de assets/colors.css
+*/
 
 /* Fondo oscuro que cubre toda la pantalla, oculto al inicio */
 .create-overlay {
@@ -15,7 +19,7 @@
     padding: 20px;
 }
 
-/* Se muestra cuando JS le pone la clase "open" */
+/* Se muestra cuando el componente le pone la clase "open" */
 .create-overlay.open {
     display: flex;
 }
@@ -33,11 +37,11 @@
     max-width: 100%;
     max-height: 100%;
     overflow-y: auto;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 32px;
     padding: 40px 48px 28px;
-    font-family: "Inter", Arial, sans-serif;
-    color: #2C1D25;
+    font-family: var(--sans);
+    color: var(--text-h);
     box-shadow: 0 20px 48px rgba(44, 29, 37, 0.2);
 }
 
@@ -50,7 +54,7 @@
 }
 
 .create-header h3 {
-    font-family: "Playfair Display", Georgia, serif;
+    font-family: var(--heading);
     font-size: 32px;
     font-weight: 500;
 }
@@ -62,17 +66,17 @@
     border: none;
     border-radius: 50%;
     background-color: #FDF3F1;
-    color: #2C1D25;
+    color: var(--text-h);
     font-size: 18px;
     cursor: pointer;
 }
 
 .create-close:hover {
-    background-color: #F7D9E3;
+    background-color: var(--accent-bg);
 }
 
 .create-text {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 12px;
@@ -85,7 +89,7 @@
 }
 
 .create-form label {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 13px;
     margin: 12px 0 8px;
 }
@@ -93,18 +97,18 @@
 /* Campos rosados claros */
 .create-input {
     width: 100%;
-    border: 1px solid #F1DFE4;
+    border: 1px solid var(--border);
     background-color: #FFF4F2;
     border-radius: 16px;
     padding: 14px 18px;
     font-family: inherit;
     font-size: 15px;
-    color: #2C1D25;
+    color: var(--text-h);
     outline: none;
 }
 
 .create-input:focus {
-    border-color: #C2456E;
+    border-color: var(--accent);
 }
 
 /* Campo con error: borde rojo */
@@ -124,7 +128,7 @@
 .create-check input {
     width: 18px;
     height: 18px;
-    accent-color: #C2456E;
+    accent-color: var(--accent);
 }
 
 /* Mensaje de error en rojo */
@@ -139,8 +143,8 @@
     display: block;
     width: 100%;
     border: none;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
     padding: 15px;
     border-radius: 999px;
     font-family: inherit;
@@ -153,12 +157,12 @@
 }
 
 .create-button:hover {
-    background-color: #A93A5E;
+    background-color: var(--accent-hover);
 }
 
 /* "Already have an account? Log in" */
 .create-login {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 14px;
     text-align: center;
     margin-top: 16px;
@@ -167,14 +171,14 @@
 .create-login-button {
     border: none;
     background: none;
-    color: #6E5A63;
+    color: var(--text);
     font-family: inherit;
     font-size: 14px;
     cursor: pointer;
 }
 
 .create-login-button:hover {
-    color: #C2456E;
+    color: var(--accent);
 }
 
 /* Bienvenida oculta hasta crear el perfil */

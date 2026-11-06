@@ -1,3 +1,9 @@
+/*
+   AÚNA - SEARCH
+   Popup de buscar que se abre con la lupa del header
+   Los colores vienen de assets/colors.css
+*/
+
 /* fondo oscuro que tapa la pagina cuando abro el popup
    position fixed hace que quede pegado a la pantalla aunque haga scroll
    empieza escondido con display none */
@@ -12,11 +18,11 @@
     justify-content: center;
     align-items: flex-start;
     padding: 120px 16px 16px;
-    /* 3000 para que quede encima del menu de abajo en celular (igual que las ventanas de Sofía) */
+    /* 3000 para que quede encima del menu de abajo en celular */
     z-index: 3000;
 }
 
-/* cuando el js le pone la clase abierto se muestra
+/* cuando el componente le pone la clase abierto se muestra
    flex centra el popup en la pantalla */
 .buscar-fondo.abierto {
     display: flex;
@@ -27,11 +33,11 @@
 .buscar-popup {
     width: 420px;
     max-width: 100%;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 24px;
     padding: 26px 28px;
     box-shadow: 0 12px 40px rgba(44, 29, 37, 0.2);
-    font-family: "Inter", Arial, sans-serif;
+    font-family: var(--sans);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -47,34 +53,59 @@
 
 /* titulo, le pongo Inter porque en las paginas los h3 son Playfair */
 .buscar-popup h3 {
-    font-family: "Inter", Arial, sans-serif;
+    font-family: var(--sans);
     font-size: 17px;
     font-weight: 600;
-    color: #2c1d25;
+    color: var(--text-h);
 }
 
-/* buscador */
+/* buscador y boton en una fila */
+.buscar-form {
+    display: flex;
+    gap: 8px;
+}
+
+/* buscador: flex 1 ocupa el espacio que sobra
+   min-width 0 para que no empuje el boton fuera de la caja */
 .buscar-input {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     padding: 12px 16px;
-    border: 1px solid #f1dfe4;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background-color: #fff7f3;
+    background-color: var(--bg);
     font-family: inherit;
     font-size: 14px;
-    color: #2c1d25;
+    color: var(--text-h);
     outline: none;
 }
 
 /* borde rosado cuando estoy escribiendo */
 .buscar-input:focus {
-    border-color: #c2456e;
+    border-color: var(--accent);
+}
+
+/* boton rosado de buscar */
+.buscar-boton {
+    border: none;
+    background-color: var(--accent);
+    color: var(--white);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 18px;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.buscar-boton:hover {
+    background-color: var(--accent-hover);
 }
 
 /* texto de "Suggestions" */
 .buscar-subtitulo {
     font-size: 12px;
-    color: #6e5a63;
+    color: var(--text);
 }
 
 /* fila de sugerencias */
@@ -87,8 +118,8 @@
 /* cada sugerencia es una pildora rosada */
 .buscar-tag {
     border: none;
-    background-color: #f7d9e3;
-    color: #c2456e;
+    background-color: var(--accent-bg);
+    color: var(--accent);
     font-family: inherit;
     font-size: 12px;
     padding: 6px 12px;
@@ -97,8 +128,8 @@
 }
 
 .buscar-tag:hover {
-    background-color: #d3cc00d2;
-    color: #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
 }
 
 /* boton de volver al inicio, ocupa todo el ancho
@@ -107,8 +138,8 @@
     display: block;
     text-align: center;
     text-decoration: none;
-    background-color: #f7d9e3;
-    color: #c2456e;
+    background-color: var(--accent-bg);
+    color: var(--accent);
     font-size: 15px;
     font-weight: 600;
     padding: 14px;

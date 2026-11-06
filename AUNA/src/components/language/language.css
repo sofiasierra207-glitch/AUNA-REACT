@@ -1,4 +1,8 @@
-/* Menú de idiomas */
+/*
+   AÚNA - LANGUAGE
+   Menú de idiomas que se despliega debajo del botón de idioma del header
+   Los colores vienen de assets/colors.css
+*/
 
 /* El grupo de íconos es la referencia para ubicar el menú */
 .header-actions {
@@ -7,28 +11,23 @@
 
 /* Botón de idioma con el menú abierto: fondo rosado claro */
 .icon-button.active {
-    background-color: #F7D9E3;
-    border-color: #F7D9E3;
+    background-color: var(--accent-bg);
+    border-color: var(--accent-bg);
 }
 
-/* Cajita blanca debajo del botón, oculta al inicio */
+/* Cajita blanca debajo del botón */
 .language-menu {
-    display: none;
+    display: block;
     position: absolute;
     top: 60px;
     right: 0;
     width: 200px;
-    background-color: #FFFFFF;
-    border: 1px solid #F1DFE4;
+    background-color: var(--white);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 12px 8px 8px;
-    box-shadow: 0 12px 32px rgba(44, 29, 37, 0.14);
+    box-shadow: var(--shadow);
     z-index: 1100;
-}
-
-/* Se muestra cuando JS le pone la clase "open" */
-.language-menu.open {
-    display: block;
 }
 
 /* Título pequeño en mayúsculas */
@@ -37,7 +36,7 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #6E5A63;
+    color: var(--text);
     padding: 0 10px 8px;
 }
 
@@ -53,12 +52,12 @@
     padding: 10px;
     font-family: inherit;
     font-size: 13px;
-    color: #2C1D25;
+    color: var(--text-h);
     cursor: pointer;
 }
 
 .language-option:hover {
-    background-color: #FDEEF1;
+    background-color: var(--accent-soft);
 }
 
 /* El check está oculto en todos los idiomas */
@@ -70,7 +69,7 @@
 
 /* Idioma elegido: texto rosado y check visible */
 .language-option.active {
-    color: #C2456E;
+    color: var(--accent);
     font-weight: 600;
 }
 
@@ -78,7 +77,10 @@
     display: block;
 }
 
-/* En tablet los íconos son más pequeños, el menú sube un poco */
+/*
+   Tablet: los íconos son más pequeños, el menú sube un poco
+*/
+
 @media (max-width: 1000px) {
 
     .language-menu {

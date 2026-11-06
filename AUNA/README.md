@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+# AÚNA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AÚNA is a safe, verified social network for women. Users can share experiences, find verified professionals and safe places, save what helps them, and ask the community for help.
 
-Currently, two official plugins are available:
+This is the third delivery of the project: the same website from delivery 2 (HTML, CSS and JavaScript), rebuilt with **React + TypeScript** using components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## How to run it
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+You need Node.js installed.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+cd AUNA
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Then open http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other commands:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `npm run build` — checks the types and builds the project
+- `npm run lint` — checks the code with ESLint
+
+
+## Technologies
+
+- React 19 with TypeScript
+- Vite
+- React Router (pages and navigation)
+- CSS (one file per page and per component, colors in `src/assets/colors.css`)
+- localStorage through the custom hook `useLocalStorage`
+
+
+## Project structure
 
 ```
+src/
+├── assets/       images, icons, fonts and the color palette
+├── components/   reusable pieces and modals (one folder each)
+├── hooks/        custom hooks (useLocalStorage)
+├── pages/        the 6 pages (index, explore, community, favorites, help, login)
+├── App.tsx       routes and global state (session)
+└── main.tsx      starts the app with BrowserRouter
+```
+
+**Global state:** `App.tsx` keeps the session with `useLocalStorage` and passes it down with props, so it is shared by every page and is not lost when the page reloads.
+
+
+## Team
+
+| | Ana Sofía Sierra | Camila Martínez |
+|
+| Pages | Home, Community, Help, Login | Explore, Favorites |
+| Layout | Header, BottomNav, Footer, MainLayout, React Router | — |
+| Components | FeedCard, CircleCard, ProfessionalCard, ResourceCard | PostCard, CollectionCard, SavedCard |
+| Modals | Posted, Profile, Language | Search, Verified, CommunityHelp, ForgotPassword, CreateProfile, Configuration, MiniProfile |
+| State and hooks | Global session state in App | Custom hook `useLocalStorage` |

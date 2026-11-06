@@ -67,7 +67,7 @@ function Help() {
                     <p>Tell the community what you need today. Your message only reaches verified users nearby.</p>
                 </div>
 
-                {/* Aquí se conecta communityhelp de Cami */}
+                {/* Abre el modal de pedir ayuda (componente CommunityHelp) */}
                 <button type="button" className="ask-help-button" onClick={() => setHelpOpen(true)}>
                     Ask the community for help
                 </button>
@@ -90,7 +90,7 @@ function Help() {
             <div className={toast !== "" ? "toast visible" : "toast"} role="status">{toast}</div>
 
             {/* Modal de pedir ayuda: le paso si está abierto y cómo cerrarlo */}
-            <CommunityHelp abierto={helpOpen} onCerrar={() => setHelpOpen(false)} />
+            <CommunityHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
 
         </main>
     );

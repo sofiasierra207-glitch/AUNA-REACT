@@ -29,11 +29,13 @@ const covers = [
 
 // Datos que recibe la página desde App
 interface IndexProps {
-    session: string; // correo con la sesión abierta ("" si no hay sesión)
+    session: string;               // correo con la sesión abierta ("" si no hay sesión)
+    saved: number[];               // ids de los posts guardados (estado global)
+    onSave: (id: number) => void;  // guarda o quita un post
 }
 
 // Página de inicio de AÚNA (index)
-function Index({ session }: IndexProps) {
+function Index({ session, saved, onSave }: IndexProps) {
 
     // Posts que se ven en la página
     const [feed, setFeed] = useState(posts);
@@ -71,6 +73,7 @@ function Index({ session }: IndexProps) {
 
             // Post nuevo
             const newPost: Post = {
+                id: Date.now(), // número que no se repite
                 user: currentUser.user,
                 initial: currentUser.initial,
                 role: currentUser.role,
@@ -81,8 +84,7 @@ function Index({ session }: IndexProps) {
                 imageAlt: covers[cover].alt,
                 comments: 0,
                 likes: 0,
-                liked: false,
-                saved: false
+                liked: false
             };
 
             // Pone el post nuevo de primero
@@ -236,7 +238,8 @@ function Index({ session }: IndexProps) {
                 {/* Una tarjeta por cada post */}
                 <div className="posts-grid">
                     {feed.map((post) => (
-                        <FeedCard key={post.user + post.time + post.text} post={post} />
+                        <FeedCard key={post.id} post={post}
+                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)} />
                     ))}
                 </div>
 
@@ -272,7 +275,7 @@ function Index({ session }: IndexProps) {
                     <h2>AÚNA Help</h2>
                     <span className="help-label">RESOURCES NEAR YOU</span>
                     <p>Need to sort something out today? Find health centers, services, and support nearby in seconds.</p>
-                    {/* Aquí se conecta communityhelp de Cami */}
+                    {/* Abre el modal de pedir ayuda (componente CommunityHelp) */}
                     <button type="button" className="help-button" onClick={() => setHelpOpen(true)}>
                         Ask the community for help
                     </button>
@@ -300,7 +303,7 @@ function Index({ session }: IndexProps) {
 
 
             {/* Modal de pedir ayuda: le paso si está abierto y cómo cerrarlo */}
-            <CommunityHelp abierto={helpOpen} onCerrar={() => setHelpOpen(false)} />
+            <CommunityHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
         </main>
     );
 }

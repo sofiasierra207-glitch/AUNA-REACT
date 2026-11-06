@@ -11,138 +11,138 @@ import libroAnimado from '../../assets/images/libroanimado.png';
 import cafeCalma from '../../assets/images/cafe-calma.png';
 
 // temas de los filtros
-// valor es lo que comparo con el tema del post y texto es lo que se ve en el boton
-export const temas = [
-    { valor: 'All', texto: 'All' },
-    { valor: 'Wellness', texto: 'Wellness' },
-    { valor: 'Reading', texto: 'Reading' },
-    { valor: 'Places', texto: 'Safe places' },
-    { valor: 'Creativity', texto: 'Creativity' },
-    { valor: 'Motherhood', texto: 'Motherhood' },
-    { valor: 'Study', texto: 'Study & career' },
+// value es lo que comparo con el topic del post y text es lo que se ve en el boton
+export const topics = [
+    { value: 'All', text: 'All' },
+    { value: 'Wellness', text: 'Wellness' },
+    { value: 'Reading', text: 'Reading' },
+    { value: 'Places', text: 'Safe places' },
+    { value: 'Creativity', text: 'Creativity' },
+    { value: 'Motherhood', text: 'Motherhood' },
+    { value: 'Study', text: 'Study & career' },
 ];
 
 // tipado de una publicacion: asi typescript me avisa si me falta un dato
 export interface Post {
     id: number;               // numero para identificar cada post
-    usuario: string;
+    user: string;
     meta: string;
-    tema: string;             // tiene que ser igual al valor de un filtro
-    texto: string;
-    imagen: string;
-    descripcionImagen: string; // lo uso como alt de la imagen
-    comentarios: number;
+    topic: string;             // tiene que ser igual al valor de un filtro
+    text: string;
+    image: string;
+    imageAlt: string; // lo uso como alt de la imagen
+    comments: number;
     likes: number;
 }
 
 // todas las publicaciones en un array de objetos
 // con este array creo las tarjetas con map, no las escribo una por una
 // favorites tambien lo importa para saber cuales guarde
-export const publicaciones: Post[] = [
+export const explorePosts: Post[] = [
     {
         id: 1,
-        usuario: '@ana.rutas',
+        user: '@ana.rutas',
         meta: 'Places Community · 1h ago',
-        tema: 'Places',
-        texto: 'Map of lit bike paths in the north. We built it together — add yours.',
-        imagen: anaRutas,
-        descripcionImagen: 'Lit bike path at sunset',
-        comentarios: 62,
+        topic: 'Places',
+        text: 'Map of lit bike paths in the north. We built it together — add yours.',
+        image: anaRutas,
+        imageAlt: 'Lit bike path at sunset',
+        comments: 62,
         likes: 418,
     },
     {
         id: 2,
-        usuario: '@dani.mindful',
+        user: '@dani.mindful',
         meta: 'Verified creator · 3h ago',
-        tema: 'Wellness',
-        texto: 'Three breaths to calm anxiety before an interview. They even work for me on the bus.',
-        imagen: daniMindful,
-        descripcionImagen: 'Hands holding a warm cup',
-        comentarios: 95,
+        topic: 'Wellness',
+        text: 'Three breaths to calm anxiety before an interview. They even work for me on the bus.',
+        image: daniMindful,
+        imageAlt: 'Hands holding a warm cup',
+        comments: 95,
         likes: 733,
     },
     {
         id: 3,
-        usuario: '@renata.libros',
+        user: '@renata.libros',
         meta: 'Book club · 6h ago',
-        tema: 'Reading',
-        texto: 'We finished chapter five and still have questions. Did anyone else cry on page 200?',
-        imagen: renataLibros,
-        descripcionImagen: 'Stack of books by a window',
-        comentarios: 41,
+        topic: 'Reading',
+        text: 'We finished chapter five and still have questions. Did anyone else cry on page 200?',
+        image: renataLibros,
+        imageAlt: 'Stack of books by a window',
+        comments: 41,
         likes: 289,
     },
     {
         id: 4,
-        usuario: '@sara.estudia',
+        user: '@sara.estudia',
         meta: 'Study Community · 9h ago',
-        tema: 'Study',
-        texto: 'Online study session on Tuesdays at 7pm. Camera optional, company guaranteed.',
-        imagen: saraEstudia,
-        descripcionImagen: 'Desk with a notebook and coffee',
-        comentarios: 28,
+        topic: 'Study',
+        text: 'Online study session on Tuesdays at 7pm. Camera optional, company guaranteed.',
+        image: saraEstudia,
+        imageAlt: 'Desk with a notebook and coffee',
+        comments: 28,
         likes: 512,
     },
     {
         id: 5,
-        usuario: '@juli.mamis',
+        user: '@juli.mamis',
         meta: 'Weekly meetup · 1d ago',
-        tema: 'Motherhood',
-        texto: "We took the little ones to the park on 12th. There's shade, clean restrooms, and other moms nearby.",
-        imagen: juliMamis,
-        descripcionImagen: 'Playground in the morning',
-        comentarios: 77,
+        topic: 'Motherhood',
+        text: "We took the little ones to the park on 12th. There's shade, clean restrooms, and other moms nearby.",
+        image: juliMamis,
+        imageAlt: 'Playground in the morning',
+        comments: 77,
         likes: 604,
     },
     {
         id: 6,
-        usuario: '@nina.taller',
+        user: '@nina.taller',
         meta: 'Verified creator · 2d ago',
-        tema: 'Creativity',
-        texto: "I opened spots for Saturday's ceramics workshop. Small space, only eight spots.",
-        imagen: ninaTaller,
-        descripcionImagen: 'Hands shaping ceramics',
-        comentarios: 33,
+        topic: 'Creativity',
+        text: "I opened spots for Saturday's ceramics workshop. Small space, only eight spots.",
+        image: ninaTaller,
+        imageAlt: 'Hands shaping ceramics',
+        comments: 33,
         likes: 356,
     },
     {
         id: 7,
-        usuario: '@lina.camina',
+        user: '@lina.camina',
         meta: 'Wellness Community · 3d ago',
-        tema: 'Wellness',
-        texto: 'Sunday walk in the park at 8am. We go slow, we talk, and nobody walks alone.',
-        imagen: parque,
-        descripcionImagen: 'Green park with tall trees',
-        comentarios: 24,
+        topic: 'Wellness',
+        text: 'Sunday walk in the park at 8am. We go slow, we talk, and nobody walks alone.',
+        image: parque,
+        imageAlt: 'Green park with tall trees',
+        comments: 24,
         likes: 198,
     },
     {
         id: 8,
-        usuario: '@sofi.lee',
+        user: '@sofi.lee',
         meta: 'Book club · 4d ago',
-        tema: 'Reading',
-        texto: 'This month\'s book is short and sweet. Perfect if you want to start reading again.',
-        imagen: libroAnimado,
-        descripcionImagen: 'Illustrated book cover',
-        comentarios: 18,
+        topic: 'Reading',
+        text: 'This month\'s book is short and sweet. Perfect if you want to start reading again.',
+        image: libroAnimado,
+        imageAlt: 'Illustrated book cover',
+        comments: 18,
         likes: 143,
     },
     {
         id: 9,
-        usuario: '@cafe.calma',
+        user: '@cafe.calma',
         meta: 'Safe place · 5d ago',
-        tema: 'Places',
-        texto: 'Quiet café with big tables and staff who know the network. Open until 10pm.',
-        imagen: cafeCalma,
-        descripcionImagen: 'Cup of coffee on a table',
-        comentarios: 31,
+        topic: 'Places',
+        text: 'Quiet café with big tables and staff who know the network. Open until 10pm.',
+        image: cafeCalma,
+        imageAlt: 'Cup of coffee on a table',
+        comments: 31,
         likes: 267,
     },
 ];
 
 // colecciones de la semana (las 3 tarjetas de colores)
-export const coleccionesSemana = [
-    { titulo: 'Safe routes', texto: '48 places verified by users', color: 'rosa-claro' },
-    { titulo: 'Read together', texto: '12 active clubs this month', color: 'rosa' },
-    { titulo: 'Voices that support you', texto: 'Stories of care and mental health', color: 'oscura' },
+export const weeklyCollections = [
+    { title: 'Safe routes', text: '48 places verified by users', color: 'rosa-claro' },
+    { title: 'Read together', text: '12 active clubs this month', color: 'rosa' },
+    { title: 'Voices that support you', text: 'Stories of care and mental health', color: 'oscura' },
 ] as const;

@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import SearchPopup from '../search/SearchPopup';
 import Profile from '../profile/Profile';
+import Language from '../language/Language';
+import Configuration from '../configuration/Configuration';
+import MiniProfile from '../mini-profile/MiniProfile';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -18,28 +21,57 @@ interface HeaderProps {
 // Barra de arriba: logo, menú y botones redondos
 function Header({ session, onLogout }: HeaderProps) {
     // estado para saber si el popup de buscar esta abierto o cerrado
-    const [buscarAbierto, setBuscarAbierto] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     // ¿Está abierta la ventana del perfil?
     const [profileOpen, setProfileOpen] = useState(false);
 
+    // ¿Está abierto el menú de idiomas?
+    const [languageOpen, setLanguageOpen] = useState(false);
+
+    // ¿Está abierta la ventana de Settings? (configuration de Cami)
+    const [settingsOpen, setSettingsOpen] = useState(false);
+
+    // ¿Está abierto el mini perfil? (menú de Cami debajo del botón de perfil)
+    const [miniOpen, setMiniOpen] = useState(false);
+
     // Para ir a otra página desde el código
     const navigate = useNavigate();
 
-    // Botón de perfil: si no hay sesión va al Login; si hay, abre el perfil
+    // Botón de perfil: si no hay sesión va al Login; si hay, abre o cierra el mini perfil
     function handleProfile() {
         if (session === "") {
             navigate("/login");
         } else {
-            setProfileOpen(true);
+            setMiniOpen(!miniOpen);
         }
+    }
+
+    // "View my profile" del mini perfil: cierra el menú y abre el perfil
+    function handleViewProfile() {
+        setMiniOpen(false);
+        setProfileOpen(true);
+    }
+
+    // "Settings" del mini perfil: cierra el menú y abre Settings
+    function handleSettings() {
+        setMiniOpen(false);
+        setSettingsOpen(true);
     }
 
     // Log out: borra la sesión, cierra el perfil y va al Login
     function handleLogout() {
         onLogout();
         setProfileOpen(false);
+        setSettingsOpen(false);
+        setMiniOpen(false);
         navigate("/login");
+    }
+
+    // Edit profile: cierra el perfil y abre Settings
+    function handleEdit() {
+        setProfileOpen(false);
+        setSettingsOpen(true);
     }
 
     return (
@@ -72,20 +104,31 @@ function Header({ session, onLogout }: HeaderProps) {
                         className="icon-button"
                         id="search-button"
                         aria-label="Search"
-                        onClick={() => setBuscarAbierto(true)}
+                        onClick={() => setSearchOpen(true)}
                     >
                         <img src={searchIcon} alt="" />
                     </button>
 
-                    {/* el perfil abre la ventana Profile (o el Login si no hay sesión) */}
-                    <button type="button" className="icon-button" id="profile-button" aria-label="Profile"
+                    {/* el perfil abre el mini perfil (o el Login si no hay sesión) */}
+                    <button type="button" id="profile-button" aria-label="Profile"
+                        className={miniOpen ? "icon-button active" : "icon-button"}
                         onClick={handleProfile}>
                         <img src={profileIcon} alt="" />
                     </button>
 
-                    <button type="button" className="icon-button" id="language-button" aria-label="Change language">
+                    {/* el botón de idioma abre y cierra el menú Language */}
+                    <button type="button" id="language-button" aria-label="Change language"
+                        className={languageOpen ? "icon-button active" : "icon-button"}
+                        onClick={() => setLanguageOpen(!languageOpen)}>
                         <img src={languageIcon} alt="" />
                     </button>
+
+                    {/* Menú de idiomas, debajo del botón */}
+                    <Language open={languageOpen} onClose={() => setLanguageOpen(false)} />
+
+                    {/* Mini perfil de Cami, debajo del botón de perfil */}
+                    <MiniProfile open={miniOpen} onClose={() => setMiniOpen(false)}
+                        onViewProfile={handleViewProfile} onSettings={handleSettings} onLogout={handleLogout} />
 
                 </div>
 
@@ -93,13 +136,17 @@ function Header({ session, onLogout }: HeaderProps) {
 
             {/* popup de buscar: le paso si esta abierto y la funcion para cerrarlo */}
             <SearchPopup
-                abierto={buscarAbierto}
-                onCerrar={() => setBuscarAbierto(false)}
+                open={searchOpen}
+                onClose={() => setSearchOpen(false)}
             />
 
             {/* Ventana del perfil */}
             <Profile open={profileOpen} session={session}
-                onClose={() => setProfileOpen(false)} onLogout={handleLogout} />
+                onClose={() => setProfileOpen(false)} onLogout={handleLogout} onEdit={handleEdit} />
+
+            {/* Ventana de Settings (configuration de Cami) */}
+            <Configuration open={settingsOpen}
+                onClose={() => setSettingsOpen(false)} onLogout={handleLogout} />
 
         </header>
     );

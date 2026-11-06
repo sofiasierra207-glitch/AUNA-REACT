@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.css';
 
+import ForgotPassword from '../../components/forgotpassword/ForgotPassword';
+import CreateProfile from '../../components/createprofile/CreateProfile';
+
 // Datos que recibe la página desde App
 interface LoginProps {
     onLogin: (email: string) => void; // guarda la sesión en el estado global
@@ -18,6 +21,14 @@ function Login({ onLogin }: LoginProps) {
     // Mensaje de error y campo que tiene el error ("email", "password" o "")
     const [message, setMessage] = useState("");
     const [errorField, setErrorField] = useState("");
+
+
+    // Si el modal de olvidé mi contraseña está abierto o cerrado
+    const [forgotOpen, setForgotOpen] = useState(false);
+
+
+    // Si el modal de crear cuenta está abierto o cerrado
+    const [createOpen, setCreateOpen] = useState(false);
 
     // Para ir a otra página desde el código
     const navigate = useNavigate();
@@ -95,8 +106,10 @@ function Login({ onLogin }: LoginProps) {
                             clearError();
                         }} />
 
-                    {/* Aquí se conecta forgotpassword de Cami */}
-                    <button type="button" className="login-forgot">Forgot your password?</button>
+                    {/* Abre el modal de olvidé mi contraseña (componente ForgotPassword) */}
+                    <button type="button" className="login-forgot" onClick={() => setForgotOpen(true)}>
+                        Forgot your password?
+                    </button>
 
                     {/* Mensaje de error */}
                     <p className="login-message" role="status">{message}</p>
@@ -113,13 +126,22 @@ function Login({ onLogin }: LoginProps) {
                     <p className="login-create">
                         {/* {" "} deja un espacio antes del botón */}
                         Don't have an account?{" "}
-                        {/* Aquí se conecta createprofile de Cami */}
-                        <button type="button" className="login-create-button">Create account</button>
+                        {/* Abre el modal de crear cuenta (componente CreateProfile de Cami) */}
+                        <button type="button" className="login-create-button" onClick={() => setCreateOpen(true)}>
+                            Create account
+                        </button>
                     </p>
 
                 </form>
 
             </section>
+
+            {/* Modal de Cami: le paso si está abierto y cómo cerrarlo */}
+            <ForgotPassword open={forgotOpen} onClose={() => setForgotOpen(false)} />
+
+            
+            {/* onCreate usa onLogin: al crear la cuenta queda la sesión iniciada (estado global) */}
+            <CreateProfile open={createOpen} onClose={() => setCreateOpen(false)} onCreate={onLogin} />
 
         </main>
     );
