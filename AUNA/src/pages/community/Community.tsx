@@ -127,7 +127,7 @@ function Community() {
             <div className={toast !== "" ? "toast visible" : "toast"} role="status">{toast}</div>
 
             {/* Modal de verificación: le paso si está abierto y cómo cerrarlo */}
-            <Verified abierto={verifiedOpen} onCerrar={() => setVerifiedOpen(false)} />
+            <Verified open={verifiedOpen} onClose={() => setVerifiedOpen(false)} />
 
         </main>
     );
