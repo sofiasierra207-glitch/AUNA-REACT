@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import SearchPopup from '../search/SearchPopup';
 import Profile from '../profile/Profile';
+import Language from '../language/Language';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -22,6 +23,9 @@ function Header({ session, onLogout }: HeaderProps) {
 
     // ¿Está abierta la ventana del perfil?
     const [profileOpen, setProfileOpen] = useState(false);
+
+    // ¿Está abierto el menú de idiomas?
+    const [languageOpen, setLanguageOpen] = useState(false);
 
     // Para ir a otra página desde el código
     const navigate = useNavigate();
@@ -83,9 +87,15 @@ function Header({ session, onLogout }: HeaderProps) {
                         <img src={profileIcon} alt="" />
                     </button>
 
-                    <button type="button" className="icon-button" id="language-button" aria-label="Change language">
+                    {/* el botón de idioma abre y cierra el menú Language */}
+                    <button type="button" id="language-button" aria-label="Change language"
+                        className={languageOpen ? "icon-button active" : "icon-button"}
+                        onClick={() => setLanguageOpen(!languageOpen)}>
                         <img src={languageIcon} alt="" />
                     </button>
+
+                    {/* Menú de idiomas, debajo del botón */}
+                    <Language open={languageOpen} onClose={() => setLanguageOpen(false)} />
 
                 </div>
 
