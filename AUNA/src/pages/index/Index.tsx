@@ -275,7 +275,7 @@ function Index({ session, saved, onSave }: IndexProps) {
                     <h2>AÚNA Help</h2>
                     <span className="help-label">RESOURCES NEAR YOU</span>
                     <p>Need to sort something out today? Find health centers, services, and support nearby in seconds.</p>
-                    {/* Aquí se conecta communityhelp de Cami */}
+                    {/* Abre el modal de pedir ayuda (componente CommunityHelp) */}
                     <button type="button" className="help-button" onClick={() => setHelpOpen(true)}>
                         Ask the community for help
                     </button>

@@ -106,7 +106,7 @@ function Login({ onLogin }: LoginProps) {
                             clearError();
                         }} />
 
-                    {/* Aquí se conecta forgotpassword de Cami */}
+                    {/* Abre el modal de olvidé mi contraseña (componente ForgotPassword) */}
                     <button type="button" className="login-forgot" onClick={() => setForgotOpen(true)}>
                         Forgot your password?
                     </button>
