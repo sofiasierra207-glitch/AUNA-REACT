@@ -4,6 +4,7 @@ import SearchPopup from '../search/SearchPopup';
 import Profile from '../profile/Profile';
 import Language from '../language/Language';
 import Configuration from '../configuration/Configuration';
+import MiniProfile from '../mini-profile/MiniProfile';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -31,16 +32,31 @@ function Header({ session, onLogout }: HeaderProps) {
     // ¿Está abierta la ventana de Settings? (configuration de Cami)
     const [settingsOpen, setSettingsOpen] = useState(false);
 
+    // ¿Está abierto el mini perfil? (menú de Cami debajo del botón de perfil)
+    const [miniOpen, setMiniOpen] = useState(false);
+
     // Para ir a otra página desde el código
     const navigate = useNavigate();
 
-    // Botón de perfil: si no hay sesión va al Login; si hay, abre el perfil
+    // Botón de perfil: si no hay sesión va al Login; si hay, abre o cierra el mini perfil
     function handleProfile() {
         if (session === "") {
             navigate("/login");
         } else {
-            setProfileOpen(true);
+            setMiniOpen(!miniOpen);
         }
+    }
+
+    // "View my profile" del mini perfil: cierra el menú y abre el perfil
+    function handleViewProfile() {
+        setMiniOpen(false);
+        setProfileOpen(true);
+    }
+
+    // "Settings" del mini perfil: cierra el menú y abre Settings
+    function handleSettings() {
+        setMiniOpen(false);
+        setSettingsOpen(true);
     }
 
     // Log out: borra la sesión, cierra el perfil y va al Login
@@ -48,6 +64,7 @@ function Header({ session, onLogout }: HeaderProps) {
         onLogout();
         setProfileOpen(false);
         setSettingsOpen(false);
+        setMiniOpen(false);
         navigate("/login");
     }
 
@@ -92,8 +109,9 @@ function Header({ session, onLogout }: HeaderProps) {
                         <img src={searchIcon} alt="" />
                     </button>
 
-                    {/* el perfil abre la ventana Profile (o el Login si no hay sesión) */}
-                    <button type="button" className="icon-button" id="profile-button" aria-label="Profile"
+                    {/* el perfil abre el mini perfil (o el Login si no hay sesión) */}
+                    <button type="button" id="profile-button" aria-label="Profile"
+                        className={miniOpen ? "icon-button active" : "icon-button"}
                         onClick={handleProfile}>
                         <img src={profileIcon} alt="" />
                     </button>
@@ -107,6 +125,10 @@ function Header({ session, onLogout }: HeaderProps) {
 
                     {/* Menú de idiomas, debajo del botón */}
                     <Language open={languageOpen} onClose={() => setLanguageOpen(false)} />
+
+                    {/* Mini perfil de Cami, debajo del botón de perfil */}
+                    <MiniProfile abierto={miniOpen} onCerrar={() => setMiniOpen(false)}
+                        onVerPerfil={handleViewProfile} onAjustes={handleSettings} onLogout={handleLogout} />
 
                 </div>
 
