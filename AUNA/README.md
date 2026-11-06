@@ -21,3 +21,12 @@ Other commands:
 
 - `npm run build` — checks the types and builds the project
 - `npm run lint` — checks the code with ESLint
+
+
+## Technologies
+
+- React 19 with TypeScript
+- Vite
+- React Router (pages and navigation)
+- CSS (one file per page and per component, colors in `src/assets/colors.css`)
+- localStorage through the custom hook `useLocalStorage`
