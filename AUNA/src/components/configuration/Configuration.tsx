@@ -27,10 +27,11 @@ interface Interruptor {
 }
 
 // datos de la cuenta (como en el figma)
+// la contraseña no se guarda en el codigo: la fila solo muestra puntos
 const cuentaInicial: DatoCuenta[] = [
     { label: 'Full name', value: 'Valentina Torres', type: 'text' },
     { label: 'Email address', value: 'valen.torres@email.com', type: 'email' },
-    { label: 'Password', value: 'auna2026', type: 'password' },
+    { label: 'Password', value: '', type: 'password' },
 ];
 
 // interruptores de notificaciones y privacidad
@@ -53,16 +54,38 @@ function Configuration({ abierto, onCerrar, onLogout }: ConfigurationProps) {
     const [editando, setEditando] = useState('');
     const [textoEditar, setTextoEditar] = useState('');
 
+    // cambio seguro de correo o contraseña ("" si no hay ninguno abierto)
+    // por seguridad no se editan en la fila: piden la contraseña actual
+    const [cambioSeguro, setCambioSeguro] = useState('');
+    const [correoNuevo, setCorreoNuevo] = useState('');
+    const [actual, setActual] = useState('');           // contraseña actual
+    const [nueva, setNueva] = useState('');             // contraseña nueva
+    const [confirmar, setConfirmar] = useState('');     // contraseña nueva otra vez
+    const [errorSeguro, setErrorSeguro] = useState('');
+    const [avisoSeguro, setAvisoSeguro] = useState(''); // mensaje cuando sale bien
+
     // primer click en "Delete my account" pide confirmar
     const [confirmarBorrar, setConfirmarBorrar] = useState(false);
 
     // el perfil guardado por createprofile, para borrarlo al eliminar la cuenta
     const [, setUsuaria] = useLocalStorage<object | null>('aunaUser', null);
 
-    // cierro y dejo "Delete" como al inicio
+    // cierro el formulario seguro y borro lo que se escribio
+    function cancelarSeguro() {
+        setCambioSeguro('');
+        setCorreoNuevo('');
+        setActual('');
+        setNueva('');
+        setConfirmar('');
+        setErrorSeguro('');
+    }
+
+    // cierro y dejo todo como al inicio
     function cerrar() {
         setEditando('');
         setConfirmarBorrar(false);
+        cancelarSeguro();
+        setAvisoSeguro('');
         onCerrar();
     }
 
@@ -90,11 +113,47 @@ function Configuration({ abierto, onCerrar, onLogout }: ConfigurationProps) {
         return dato.type === 'password' ? '••••••••' : dato.value;
     }
 
-    // click en una fila: empiezo a editarla con su valor actual
+    // click en una fila
+    // el nombre se edita en la misma fila
+    // el correo y la contraseña abren el formulario seguro
     function empezarEditar(dato: DatoCuenta) {
-        if (editando !== dato.label) {
-            setEditando(dato.label);
-            setTextoEditar(dato.value);
+        setAvisoSeguro('');
+        if (dato.type === 'text') {
+            if (editando !== dato.label) {
+                setEditando(dato.label);
+                setTextoEditar(dato.value);
+            }
+        } else if (cambioSeguro !== dato.type) {
+            cancelarSeguro();
+            setCambioSeguro(dato.type);
+        }
+    }
+
+    // Save del formulario seguro: revisa los campos antes de cambiar algo
+    // la contraseña actual solo se revisa que este escrita
+    // (en la entrega final la revisa el servicio de autenticacion)
+    function guardarSeguro() {
+        if (actual === '') {
+            setErrorSeguro('Write your current password.');
+        } else if (cambioSeguro === 'email') {
+            const limpio = correoNuevo.trim();
+            if (!limpio.includes('@') || !limpio.includes('.')) {
+                setErrorSeguro('Write a valid email address.');
+            } else {
+                // el correo no cambia hasta que se confirme desde el enlace
+                cancelarSeguro();
+                setAvisoSeguro('We sent a confirmation link to ' + limpio + '. Your email will change once you confirm it.');
+            }
+        } else if (nueva.length < 8) {
+            setErrorSeguro('Your new password needs at least 8 characters.');
+        } else if (nueva === actual) {
+            setErrorSeguro('Your new password must be different from the current one.');
+        } else if (nueva !== confirmar) {
+            setErrorSeguro("The new passwords don't match.");
+        } else {
+            // la contraseña no se guarda en ninguna parte
+            cancelarSeguro();
+            setAvisoSeguro('Your password was updated.');
         }
     }
 
@@ -201,6 +260,68 @@ function Configuration({ abierto, onCerrar, onLogout }: ConfigurationProps) {
                             <span className="settings-arrow">›</span>
                         </div>
                     ))}
+
+                    {/* formulario seguro: solo se ve si toque el correo o la contraseña */}
+                    {cambioSeguro !== '' && (
+                        <div className="settings-secure">
+                            <p className="settings-secure-title">
+                                {cambioSeguro === 'email' ? 'Change your email' : 'Change your password'}
+                            </p>
+
+                            {/* el correo nuevo solo se pide si cambio el correo */}
+                            {cambioSeguro === 'email' && (
+                                <input
+                                    className="settings-secure-input"
+                                    type="email"
+                                    placeholder="New email address"
+                                    aria-label="New email address"
+                                    value={correoNuevo}
+                                    onChange={(evento) => { setCorreoNuevo(evento.target.value); setErrorSeguro(''); }}
+                                />
+                            )}
+
+                            <input
+                                className="settings-secure-input"
+                                type="password"
+                                placeholder="Current password"
+                                aria-label="Current password"
+                                value={actual}
+                                onChange={(evento) => { setActual(evento.target.value); setErrorSeguro(''); }}
+                            />
+
+                            {/* la contraseña nueva se escribe dos veces para confirmarla */}
+                            {cambioSeguro === 'password' && (
+                                <>
+                                    <input
+                                        className="settings-secure-input"
+                                        type="password"
+                                        placeholder="New password (8+ characters)"
+                                        aria-label="New password"
+                                        value={nueva}
+                                        onChange={(evento) => { setNueva(evento.target.value); setErrorSeguro(''); }}
+                                    />
+                                    <input
+                                        className="settings-secure-input"
+                                        type="password"
+                                        placeholder="Confirm new password"
+                                        aria-label="Confirm new password"
+                                        value={confirmar}
+                                        onChange={(evento) => { setConfirmar(evento.target.value); setErrorSeguro(''); }}
+                                    />
+                                </>
+                            )}
+
+                            <p className="settings-secure-error" role="status">{errorSeguro}</p>
+
+                            <div className="settings-secure-actions">
+                                <button type="button" className="settings-secure-cancel" onClick={cancelarSeguro}>Cancel</button>
+                                <button type="button" className="settings-secure-save" onClick={guardarSeguro}>Save</button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* mensaje cuando el cambio sale bien */}
+                    {avisoSeguro !== '' && <p className="settings-secure-ok" role="status">{avisoSeguro}</p>}
                 </div>
 
                 <p className="settings-group">NOTIFICATIONS</p>
