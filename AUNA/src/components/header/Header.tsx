@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import SearchPopup from '../search/SearchPopup';
+import Profile from '../profile/Profile';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -8,10 +9,38 @@ import searchIcon from '../../assets/icons/search.svg';
 import profileIcon from '../../assets/icons/profile.svg';
 import languageIcon from '../../assets/icons/language.svg';
 
+// Datos que recibe el Header desde MainLayout (vienen del estado global de App)
+interface HeaderProps {
+    session: string;        // correo con la sesión abierta ("" si no hay sesión)
+    onLogout: () => void;   // borra la sesión
+}
+
 // Barra de arriba: logo, menú y botones redondos
-function Header() {
+function Header({ session, onLogout }: HeaderProps) {
     // estado para saber si el popup de buscar esta abierto o cerrado
     const [buscarAbierto, setBuscarAbierto] = useState(false);
+
+    // ¿Está abierta la ventana del perfil?
+    const [profileOpen, setProfileOpen] = useState(false);
+
+    // Para ir a otra página desde el código
+    const navigate = useNavigate();
+
+    // Botón de perfil: si no hay sesión va al Login; si hay, abre el perfil
+    function handleProfile() {
+        if (session === "") {
+            navigate("/login");
+        } else {
+            setProfileOpen(true);
+        }
+    }
+
+    // Log out: borra la sesión, cierra el perfil y va al Login
+    function handleLogout() {
+        onLogout();
+        setProfileOpen(false);
+        navigate("/login");
+    }
 
     return (
         <header>
@@ -48,7 +77,9 @@ function Header() {
                         <img src={searchIcon} alt="" />
                     </button>
 
-                    <button type="button" className="icon-button" id="profile-button" aria-label="Profile">
+                    {/* el perfil abre la ventana Profile (o el Login si no hay sesión) */}
+                    <button type="button" className="icon-button" id="profile-button" aria-label="Profile"
+                        onClick={handleProfile}>
                         <img src={profileIcon} alt="" />
                     </button>
 
@@ -65,6 +96,10 @@ function Header() {
                 abierto={buscarAbierto}
                 onCerrar={() => setBuscarAbierto(false)}
             />
+
+            {/* Ventana del perfil */}
+            <Profile open={profileOpen} session={session}
+                onClose={() => setProfileOpen(false)} onLogout={handleLogout} />
 
         </header>
     );
