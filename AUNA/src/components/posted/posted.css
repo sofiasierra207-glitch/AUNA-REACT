@@ -1,6 +1,13 @@
-/* Fondo oscuro que cubre toda la pantalla, oculto al inicio */
+/*
+   AÚNA - POSTED
+   Ventana que aparece cuando se publica un post en el Home
+   Los colores vienen de assets/colors.css
+*/
+
+
+/* Fondo oscuro que cubre toda la pantalla */
 .posted-overlay {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -13,20 +20,15 @@
     padding: 20px;
 }
 
-/* Se muestra cuando JS le pone la clase "open" */
-.posted-overlay.open {
-    display: flex;
-}
-
 /* Ventana blanca centrada */
 .posted-modal {
     width: 100%;
     max-width: 380px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 24px;
     padding: 32px 40px;
     text-align: center;
-    font-family: "Inter", Arial, sans-serif;
+    font-family: var(--sans);
     box-shadow: 0 20px 48px rgba(44, 29, 37, 0.2);
 }
 
@@ -36,7 +38,7 @@
     height: 56px;
     margin: 0 auto 16px;
     border-radius: 50%;
-    background-color: #F7D9E3;
+    background-color: var(--accent-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,14 +50,14 @@
 }
 
 .posted-modal h3 {
-    color: #2C1D25;
+    color: var(--text-h);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 8px;
 }
 
 .posted-modal p {
-    color: #6E5A63;
+    color: var(--text);
     font-size: 13px;
     margin-bottom: 20px;
 }
@@ -64,8 +66,8 @@
 .posted-button {
     width: 100%;
     border: none;
-    background-color: #C2456E;
-    color: #FFFFFF;
+    background-color: var(--accent);
+    color: var(--white);
     padding: 12px;
     border-radius: 999px;
     font-family: inherit;
@@ -75,10 +77,14 @@
 }
 
 .posted-button:hover {
-    background-color: #A93A5E;
+    background-color: var(--accent-hover);
 }
 
-/* En celular la ventana es un poco más compacta */
+
+/*
+   Mobile: la ventana es un poco más compacta
+*/
+
 @media (max-width: 700px) {
 
     .posted-modal {
