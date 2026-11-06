@@ -303,7 +303,7 @@ function Index({ session, saved, onSave }: IndexProps) {
 
 
             {/* Modal de pedir ayuda: le paso si está abierto y cómo cerrarlo */}
-            <CommunityHelp abierto={helpOpen} onCerrar={() => setHelpOpen(false)} />
+            <CommunityHelp open={helpOpen} onClose={() => setHelpOpen(false)} />
         </main>
     );
 }

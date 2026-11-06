@@ -38,8 +38,8 @@ function App() {
             {/* MainLayout recibe la sesión para el perfil del Header; Log out la deja vacía */}
             <Route element={<MainLayout session={session} onLogout={() => setSession("")} />}>
                 <Route path="/" element={<Index session={session} saved={saved} onSave={toggleSave} />} />
-                <Route path="/explore" element={<Explore guardados={saved} onGuardar={toggleSave} />} />
-                <Route path="/favorites" element={<Favorites idsGuardados={saved} />} />
+                <Route path="/explore" element={<Explore saved={saved} onSave={toggleSave} />} />
+                <Route path="/favorites" element={<Favorites savedIds={saved} />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/help" element={<Help />} />
 

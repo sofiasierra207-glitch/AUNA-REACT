@@ -21,7 +21,7 @@ interface HeaderProps {
 // Barra de arriba: logo, menú y botones redondos
 function Header({ session, onLogout }: HeaderProps) {
     // estado para saber si el popup de buscar esta abierto o cerrado
-    const [buscarAbierto, setBuscarAbierto] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     // ¿Está abierta la ventana del perfil?
     const [profileOpen, setProfileOpen] = useState(false);
@@ -104,7 +104,7 @@ function Header({ session, onLogout }: HeaderProps) {
                         className="icon-button"
                         id="search-button"
                         aria-label="Search"
-                        onClick={() => setBuscarAbierto(true)}
+                        onClick={() => setSearchOpen(true)}
                     >
                         <img src={searchIcon} alt="" />
                     </button>
@@ -127,8 +127,8 @@ function Header({ session, onLogout }: HeaderProps) {
                     <Language open={languageOpen} onClose={() => setLanguageOpen(false)} />
 
                     {/* Mini perfil de Cami, debajo del botón de perfil */}
-                    <MiniProfile abierto={miniOpen} onCerrar={() => setMiniOpen(false)}
-                        onVerPerfil={handleViewProfile} onAjustes={handleSettings} onLogout={handleLogout} />
+                    <MiniProfile open={miniOpen} onClose={() => setMiniOpen(false)}
+                        onViewProfile={handleViewProfile} onSettings={handleSettings} onLogout={handleLogout} />
 
                 </div>
 
@@ -136,8 +136,8 @@ function Header({ session, onLogout }: HeaderProps) {
 
             {/* popup de buscar: le paso si esta abierto y la funcion para cerrarlo */}
             <SearchPopup
-                abierto={buscarAbierto}
-                onCerrar={() => setBuscarAbierto(false)}
+                open={searchOpen}
+                onClose={() => setSearchOpen(false)}
             />
 
             {/* Ventana del perfil */}
@@ -145,8 +145,8 @@ function Header({ session, onLogout }: HeaderProps) {
                 onClose={() => setProfileOpen(false)} onLogout={handleLogout} onEdit={handleEdit} />
 
             {/* Ventana de Settings (configuration de Cami) */}
-            <Configuration abierto={settingsOpen}
-                onCerrar={() => setSettingsOpen(false)} onLogout={handleLogout} />
+            <Configuration open={settingsOpen}
+                onClose={() => setSettingsOpen(false)} onLogout={handleLogout} />
 
         </header>
     );
