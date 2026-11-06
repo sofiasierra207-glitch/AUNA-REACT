@@ -5,9 +5,19 @@
 */
 
 
-/* Todo centrado en el medio de la página */
+/* La app ocupa al menos toda la pantalla, en columna:
+   header arriba, la página en el medio y footer abajo */
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Todo centrado en el medio de la página
+   flex 1 hace que ocupe todo el espacio libre,
+   así el footer queda pegado abajo y no sobra espacio rosado */
 .notfound-page {
-    min-height: 60vh;
+    flex: 1;
     padding: 64px 80px;
     display: flex;
     flex-direction: column;
@@ -60,6 +70,12 @@
 */
 
 @media (max-width: 700px) {
+
+    /* en celular el body tiene 96px abajo para el menú (index.css),
+       por eso la app ocupa la pantalla menos ese espacio */
+    #root {
+        min-height: calc(100vh - 96px);
+    }
 
     .notfound-page {
         padding: 48px 20px;
