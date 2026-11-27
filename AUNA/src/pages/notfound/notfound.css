@@ -71,12 +71,8 @@
 
 @media (max-width: 700px) {
 
-    /* en celular el body tiene 96px abajo para el menú (index.css),
-       por eso la app ocupa la pantalla menos ese espacio */
-    #root {
-        min-height: calc(100vh - 96px);
-    }
-
+    /* en celular el espacio del menú de abajo ya lo deja el footer
+       (96px de padding), por eso #root sigue ocupando toda la pantalla */
     .notfound-page {
         padding: 48px 20px;
     }
