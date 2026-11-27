@@ -10,7 +10,7 @@ import './favorites.css';
 // tipado de las props: los ids guardados vienen del estado global de App
 // son los que guarde con el boton "Save" en Explore o en el Home
 interface FavoritesProps {
-    savedIds: number[];
+    savedIds: string[]; // texto, porque los posts de Supabase usan uuid
 }
 
 // pagina de Favorites
@@ -22,8 +22,9 @@ function Favorites({ savedIds }: FavoritesProps) {
     // busco los posts de explore que tienen el id guardado
     // y los convierto al mismo formato de los guardados del figma
     // ya no copio los posts en otro archivo: los importo de explore/data.ts
+    // String() pasa el id de explore (número) a texto para compararlo
     const fromExplore: SavedItem[] = explorePosts
-        .filter((post) => savedIds.includes(post.id))
+        .filter((post) => savedIds.includes(String(post.id)))
         .map((post) => ({
             type: 'Post',
             name: post.user,
@@ -44,7 +45,7 @@ function Favorites({ savedIds }: FavoritesProps) {
         }));
 
     // quito del figma los que ya guarde en explore, asi no sale el mismo post dos veces
-    const fromFigma = figmaSaved.filter((item) => !savedIds.includes(item.exploreId));
+    const fromFigma = figmaSaved.filter((item) => !savedIds.includes(String(item.exploreId)));
 
     // primero los del figma y al final los que guarde en explore y en el home
     const allSaved = [...fromFigma, ...fromExplore, ...fromHome];
