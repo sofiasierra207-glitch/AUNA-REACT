@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { supabase, createProfileIfMissing } from '../../supabaseClient';
 import './createprofile.css';
 
 // tipado de las props
@@ -17,13 +17,6 @@ interface ProfileForm {
     name: string;
     email: string;
     password: string;
-    city: string;
-}
-
-// lo que guardo de la usuaria nueva (la contraseña no se guarda)
-interface User {
-    name: string;
-    email: string;
     city: string;
 }
 
@@ -51,8 +44,11 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
     // si ya cree el perfil muestro la bienvenida
     const [created, setCreated] = useState(false);
 
-    // guardo la usuaria con el custom hook
-    const [, setUser] = useLocalStorage<User | null>('aunaUser', null);
+    // true si Supabase pide confirmar el correo antes de entrar
+    const [needsConfirm, setNeedsConfirm] = useState(false);
+
+    // true mientras Supabase crea la cuenta (el botón se desactiva)
+    const [loading, setLoading] = useState(false);
 
     // dejo todo limpio y cierro
     function close() {
@@ -61,6 +57,7 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         setError('');
         setErrorField('');
         setCreated(false);
+        setNeedsConfirm(false);
         onClose();
     }
 
@@ -76,6 +73,7 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                 setError('');
                 setErrorField('');
                 setCreated(false);
+                setNeedsConfirm(false);
                 onClose();
             }
         }
@@ -102,7 +100,8 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
     }
 
     // cuando envio el formulario: reviso los campos uno por uno
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // async porque hay que esperar la respuesta de Supabase (await)
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault(); // evito que la pagina se recargue
 
         const name = formData.name.trim();
@@ -120,12 +119,31 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         } else if (!acceptedTerms) {
             showError('', 'Accept the Terms and Community Guidelines to continue.');
         } else {
-            // todo esta bien: guardo la usuaria y dejo la sesion iniciada
-            setUser({ name: name, email: email, city: city });
-            onCreate(email);
+            setLoading(true);
 
-            // cambio el formulario por la bienvenida
-            setCreated(true);
+            // todo esta bien: Supabase Auth crea la cuenta (guarda la contraseña encriptada)
+            // el nombre y la ciudad quedan en los datos de la cuenta para crear el perfil despues
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: formData.password,
+                options: { data: { full_name: name, city: city } }
+            });
+
+            setLoading(false);
+
+            if (error) {
+                // por ejemplo: el correo ya tiene cuenta
+                showError('email', error.message);
+            } else if (data.session) {
+                // Supabase ya abrio la sesion: creo el perfil y dejo la sesion iniciada en App
+                await createProfileIfMissing();
+                onCreate(email);
+                setCreated(true);
+            } else {
+                // hay que confirmar el correo antes de entrar (el perfil se crea en el primer login)
+                setNeedsConfirm(true);
+                setCreated(true);
+            }
         }
     }
 
@@ -188,7 +206,9 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
 
                     <p className="create-error">{error}</p>
 
-                    <button type="submit" className="create-button">Create my profile</button>
+                    <button type="submit" className="create-button" disabled={loading}>
+                        {loading ? 'Creating...' : 'Create my profile'}
+                    </button>
 
                     {/* "Log in" cierra el modal y deja el login a la vista */}
                     <p className="create-login">
@@ -197,10 +217,20 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                     </p>
                 </form>
 
-                <div className="create-welcome">
-                    <p className="create-text">Welcome to AÚNA, {formData.name.trim()}! Your profile is ready.</p>
-                    <Link to="/" className="create-button">Go to home</Link>
-                </div>
+                {/* si hay que confirmar el correo, aviso; si no, bienvenida */}
+                {needsConfirm ? (
+                    <div className="create-welcome">
+                        <p className="create-text">
+                            We sent a link to {formData.email.trim()}. Confirm your email and then log in.
+                        </p>
+                        <button type="button" className="create-button" onClick={close}>Back to log in</button>
+                    </div>
+                ) : (
+                    <div className="create-welcome">
+                        <p className="create-text">Welcome to AÚNA, {formData.name.trim()}! Your profile is ready.</p>
+                        <Link to="/" className="create-button">Go to home</Link>
+                    </div>
+                )}
             </div>
         </div>
     );
