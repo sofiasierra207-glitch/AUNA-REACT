@@ -12,8 +12,8 @@ const initialCount = 6; // cuantos posts muestro al inicio
 
 // tipado de las props: los guardados vienen del estado global de App
 interface ExploreProps {
-    saved: number[];
-    onSave: (id: number) => void;
+    saved: string[];                // ids guardados como texto (los de Supabase son uuid)
+    onSave: (id: string) => void;
 }
 
 // pagina de Explore
@@ -160,9 +160,9 @@ function Explore({ saved, onSave }: ExploreProps) {
                             key={post.id}
                             post={post}
                             isLiked={likes.includes(post.id)}
-                            isSaved={saved.includes(post.id)}
+                            isSaved={saved.includes(String(post.id))}
                             onLike={(id) => setLikes(toggle(likes, id))}
-                            onSave={onSave}
+                            onSave={(id) => onSave(String(id))}
                         />
                     ))}
                 </div>
