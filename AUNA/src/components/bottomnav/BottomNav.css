@@ -33,30 +33,39 @@
         padding: 10px 0 14px;
     }
 
-    /* Cada link con un punto arriba y el texto abajo */
+    /* Cada link con su ícono arriba y el texto abajo */
     .bottom-link {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         color: var(--text);
         text-decoration: none;
         font-size: 12px;
     }
 
-    .bottom-link .dot {
-        width: 5px;
-        height: 5px;
-        background-color: var(--accent-bg);
+    /* Íconos del mismo tamaño; el rosado está oculto al inicio */
+    .bottom-icon,
+    .bottom-icon-active {
+        width: 22px;
+        height: 22px;
     }
 
-    /* Página actual en rosado */
+    .bottom-icon-active {
+        display: none;
+    }
+
+    /* Página actual en rosado: se cambia el ícono gris por el rosado */
     .bottom-link.active {
         color: var(--accent);
         font-weight: 600;
     }
 
-    .bottom-link.active .dot {
-        background-color: var(--accent);
+    .bottom-link.active .bottom-icon {
+        display: none;
+    }
+
+    .bottom-link.active .bottom-icon-active {
+        display: block;
     }
 }
