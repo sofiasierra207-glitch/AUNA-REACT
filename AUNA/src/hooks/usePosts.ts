@@ -17,6 +17,12 @@ export function timeAgo(date: string) {
     return Math.floor(hours / 24) + "d ago";
 }
 
+// Pone un post de primero en la lista, si todavía no está
+// (el que yo publico llega dos veces: al guardarlo y por tiempo real)
+function addIfMissing(list: PostRow[], row: PostRow) {
+    return list.some((item) => item.id === row.id) ? list : [row, ...list];
+}
+
 // Custom hook: pide los posts de la tabla posts (los más nuevos primero)
 // Lo usan el Home y Explore, así no repiten el mismo código
 function usePosts() {
@@ -47,15 +53,36 @@ function usePosts() {
 
         loadPosts();
 
+        // Tiempo real: Supabase avisa cada vez que alguien inserta un post nuevo
+        // (Realtime está activado para la tabla posts en Supabase)
+        const channel = supabase
+            .channel('posts-feed')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'posts' }, async (payload) => {
+                // El aviso trae solo las columnas del post; pido la fila completa con su autora
+                const { data } = await supabase
+                    .from('posts')
+                    .select(postColumns)
+                    .eq('id', payload.new.id)
+                    .single();
+
+                // Uso la función de set (prev) para trabajar con la lista más nueva
+                if (active && data) {
+                    setRows((prev) => addIfMissing(prev, data as unknown as PostRow));
+                }
+            })
+            .subscribe();
+
         // Limpieza: se ejecuta cuando la página se cierra
+        // deja de escuchar los cambios para no dejar la conexión abierta
         return () => {
             active = false;
+            supabase.removeChannel(channel);
         };
     }, []);
 
-    // Pone un post recién publicado de primero, sin volver a pedir toda la lista
+    // El Home la llama después de publicar: pone el post nuevo de primero sin pedir toda la lista
     function addRow(row: PostRow) {
-        setRows([row, ...rows]);
+        setRows((prev) => addIfMissing(prev, row));
     }
 
     return { rows, loading, error, addRow };
