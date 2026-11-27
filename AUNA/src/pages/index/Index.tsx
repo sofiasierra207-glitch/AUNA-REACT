@@ -19,7 +19,16 @@ import libro from '../../assets/images/libro.png';
 
 // Opciones del formulario
 const types = ["Photo", "Video"];
-const topics = ["Mental wellness", "Book club", "Safe spaces", "Creativity", "Motherhood", "Study & career"];
+// value es lo que se guarda en la tabla posts (los mismos temas que acepta el check de Supabase)
+// text es lo que se ve en el botón
+const topics = [
+    { value: "Wellness", text: "Mental wellness" },
+    { value: "Reading", text: "Book club" },
+    { value: "Places", text: "Safe spaces" },
+    { value: "Creativity", text: "Creativity" },
+    { value: "Motherhood", text: "Motherhood" },
+    { value: "Study", text: "Study & career" }
+];
 const covers = [
     { image: libroanimado, alt: "Notebook with stickers" },
     { image: parque, alt: "Park with trees" },
@@ -204,10 +213,10 @@ function Index({ session, saved, onSave }: IndexProps) {
                             <span className="option-label">Topic</span>
                             <div className="chips topic-chips">
                                 {topics.map((item) => (
-                                    <button key={item} type="button"
-                                        className={topic === item ? "chip topic-chip active" : "chip topic-chip"}
-                                        aria-pressed={topic === item} onClick={() => setTopic(item)}>
-                                        {item}
+                                    <button key={item.value} type="button"
+                                        className={topic === item.value ? "chip topic-chip active" : "chip topic-chip"}
+                                        aria-pressed={topic === item.value} onClick={() => setTopic(item.value)}>
+                                        {item.text}
                                     </button>
                                 ))}
                             </div>
