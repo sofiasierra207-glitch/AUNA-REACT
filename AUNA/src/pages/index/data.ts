@@ -7,7 +7,7 @@ import amigashablando from '../../assets/images/amigashablando.png'
 
 // Forma que tiene cada post
 export interface Post {
-    id: number;           // número para identificar el post (los guardados usan este id)
+    id: string;           // texto que identifica el post (en Supabase es un uuid; los guardados usan este id)
     user: string;
     initial: string;
     role: string;
@@ -19,6 +19,22 @@ export interface Post {
     comments: number;
     likes: number;
     liked: boolean;
+}
+
+// Forma de una fila de la tabla posts de Supabase
+// profiles viene de la relación (FK user_id → profiles.id): la autora del post
+export interface PostRow {
+    id: string;
+    content: string;
+    topic: string;
+    image_url: string | null;
+    image_alt: string | null;
+    created_at: string;
+    profiles: {
+        username: string;
+        full_name: string;
+        role: string;
+    } | null;
 }
 
 // Forma que tiene cada lugar de AÚNA Help
@@ -38,7 +54,7 @@ export const currentUser = {
 // Lista de posts del feed (cada post es un objeto)
 export const posts: Post[] = [
     {
-        id: 101,
+        id: "101",
         user: "@mara.arte",
         initial: "M",
         role: "Verified creator",
@@ -52,7 +68,7 @@ export const posts: Post[] = [
         liked: false
     },
     {
-        id: 102,
+        id: "102",
         user: "@sofia.caminata",
         initial: "S",
         role: "Wellness Community",
@@ -66,7 +82,7 @@ export const posts: Post[] = [
         liked: false
     },
     {
-        id: 103,
+        id: "103",
         user: "@valen.creativa",
         initial: "V",
         role: "Verified creator",
@@ -80,7 +96,7 @@ export const posts: Post[] = [
         liked: false
     },
     {
-        id: 104,
+        id: "104",
         user: "@lucia.lee",
         initial: "L",
         role: "Book club",
@@ -94,7 +110,7 @@ export const posts: Post[] = [
         liked: false
     },
     {
-        id: 105,
+        id: "105",
         user: "@circulo.aúna",
         initial: "C",
         role: "Monthly meetup",
