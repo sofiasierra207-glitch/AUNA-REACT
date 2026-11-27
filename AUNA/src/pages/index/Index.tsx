@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
+import usePosts, { postColumns, timeAgo } from '../../hooks/usePosts';
 
 // Paleta, estilos generales y estilos del Home
 import './index.css';
@@ -48,21 +49,6 @@ function coverUrl(file: string) {
     return supabase.storage.from('post-images').getPublicUrl('covers/' + file).data.publicUrl;
 }
 
-// Columnas que pido a Supabase: las del post y, por la FK, los datos de la autora en profiles
-// posts y profiles también se conectan por likes, saved_posts y comments,
-// por eso digo cuál FK usar: posts_user_id_fkey (la de la autora del post)
-const postColumns = "id, content, topic, image_url, image_alt, created_at, profiles!posts_user_id_fkey ( username, full_name, role )";
-
-// Convierte la fecha del post en "Just now", "5m ago", "2h ago" o "3d ago"
-function timeAgo(date: string) {
-    const minutes = Math.floor((Date.now() - new Date(date).getTime()) / 60000);
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return minutes + "m ago";
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return hours + "h ago";
-    return Math.floor(hours / 24) + "d ago";
-}
-
 // Pasa una fila de la tabla posts a la forma que usa FeedCard
 function toPost(row: PostRow): Post {
     const name = row.profiles ? row.profiles.full_name : "";
@@ -94,40 +80,10 @@ interface IndexProps {
 // Página de inicio de AÚNA (index)
 function Index({ session, saved, onSave }: IndexProps) {
 
-    // Posts que se ven en la página (llegan de la tabla posts de Supabase)
-    const [feed, setFeed] = useState<Post[]>([]);
-    const [loadingFeed, setLoadingFeed] = useState(true);
-    const [feedError, setFeedError] = useState("");
-
-    // Al abrir la página, pide los posts a Supabase (los más nuevos primero)
-    useEffect(() => {
-        // Si la usuaria sale de la página antes de que lleguen, no actualiza el estado
-        let active = true;
-
-        async function loadPosts() {
-            const { data, error } = await supabase
-                .from('posts')
-                .select(postColumns)
-                .order('created_at', { ascending: false });
-
-            if (!active) return;
-
-            if (error) {
-                console.error('Error loading posts:', error);
-                setFeedError("We couldn't load the posts. Try again later.");
-            } else {
-                setFeed((data as unknown as PostRow[]).map(toPost));
-            }
-            setLoadingFeed(false);
-        }
-
-        loadPosts();
-
-        // Limpieza: se ejecuta cuando la página se cierra
-        return () => {
-            active = false;
-        };
-    }, []);
+    // Posts de la tabla posts de Supabase (con el custom hook usePosts)
+    // map los pasa a la forma que usa FeedCard
+    const { rows, loading: loadingFeed, error: feedError, addRow } = usePosts();
+    const feed = rows.map(toPost);
 
     // ¿Ya sigue a la creadora de arriba?
     const [following, setFollowing] = useState(false);
@@ -258,7 +214,7 @@ function Index({ session, saved, onSave }: IndexProps) {
             setPostError("We couldn't publish your post. Try again.");
         } else {
             // Pone el post nuevo de primero (sin volver a pedir toda la lista)
-            setFeed([toPost(data as unknown as PostRow), ...feed]);
+            addRow(data as unknown as PostRow);
 
             // Limpia el formulario
             setPostText("");
