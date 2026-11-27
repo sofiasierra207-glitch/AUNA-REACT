@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import useLocalStorage from './hooks/useLocalStorage';
@@ -23,6 +24,16 @@ function App() {
 
     // Ids de los posts guardados (Home, Explore y Favorites usan esta misma lista)
     const [saved, setSaved] = useLocalStorage<number[]>("aunaGuardados", []);
+
+    // Al abrir la app: si Supabase no tiene sesión, se borra la que quedó guardada
+    // (por ejemplo una sesión vieja de antes de usar Supabase)
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data }) => {
+            if (!data.session) {
+                setSession("");
+            }
+        });
+    }, [setSession]);
 
     // Log out: cierra la sesión en Supabase y deja vacía la de la app
     async function handleLogout() {
