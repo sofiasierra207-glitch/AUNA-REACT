@@ -434,6 +434,30 @@ input:focus-visible {
     border-color: var(--accent);
 }
 
+/* Cuadro para subir una foto propia: mismo tamaño que las portadas */
+.upload-cover {
+    width: 100px;
+    height: 66px;
+    border: 2px dashed var(--border);
+    background-color: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Con foto elegida el borde queda rosado y sin rayas */
+.upload-cover.active {
+    border-style: solid;
+}
+
+.upload-cover-text {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+}
+
 /* Botón Post a la derecha */
 .post-actions {
     display: flex;
@@ -848,6 +872,11 @@ input:focus-visible {
     }
 
     .cover img {
+        width: 132px;
+        height: 88px;
+    }
+
+    .upload-cover {
         width: 132px;
         height: 88px;
     }
