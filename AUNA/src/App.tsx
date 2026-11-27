@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import useLocalStorage from './hooks/useLocalStorage';
+import useSaved from './hooks/useSaved';
+import useLikes from './hooks/useLikes';
 import { supabase } from './supabaseClient';
 import MainLayout from './components/mainlayout/MainLayout';
 import Index from './pages/index/Index';
@@ -23,8 +25,14 @@ function App() {
     const [session, setSession] = useLocalStorage<string>("aunaSession", "");
 
     // Ids de los posts guardados (Home, Explore y Favorites usan esta misma lista)
-    // Son texto porque los posts de Supabase usan uuid como id
-    const [saved, setSaved] = useLocalStorage<string[]>("aunaGuardados", []);
+    // Vienen de la tabla saved_posts de Supabase (custom hook useSaved)
+    const { saved, toggleSave } = useSaved(session);
+
+    // Likes: a cuáles les di like y cuántos tiene cada post (tabla likes, custom hook useLikes)
+    const { liked, counts, toggleLike } = useLikes(session);
+
+    // Para mandar al Login si alguien sin sesión intenta guardar o dar like
+    const navigate = useNavigate();
 
     // Al abrir la app: si Supabase no tiene sesión, se borra la que quedó guardada
     // (por ejemplo una sesión vieja de antes de usar Supabase)
@@ -42,13 +50,16 @@ function App() {
         setSession("");
     }
 
-    // Save: si el post ya estaba guardado lo quita; si no, lo agrega
-    function toggleSave(id: string) {
-        if (saved.includes(id)) {
-            setSaved(saved.filter((item) => item !== id));
-        } else {
-            setSaved([...saved, id]);
-        }
+    // Save: guarda o quita el post en Supabase; sin sesión va al Login
+    async function handleSave(id: string) {
+        const done = await toggleSave(id);
+        if (!done) navigate("/login");
+    }
+
+    // Like: pone o quita el like en Supabase; sin sesión va al Login
+    async function handleLike(id: string) {
+        const done = await toggleLike(id);
+        if (!done) navigate("/login");
     }
 
     return (
@@ -56,8 +67,10 @@ function App() {
             {/* Páginas que llevan header, menú de celular y footer */}
             {/* MainLayout recibe la sesión para el perfil del Header; Log out la cierra */}
             <Route element={<MainLayout session={session} onLogout={handleLogout} />}>
-                <Route path="/" element={<Index session={session} saved={saved} onSave={toggleSave} />} />
-                <Route path="/explore" element={<Explore saved={saved} onSave={toggleSave} />} />
+                <Route path="/" element={<Index session={session} saved={saved} onSave={handleSave}
+                    liked={liked} likeCounts={counts} onLike={handleLike} />} />
+                <Route path="/explore" element={<Explore saved={saved} onSave={handleSave}
+                    liked={liked} likeCounts={counts} onLike={handleLike} />} />
                 <Route path="/favorites" element={<Favorites savedIds={saved} />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/help" element={<Help />} />
