@@ -1,58 +1,34 @@
-# AÚNA
+# AÚNA (app)
 
-AÚNA is a safe, verified social network for women. Users can share experiences, find verified professionals and safe places, save what helps them, and ask the community for help.
+This folder is the React + TypeScript app of AÚNA, built with Vite.
 
-This is the third delivery of the project: the same website from delivery 2 (HTML, CSS and JavaScript), rebuilt with **React + TypeScript** using components.
+**Live site:** https://auna-react.onrender.com
+
+The full documentation (features, database, deploy and team) is in the [main README](../README.md).
 
 
 ## How to run it
 
-You need Node.js installed.
+1. Install the packages:
 
-```bash
-cd AUNA
-npm install
-npm run dev
-```
+   ```bash
+   npm install
+   ```
 
-Then open http://localhost:5173
+2. Create a `.env` file in this folder with the Supabase keys:
+
+   ```
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-publishable-key
+   ```
+
+3. Start the app and open http://localhost:5173:
+
+   ```bash
+   npm run dev
+   ```
 
 Other commands:
 
-- `npm run build` — checks the types and builds the project
-- `npm run lint` — checks the code with ESLint
-
-
-## Technologies
-
-- React 19 with TypeScript
-- Vite
-- React Router (pages and navigation)
-- CSS (one file per page and per component, colors in `src/assets/colors.css`)
-- localStorage through the custom hook `useLocalStorage`
-
-
-## Project structure
-
-```
-src/
-├── assets/       images, icons, fonts and the color palette
-├── components/   reusable pieces and modals (one folder each)
-├── hooks/        custom hooks (useLocalStorage)
-├── pages/        the 6 pages (index, explore, community, favorites, help, login)
-├── App.tsx       routes and global state (session)
-└── main.tsx      starts the app with BrowserRouter
-```
-
-**Global state:** `App.tsx` keeps the session with `useLocalStorage` and passes it down with props, so it is shared by every page and is not lost when the page reloads.
-
-
-## Team
-
-| | Ana Sofía Sierra | Camila Martínez |
-|
-| Pages | Home, Community, Help, Login | Explore, Favorites |
-| Layout | Header, BottomNav, Footer, MainLayout, React Router | — |
-| Components | FeedCard, CircleCard, ProfessionalCard, ResourceCard | PostCard, CollectionCard, SavedCard |
-| Modals | Posted, Profile, Language | Search, Verified, CommunityHelp, ForgotPassword, CreateProfile, Configuration, MiniProfile |
-| State and hooks | Global session state in App | Custom hook `useLocalStorage` |
+- `npm run build`: checks the types and builds the project into `dist/`
+- `npm run lint`: checks the code with ESLint
