@@ -20,6 +20,9 @@ function useProfile(session: string) {
     const [postCount, setPostCount] = useState(0);
     const [savedCount, setSavedCount] = useState(0);
 
+    // cada vez que sube este número, el perfil se vuelve a pedir (después de editarlo)
+    const [version, setVersion] = useState(0);
+
     useEffect(() => {
         // si se cierra la sesión mientras llega la respuesta, no la uso
         let active = true;
@@ -54,9 +57,14 @@ function useProfile(session: string) {
 
         // limpieza: si la sesión cambia antes de terminar, se ignora esta respuesta
         return () => { active = false; };
-    }, [session]);
+    }, [session, version]);
 
-    return { profile, postCount, savedCount };
+    // Edit profile la llama después de guardar para ver los cambios sin recargar
+    function reload() {
+        setVersion(version + 1);
+    }
+
+    return { profile, postCount, savedCount, reload };
 }
 
 export default useProfile;
