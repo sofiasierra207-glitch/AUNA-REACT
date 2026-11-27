@@ -15,6 +15,7 @@ interface CreateProfileProps {
 // los campos del formulario
 interface ProfileForm {
     name: string;
+    username: string;
     email: string;
     password: string;
     city: string;
@@ -23,15 +24,25 @@ interface ProfileForm {
 // como empieza el formulario: todo vacio
 const emptyForm: ProfileForm = {
     name: '',
+    username: '',
     email: '',
     password: '',
     city: '',
 };
 
+// letras que puede tener un usuario (como en Instagram)
+const usernameLetters = 'abcdefghijklmnopqrstuvwxyz0123456789._';
+
+// revisa que el usuario tenga de 3 a 30 letras y solo las permitidas
+function isValidUsername(username: string) {
+    if (username.length < 3 || username.length > 30) return false;
+    return username.split('').every((letter) => usernameLetters.includes(letter));
+}
+
 // modal para crear una cuenta (se abre desde el Login)
 // en js lo creaba con createElement e innerHTML, ahora es un componente
 function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
-    // lo que voy escribiendo en los 4 campos, en un solo objeto
+    // lo que voy escribiendo en los 5 campos, en un solo objeto
     const [formData, setFormData] = useState<ProfileForm>(emptyForm);
 
     // si acepte los terminos
@@ -105,11 +116,15 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         event.preventDefault(); // evito que la pagina se recargue
 
         const name = formData.name.trim();
+        // el usuario va en minúsculas y sin @ (la @ se agrega al guardarlo)
+        const username = formData.username.trim().toLowerCase().replace('@', '');
         const email = formData.email.trim();
         const city = formData.city.trim();
 
         if (name === '') {
             showError('name', 'Write your full name.');
+        } else if (!isValidUsername(username)) {
+            showError('username', 'Use 3 to 30 letters, numbers, dots or underscores, with no spaces.');
         } else if (!email.includes('@') || !email.includes('.')) {
             showError('email', 'Write a valid email address.');
         } else if (formData.password.length < 8) {
@@ -121,12 +136,22 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         } else {
             setLoading(true);
 
+            // ¿Ya existe alguien con ese usuario? (como en Instagram, no se puede repetir)
+            const { data: taken } = await supabase.from('profiles')
+                .select('id').eq('username', '@' + username).maybeSingle();
+
+            if (taken) {
+                setLoading(false);
+                showError('username', 'That username is already taken.');
+                return;
+            }
+
             // todo esta bien: Supabase Auth crea la cuenta (guarda la contraseña encriptada)
-            // el nombre y la ciudad quedan en los datos de la cuenta para crear el perfil despues
+            // el nombre, el usuario y la ciudad quedan en los datos de la cuenta para crear el perfil despues
             const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: formData.password,
-                options: { data: { full_name: name, city: city } }
+                options: { data: { full_name: name, username: '@' + username, city: city } }
             });
 
             setLoading(false);
@@ -178,6 +203,11 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                     <label htmlFor="create-name">Full name</label>
                     <input type="text" id="create-name" name="name" className={fieldClass('name')}
                         placeholder="E.g. Valentina Torres" value={formData.name} onChange={handleChange} autoFocus />
+
+                    {/* usuario único: nadie más puede tener el mismo */}
+                    <label htmlFor="create-username">Username</label>
+                    <input type="text" id="create-username" name="username" className={fieldClass('username')}
+                        placeholder="E.g. valen.torres" value={formData.username} onChange={handleChange} />
 
                     <label htmlFor="create-email">Email address</label>
                     <input type="text" id="create-email" name="email" className={fieldClass('email')}
