@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
 import SavedCard from '../../components/savedcard/SavedCard';
-import { explorePosts } from '../explore/data';
-import { posts } from '../index/data';
+import { supabase } from '../../supabaseClient';
+import { postColumns } from '../../hooks/usePosts';
+import type { PostRow } from '../index/data';
 import { figmaSaved, myCollections, tabs } from './data';
 import type { SavedItem, SavedType } from './data';
+import libroAnimado from '../../assets/images/libroanimado.png';
 import './favorites.css';
 
 // tipado de las props: los ids guardados vienen del estado global de App
@@ -19,35 +21,47 @@ function Favorites({ savedIds }: FavoritesProps) {
     // la tab seleccionada, empieza en All
     const [currentType, setCurrentType] = useState<'All' | SavedType>('All');
 
-    // busco los posts de explore que tienen el id guardado
-    // y los convierto al mismo formato de los guardados del figma
-    // ya no copio los posts en otro archivo: los importo de explore/data.ts
-    const fromExplore: SavedItem[] = explorePosts
-        .filter((post) => savedIds.includes(post.id))
-        .map((post) => ({
-            type: 'Post',
-            name: post.user,
-            text: post.text,
-            image: post.image,
-            exploreId: post.id,
-        }));
+    // los posts guardados, traidos de la tabla posts de Supabase
+    const [savedPosts, setSavedPosts] = useState<SavedItem[]>([]);
 
-    // lo mismo con los posts del Home que guarde
-    const fromHome: SavedItem[] = posts
-        .filter((post) => savedIds.includes(post.id))
-        .map((post) => ({
-            type: 'Post',
-            name: post.user,
-            text: post.text,
-            image: post.image,
-            exploreId: "",
-        }));
+    // cada vez que cambian los ids guardados, pido esos posts a Supabase
+    useEffect(() => {
+        let active = true;
 
-    // quito del figma los que ya guarde en explore, asi no sale el mismo post dos veces
-    const fromFigma = figmaSaved.filter((item) => !savedIds.includes(item.exploreId));
+        async function load() {
+            // si no hay guardados no pregunto nada
+            if (savedIds.length === 0) {
+                if (active) setSavedPosts([]);
+                return;
+            }
 
-    // primero los del figma y al final los que guarde en explore y en el home
-    const allSaved = [...fromFigma, ...fromExplore, ...fromHome];
+            // .in trae solo los posts cuyo id esta en la lista de guardados
+            const { data } = await supabase.from('posts').select(postColumns).in('id', savedIds);
+            if (!active) return;
+
+            // los convierto al formato de las tarjetas de Favorites
+            const rows = (data ?? []) as unknown as PostRow[];
+            setSavedPosts(rows.map((row) => ({
+                type: 'Post',
+                name: row.profiles ? row.profiles.username : '@auna',
+                text: row.content,
+                image: row.image_url ?? libroAnimado,
+                exploreId: row.id,
+            })));
+        }
+
+        load();
+
+        // limpieza: si los guardados cambian antes de terminar, ignoro esta respuesta
+        return () => { active = false; };
+    }, [savedIds]);
+
+    // del figma solo quedan los lugares y creadoras de ejemplo (todavia no tienen tabla)
+    // los posts ya son los reales de Supabase
+    const fromFigma = figmaSaved.filter((item) => item.type !== 'Post');
+
+    // primero mis posts guardados y despues los lugares y creadoras
+    const allSaved = [...savedPosts, ...fromFigma];
 
     // cuantos hay de cada tipo, para la pastilla de cada tab
     function count(type: 'All' | SavedType) {
@@ -95,7 +109,7 @@ function Favorites({ savedIds }: FavoritesProps) {
                 {/* una SavedCard por cada guardado */}
                 <div className="recientes-lista">
                     {filteredItems.map((item) => (
-                        <SavedCard key={`${item.type}-${item.name}`} item={item} />
+                        <SavedCard key={`${item.type}-${item.exploreId}-${item.name}`} item={item} />
                     ))}
                 </div>
 
