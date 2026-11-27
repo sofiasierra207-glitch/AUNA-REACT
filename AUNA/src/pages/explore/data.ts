@@ -24,7 +24,7 @@ export const topics = [
 
 // tipado de una publicacion: asi typescript me avisa si me falta un dato
 export interface Post {
-    id: number;               // numero para identificar cada post
+    id: string;               // texto que identifica cada post (en Supabase es un uuid)
     user: string;
     meta: string;
     topic: string;             // tiene que ser igual al valor de un filtro
@@ -40,7 +40,7 @@ export interface Post {
 // favorites tambien lo importa para saber cuales guarde
 export const explorePosts: Post[] = [
     {
-        id: 1,
+        id: "1",
         user: '@ana.rutas',
         meta: 'Places Community · 1h ago',
         topic: 'Places',
@@ -51,7 +51,7 @@ export const explorePosts: Post[] = [
         likes: 418,
     },
     {
-        id: 2,
+        id: "2",
         user: '@dani.mindful',
         meta: 'Verified creator · 3h ago',
         topic: 'Wellness',
@@ -62,7 +62,7 @@ export const explorePosts: Post[] = [
         likes: 733,
     },
     {
-        id: 3,
+        id: "3",
         user: '@renata.libros',
         meta: 'Book club · 6h ago',
         topic: 'Reading',
@@ -73,7 +73,7 @@ export const explorePosts: Post[] = [
         likes: 289,
     },
     {
-        id: 4,
+        id: "4",
         user: '@sara.estudia',
         meta: 'Study Community · 9h ago',
         topic: 'Study',
@@ -84,7 +84,7 @@ export const explorePosts: Post[] = [
         likes: 512,
     },
     {
-        id: 5,
+        id: "5",
         user: '@juli.mamis',
         meta: 'Weekly meetup · 1d ago',
         topic: 'Motherhood',
@@ -95,7 +95,7 @@ export const explorePosts: Post[] = [
         likes: 604,
     },
     {
-        id: 6,
+        id: "6",
         user: '@nina.taller',
         meta: 'Verified creator · 2d ago',
         topic: 'Creativity',
@@ -106,7 +106,7 @@ export const explorePosts: Post[] = [
         likes: 356,
     },
     {
-        id: 7,
+        id: "7",
         user: '@lina.camina',
         meta: 'Wellness Community · 3d ago',
         topic: 'Wellness',
@@ -117,7 +117,7 @@ export const explorePosts: Post[] = [
         likes: 198,
     },
     {
-        id: 8,
+        id: "8",
         user: '@sofi.lee',
         meta: 'Book club · 4d ago',
         topic: 'Reading',
@@ -128,7 +128,7 @@ export const explorePosts: Post[] = [
         likes: 143,
     },
     {
-        id: 9,
+        id: "9",
         user: '@cafe.calma',
         meta: 'Safe place · 5d ago',
         topic: 'Places',

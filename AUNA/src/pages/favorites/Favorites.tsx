@@ -10,7 +10,7 @@ import './favorites.css';
 // tipado de las props: los ids guardados vienen del estado global de App
 // son los que guarde con el boton "Save" en Explore o en el Home
 interface FavoritesProps {
-    savedIds: number[];
+    savedIds: string[]; // texto, porque los posts de Supabase usan uuid
 }
 
 // pagina de Favorites
@@ -40,7 +40,7 @@ function Favorites({ savedIds }: FavoritesProps) {
             name: post.user,
             text: post.text,
             image: post.image,
-            exploreId: 0,
+            exploreId: "",
         }));
 
     // quito del figma los que ya guarde en explore, asi no sale el mismo post dos veces

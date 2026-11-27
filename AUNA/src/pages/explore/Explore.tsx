@@ -4,16 +4,37 @@ import { useSearchParams } from 'react-router-dom';
 import PostCard from '../../components/postcard/PostCard';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { weeklyCollections, explorePosts, topics } from './data';
+import usePosts, { timeAgo } from '../../hooks/usePosts';
+import { weeklyCollections, topics } from './data';
+import type { Post } from './data';
+import type { PostRow } from '../index/data';
 import searchIcon from '../../assets/icons/search.svg';
+import libroAnimado from '../../assets/images/libroanimado.png';
 import './explore.css';
 
 const initialCount = 6; // cuantos posts muestro al inicio
 
+// pasa una fila de la tabla posts a la forma que usa PostCard
+// meta junta el rol de la autora y hace cuanto lo publico
+function toExplorePost(row: PostRow): Post {
+    return {
+        id: row.id,
+        user: row.profiles ? row.profiles.username : '@auna',
+        meta: (row.profiles ? row.profiles.role : 'Member') + ' · ' + timeAgo(row.created_at),
+        topic: row.topic,
+        text: row.content,
+        // si el post no tiene foto uso la portada del cuaderno
+        image: row.image_url ?? libroAnimado,
+        imageAlt: row.image_alt ?? 'Notebook with stickers',
+        comments: 0, // los comentarios y likes reales se conectan despues
+        likes: 0,
+    };
+}
+
 // tipado de las props: los guardados vienen del estado global de App
 interface ExploreProps {
-    saved: number[];
-    onSave: (id: number) => void;
+    saved: string[];                // ids guardados como texto (los de Supabase son uuid)
+    onSave: (id: string) => void;
 }
 
 // pagina de Explore
@@ -39,10 +60,14 @@ function Explore({ saved, onSave }: ExploreProps) {
 
     // likes con mi custom hook, se guardan en localStorage
     // los guardados ya no van aqui: vienen de App por props (estado global)
-    const [likes, setLikes] = useLocalStorage<number[]>('aunaLikes', []);
+    const [likes, setLikes] = useLocalStorage<string[]>('aunaLikes', []);
+
+    // posts de la tabla posts de Supabase (custom hook usePosts, el mismo del Home)
+    const { rows, loading, error } = usePosts();
 
     // filtro los posts por tema y por texto
-    const filtered = explorePosts.filter((post) => {
+    // la busqueda revisa la autora, el tema y el texto de cada post de la base de datos
+    const filtered = rows.map(toExplorePost).filter((post) => {
         // pasa si el filtro es All o si el tema del post es igual al filtro
         const matchesTopic = currentTopic === 'All' || post.topic === currentTopic;
 
@@ -59,7 +84,7 @@ function Explore({ saved, onSave }: ExploreProps) {
 
     // agrega o quita un id de un array (lo uso para los likes)
     // includes revisa si ya esta, filter crea un array nuevo sin ese id
-    function toggle(list: number[], id: number) {
+    function toggle(list: string[], id: string) {
         return list.includes(id) ? list.filter((item) => item !== id) : [...list, id];
     }
 
@@ -167,7 +192,11 @@ function Explore({ saved, onSave }: ExploreProps) {
                     ))}
                 </div>
 
-                {filtered.length === 0 && (
+                {/* mensajes mientras cargan los posts o si hubo un error */}
+                {loading && <p className="sin-resultados">Loading posts...</p>}
+                {error !== '' && <p className="sin-resultados">{error}</p>}
+
+                {!loading && error === '' && filtered.length === 0 && (
                     <p className="sin-resultados">No posts found. Try another topic or word.</p>
                 )}
 

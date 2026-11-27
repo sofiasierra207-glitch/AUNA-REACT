@@ -15,8 +15,8 @@ interface PostCardProps {
     post: Post;
     isLiked: boolean;
     isSaved: boolean;
-    onLike: (id: number) => void;
-    onSave: (id: number) => void;
+    onLike: (id: string) => void;
+    onSave: (id: string) => void;
 }
 
 // tarjeta de una publicacion de explore
