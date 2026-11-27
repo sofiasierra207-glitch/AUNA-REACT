@@ -75,10 +75,13 @@ interface IndexProps {
     session: string;               // correo con la sesión abierta ("" si no hay sesión)
     saved: string[];               // ids de los posts guardados (estado global)
     onSave: (id: string) => void;  // guarda o quita un post
+    liked: string[];               // ids de los posts con mi like (tabla likes)
+    likeCounts: Record<string, number>; // cuántos likes tiene cada post
+    onLike: (id: string) => void;  // pone o quita el like
 }
 
 // Página de inicio de AÚNA (index)
-function Index({ session, saved, onSave }: IndexProps) {
+function Index({ session, saved, onSave, liked, likeCounts, onLike }: IndexProps) {
 
     // Posts de la tabla posts de Supabase (con el custom hook usePosts)
     // map los pasa a la forma que usa FeedCard
@@ -389,7 +392,9 @@ function Index({ session, saved, onSave }: IndexProps) {
                 <div className="posts-grid">
                     {feed.map((post) => (
                         <FeedCard key={post.id} post={post}
-                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)} />
+                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)}
+                            liked={liked.includes(post.id)} likes={likeCounts[post.id] ?? 0}
+                            onLike={() => onLike(post.id)} />
                     ))}
                 </div>
 

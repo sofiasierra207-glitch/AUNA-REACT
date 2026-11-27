@@ -9,33 +9,24 @@ import saveIcon from '../../assets/icons/save.svg';
 import saveFilledIcon from '../../assets/icons/save-filled.svg';
 
 // Datos que recibe la tarjeta
-// saved y onSave vienen del estado global de App (pasan por el Home)
+// saved, liked y sus funciones vienen del estado global de App (pasan por el Home)
+// y App los guarda en Supabase (tablas saved_posts y likes)
 interface FeedCardProps {
     post: Post;
     saved: boolean;      // ¿este post está guardado?
     onSave: () => void;  // guarda o quita el post
+    liked: boolean;      // ¿le di like?
+    likes: number;       // cuántos likes tiene (contados en la tabla likes)
+    onLike: () => void;  // pone o quita el like
 }
 
 // Tarjeta de un post del feed del Home
-function FeedCard({ post, saved, onSave }: FeedCardProps) {
+function FeedCard({ post, saved, onSave, liked, likes, onLike }: FeedCardProps) {
 
-    // Estados de la tarjeta (como el contador de clase)
-    const [liked, setLiked] = useState(post.liked);
-    const [likes, setLikes] = useState(post.likes);
+    // Estados que solo le importan a la tarjeta (comentarios)
     const [comments, setComments] = useState(post.comments);
     const [commentOpen, setCommentOpen] = useState(false);
     const [commentText, setCommentText] = useState("");
-
-    // Like: pone o quita el like
-    function handleLike() {
-        if (liked) {
-            setLiked(false);
-            setLikes(likes - 1);
-        } else {
-            setLiked(true);
-            setLikes(likes + 1);
-        }
-    }
 
     // Send: suma el comentario si hay texto
     function handleSend() {
@@ -75,7 +66,7 @@ function FeedCard({ post, saved, onSave }: FeedCardProps) {
 
                     {/* Like */}
                     <button type="button" className={liked ? "action-button like-button liked" : "action-button like-button"}
-                        aria-label="Like" onClick={handleLike}>
+                        aria-label="Like" onClick={onLike}>
                         <img src={liked ? heartFilledIcon : heartIcon} alt="" className="like-icon" />
                         <span className="like-count">{likes}</span>
                     </button>
