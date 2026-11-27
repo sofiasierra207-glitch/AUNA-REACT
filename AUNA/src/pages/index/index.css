@@ -460,6 +460,14 @@ input:focus-visible {
    Tarjetas de posts
 */
 
+/* Mensaje sobre el feed: cargando, error o sin posts */
+.feed-message {
+    margin-bottom: 16px;
+    color: var(--text);
+    font-size: 14px;
+    text-align: center;
+}
+
 /* Tarjetas en filas de tres en computador */
 .posts-grid {
     display: flex;
