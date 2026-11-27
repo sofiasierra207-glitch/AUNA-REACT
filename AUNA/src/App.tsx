@@ -23,7 +23,8 @@ function App() {
     const [session, setSession] = useLocalStorage<string>("aunaSession", "");
 
     // Ids de los posts guardados (Home, Explore y Favorites usan esta misma lista)
-    const [saved, setSaved] = useLocalStorage<number[]>("aunaGuardados", []);
+    // Son texto porque los posts de Supabase usan uuid como id
+    const [saved, setSaved] = useLocalStorage<string[]>("aunaGuardados", []);
 
     // Al abrir la app: si Supabase no tiene sesión, se borra la que quedó guardada
     // (por ejemplo una sesión vieja de antes de usar Supabase)
@@ -42,7 +43,7 @@ function App() {
     }
 
     // Save: si el post ya estaba guardado lo quita; si no, lo agrega
-    function toggleSave(id: number) {
+    function toggleSave(id: string) {
         if (saved.includes(id)) {
             setSaved(saved.filter((item) => item !== id));
         } else {
