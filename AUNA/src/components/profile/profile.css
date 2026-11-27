@@ -49,6 +49,11 @@
 }
 
 /* Círculo grande con la inicial */
+/* Si es foto, se recorta para llenar el círculo */
+img.profile-avatar {
+    object-fit: cover;
+}
+
 .profile-avatar {
     width: 84px;
     height: 84px;

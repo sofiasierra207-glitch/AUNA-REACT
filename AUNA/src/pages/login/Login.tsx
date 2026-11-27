@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import './login.css';
 
+// Cliente de Supabase: revisa si la cuenta existe
+import { supabase, createProfileIfMissing } from '../../supabaseClient';
+
 import ForgotPassword from '../../components/forgotpassword/ForgotPassword';
 import CreateProfile from '../../components/createprofile/CreateProfile';
 
@@ -22,6 +25,9 @@ function Login({ onLogin }: LoginProps) {
     const [message, setMessage] = useState("");
     const [errorField, setErrorField] = useState("");
 
+    // true mientras Supabase revisa la cuenta (el botón se desactiva)
+    const [loading, setLoading] = useState(false);
+
 
     // Si el modal de olvidé mi contraseña está abierto o cerrado
     const [forgotOpen, setForgotOpen] = useState(false);
@@ -39,8 +45,9 @@ function Login({ onLogin }: LoginProps) {
         setErrorField("");
     }
 
-    // Botón Log in: revisa los campos y entra al inicio
-    function handleLogin() {
+    // Botón Log in: revisa los campos, pregunta a Supabase y entra al inicio
+    // async porque hay que esperar la respuesta de Supabase (await)
+    async function handleLogin() {
         const cleanEmail = email.trim();
 
         if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
@@ -50,9 +57,28 @@ function Login({ onLogin }: LoginProps) {
             setMessage("Write your password.");
             setErrorField("password");
         } else {
-            // Le pasa el correo a App (estado global) y entra al inicio
-            onLogin(cleanEmail);
-            navigate("/");
+            setLoading(true);
+
+            // Supabase Auth revisa si la cuenta existe y si la contraseña es correcta
+            const { error } = await supabase.auth.signInWithPassword({
+                email: cleanEmail,
+                password: password
+            });
+
+            if (error) {
+                setLoading(false);
+                // No existe la cuenta o la contraseña está mal (no decimos cuál, por seguridad)
+                setMessage("Incorrect email or password.");
+                setErrorField("password");
+            } else {
+                // En el primer login (después de confirmar el correo) se crea su fila en profiles
+                await createProfileIfMissing();
+                setLoading(false);
+
+                // Le pasa el correo a App (estado global) y entra al inicio
+                onLogin(cleanEmail);
+                navigate("/");
+            }
         }
     }
 
@@ -114,7 +140,9 @@ function Login({ onLogin }: LoginProps) {
                     {/* Mensaje de error */}
                     <p className="login-message" role="status">{message}</p>
 
-                    <button type="submit" className="login-button">Log in</button>
+                    <button type="submit" className="login-button" disabled={loading}>
+                        {loading ? "Logging in..." : "Log in"}
+                    </button>
 
                     {/* Línea con "or" en el medio */}
                     <div className="login-divider">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { supabase, createProfileIfMissing } from '../../supabaseClient';
 import './createprofile.css';
 
 // tipado de las props
@@ -15,30 +15,34 @@ interface CreateProfileProps {
 // los campos del formulario
 interface ProfileForm {
     name: string;
+    username: string;
     email: string;
     password: string;
-    city: string;
-}
-
-// lo que guardo de la usuaria nueva (la contraseña no se guarda)
-interface User {
-    name: string;
-    email: string;
     city: string;
 }
 
 // como empieza el formulario: todo vacio
 const emptyForm: ProfileForm = {
     name: '',
+    username: '',
     email: '',
     password: '',
     city: '',
 };
 
+// letras que puede tener un usuario (como en Instagram)
+const usernameLetters = 'abcdefghijklmnopqrstuvwxyz0123456789._';
+
+// revisa que el usuario tenga de 3 a 30 letras y solo las permitidas
+function isValidUsername(username: string) {
+    if (username.length < 3 || username.length > 30) return false;
+    return username.split('').every((letter) => usernameLetters.includes(letter));
+}
+
 // modal para crear una cuenta (se abre desde el Login)
 // en js lo creaba con createElement e innerHTML, ahora es un componente
 function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
-    // lo que voy escribiendo en los 4 campos, en un solo objeto
+    // lo que voy escribiendo en los 5 campos, en un solo objeto
     const [formData, setFormData] = useState<ProfileForm>(emptyForm);
 
     // si acepte los terminos
@@ -51,8 +55,11 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
     // si ya cree el perfil muestro la bienvenida
     const [created, setCreated] = useState(false);
 
-    // guardo la usuaria con el custom hook
-    const [, setUser] = useLocalStorage<User | null>('aunaUser', null);
+    // true si Supabase pide confirmar el correo antes de entrar
+    const [needsConfirm, setNeedsConfirm] = useState(false);
+
+    // true mientras Supabase crea la cuenta (el botón se desactiva)
+    const [loading, setLoading] = useState(false);
 
     // dejo todo limpio y cierro
     function close() {
@@ -61,6 +68,7 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         setError('');
         setErrorField('');
         setCreated(false);
+        setNeedsConfirm(false);
         onClose();
     }
 
@@ -76,6 +84,7 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                 setError('');
                 setErrorField('');
                 setCreated(false);
+                setNeedsConfirm(false);
                 onClose();
             }
         }
@@ -102,15 +111,20 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
     }
 
     // cuando envio el formulario: reviso los campos uno por uno
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // async porque hay que esperar la respuesta de Supabase (await)
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault(); // evito que la pagina se recargue
 
         const name = formData.name.trim();
+        // el usuario va en minúsculas y sin @ (la @ se agrega al guardarlo)
+        const username = formData.username.trim().toLowerCase().replace('@', '');
         const email = formData.email.trim();
         const city = formData.city.trim();
 
         if (name === '') {
             showError('name', 'Write your full name.');
+        } else if (!isValidUsername(username)) {
+            showError('username', 'Use 3 to 30 letters, numbers, dots or underscores, with no spaces.');
         } else if (!email.includes('@') || !email.includes('.')) {
             showError('email', 'Write a valid email address.');
         } else if (formData.password.length < 8) {
@@ -120,12 +134,41 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
         } else if (!acceptedTerms) {
             showError('', 'Accept the Terms and Community Guidelines to continue.');
         } else {
-            // todo esta bien: guardo la usuaria y dejo la sesion iniciada
-            setUser({ name: name, email: email, city: city });
-            onCreate(email);
+            setLoading(true);
 
-            // cambio el formulario por la bienvenida
-            setCreated(true);
+            // ¿Ya existe alguien con ese usuario? (como en Instagram, no se puede repetir)
+            const { data: taken } = await supabase.from('profiles')
+                .select('id').eq('username', '@' + username).maybeSingle();
+
+            if (taken) {
+                setLoading(false);
+                showError('username', 'That username is already taken.');
+                return;
+            }
+
+            // todo esta bien: Supabase Auth crea la cuenta (guarda la contraseña encriptada)
+            // el nombre, el usuario y la ciudad quedan en los datos de la cuenta para crear el perfil despues
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: formData.password,
+                options: { data: { full_name: name, username: '@' + username, city: city } }
+            });
+
+            setLoading(false);
+
+            if (error) {
+                // por ejemplo: el correo ya tiene cuenta
+                showError('email', error.message);
+            } else if (data.session) {
+                // Supabase ya abrio la sesion: creo el perfil y dejo la sesion iniciada en App
+                await createProfileIfMissing();
+                onCreate(email);
+                setCreated(true);
+            } else {
+                // hay que confirmar el correo antes de entrar (el perfil se crea en el primer login)
+                setNeedsConfirm(true);
+                setCreated(true);
+            }
         }
     }
 
@@ -161,6 +204,11 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                     <input type="text" id="create-name" name="name" className={fieldClass('name')}
                         placeholder="E.g. Valentina Torres" value={formData.name} onChange={handleChange} autoFocus />
 
+                    {/* usuario único: nadie más puede tener el mismo */}
+                    <label htmlFor="create-username">Username</label>
+                    <input type="text" id="create-username" name="username" className={fieldClass('username')}
+                        placeholder="E.g. valen.torres" value={formData.username} onChange={handleChange} />
+
                     <label htmlFor="create-email">Email address</label>
                     <input type="text" id="create-email" name="email" className={fieldClass('email')}
                         placeholder="you@email.com" value={formData.email} onChange={handleChange} />
@@ -188,7 +236,9 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
 
                     <p className="create-error">{error}</p>
 
-                    <button type="submit" className="create-button">Create my profile</button>
+                    <button type="submit" className="create-button" disabled={loading}>
+                        {loading ? 'Creating...' : 'Create my profile'}
+                    </button>
 
                     {/* "Log in" cierra el modal y deja el login a la vista */}
                     <p className="create-login">
@@ -197,10 +247,20 @@ function CreateProfile({ open, onClose, onCreate }: CreateProfileProps) {
                     </p>
                 </form>
 
-                <div className="create-welcome">
-                    <p className="create-text">Welcome to AÚNA, {formData.name.trim()}! Your profile is ready.</p>
-                    <Link to="/" className="create-button">Go to home</Link>
-                </div>
+                {/* si hay que confirmar el correo, aviso; si no, bienvenida */}
+                {needsConfirm ? (
+                    <div className="create-welcome">
+                        <p className="create-text">
+                            We sent a link to {formData.email.trim()}. Confirm your email and then log in.
+                        </p>
+                        <button type="button" className="create-button" onClick={close}>Back to log in</button>
+                    </div>
+                ) : (
+                    <div className="create-welcome">
+                        <p className="create-text">Welcome to AÚNA, {formData.name.trim()}! Your profile is ready.</p>
+                        <Link to="/" className="create-button">Go to home</Link>
+                    </div>
+                )}
             </div>
         </div>
     );

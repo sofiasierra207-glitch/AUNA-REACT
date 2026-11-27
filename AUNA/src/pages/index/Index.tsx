@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
+import usePosts, { postColumns, timeAgo } from '../../hooks/usePosts';
 
 // Paleta, estilos generales y estilos del Home
 import './index.css';
@@ -7,8 +10,8 @@ import './index.css';
 import FeedCard from '../../components/feedcard/FeedCard';
 import CommunityHelp from '../../components/communityhelp/CommunityHelp';
 import Posted from '../../components/posted/Posted';
-import { currentUser, posts, resources } from './data';
-import type { Post } from './data';
+import { resources } from './data';
+import type { Post, PostRow } from './data';
 
 // Imágenes e íconos
 import principal from '../../assets/images/principal.png';
@@ -19,26 +22,68 @@ import libro from '../../assets/images/libro.png';
 
 // Opciones del formulario
 const types = ["Photo", "Video"];
-const topics = ["Mental wellness", "Book club", "Safe spaces", "Creativity", "Motherhood", "Study & career"];
-const covers = [
-    { image: libroanimado, alt: "Notebook with stickers" },
-    { image: parque, alt: "Park with trees" },
-    { image: cafe, alt: "Latte with heart art" },
-    { image: libro, alt: "Open book" }
+// value es lo que se guarda en la tabla posts (los mismos temas que acepta el check de Supabase)
+// text es lo que se ve en el botón
+const topics = [
+    { value: "Wellness", text: "Mental wellness" },
+    { value: "Reading", text: "Book club" },
+    { value: "Places", text: "Safe spaces" },
+    { value: "Creativity", text: "Creativity" },
+    { value: "Motherhood", text: "Motherhood" },
+    { value: "Study", text: "Study & career" }
 ];
+// image es la foto que se ve en el formulario
+// file es el nombre de la misma foto en Storage (post-images/covers/)
+const covers = [
+    { image: libroanimado, alt: "Notebook with stickers", file: "libroanimado.png" },
+    { image: parque, alt: "Park with trees", file: "parque.png" },
+    { image: cafe, alt: "Latte with heart art", file: "cafe.png" },
+    { image: libro, alt: "Open book", file: "libro.png" }
+];
+
+// Las fotos pueden pesar máximo 5 MB
+const maxPhotoSize = 5 * 1024 * 1024;
+
+// Link público de una portada guardada en el bucket post-images
+function coverUrl(file: string) {
+    return supabase.storage.from('post-images').getPublicUrl('covers/' + file).data.publicUrl;
+}
+
+// Pasa una fila de la tabla posts a la forma que usa FeedCard
+function toPost(row: PostRow): Post {
+    const name = row.profiles ? row.profiles.full_name : "";
+    const user = row.profiles ? row.profiles.username : "@auna";
+    return {
+        id: row.id,
+        user: user,
+        initial: (name || user.replace("@", "")).charAt(0).toUpperCase(),
+        role: row.profiles ? row.profiles.role : "Member",
+        time: timeAgo(row.created_at),
+        tag: row.topic,
+        text: row.content,
+        // Si el post no tiene foto, usa la primera portada
+        image: row.image_url ?? covers[0].image,
+        imageAlt: row.image_alt ?? covers[0].alt
+    };
+}
 
 // Datos que recibe la página desde App
 interface IndexProps {
     session: string;               // correo con la sesión abierta ("" si no hay sesión)
-    saved: number[];               // ids de los posts guardados (estado global)
-    onSave: (id: number) => void;  // guarda o quita un post
+    saved: string[];               // ids de los posts guardados (estado global)
+    onSave: (id: string) => void;  // guarda o quita un post
+    liked: string[];               // ids de los posts con mi like (tabla likes)
+    likeCounts: Record<string, number>; // cuántos likes tiene cada post
+    onLike: (id: string) => void;  // pone o quita el like
 }
 
 // Página de inicio de AÚNA (index)
-function Index({ session, saved, onSave }: IndexProps) {
+function Index({ session, saved, onSave, liked, likeCounts, onLike }: IndexProps) {
 
-    // Posts que se ven en la página
-    const [feed, setFeed] = useState(posts);
+    // Posts de la tabla posts de Supabase (con el custom hook usePosts)
+    // map los pasa a la forma que usa FeedCard
+    const { rows, loading: loadingFeed, error: feedError, addRow } = usePosts();
+    const feed = rows.map(toPost);
 
     // ¿Ya sigue a la creadora de arriba?
     const [following, setFollowing] = useState(false);
@@ -54,51 +99,134 @@ function Index({ session, saved, onSave }: IndexProps) {
     const [topic, setTopic] = useState("");
     const [cover, setCover] = useState(0); // número de la portada elegida
 
+    // Foto propia que la usuaria sube (null si eligió una portada)
+    const [photo, setPhoto] = useState<File | null>(null);
+    const [photoPreview, setPhotoPreview] = useState(""); // link temporal para verla antes de publicar
+    const [photoError, setPhotoError] = useState("");     // aviso al lado del cuadro de subir foto
+
     // ¿Está abierta la ventana de "Posted successfully"?
     const [postedOpen, setPostedOpen] = useState(false);
 
-    // Botón Post: publica si hay sesión y texto
-    function handlePost() {
+    // ¿Se está guardando el post? (evita publicar dos veces con doble clic)
+    const [posting, setPosting] = useState(false);
+
+    // Quita la foto propia y borra su link temporal
+    function clearPhoto() {
+        if (photoPreview !== "") {
+            URL.revokeObjectURL(photoPreview);
+        }
+        setPhoto(null);
+        setPhotoPreview("");
+    }
+
+    // Elegir una portada quita la foto propia
+    function chooseCover(index: number) {
+        clearPhoto();
+        setPhotoError("");
+        setCover(index);
+    }
+
+    // Cuando la usuaria escoge una foto de su computador o celular
+    function handlePhoto(event: ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files ? event.target.files[0] : null;
+        event.target.value = ""; // así puede volver a escoger la misma foto
+        if (!file) return;
+
+        if (!file.type.startsWith("image/")) {
+            setPhotoError("Choose an image file (JPG or PNG).");
+            return;
+        }
+        if (file.size > maxPhotoSize) {
+            setPhotoError("This photo is too big. Choose one of 5 MB or less.");
+            return;
+        }
+
+        clearPhoto();
+        setPhoto(file);
+        setPhotoPreview(URL.createObjectURL(file));
+        setPhotoError("");
+    }
+
+    // Botón Post: guarda el post en la tabla posts de Supabase
+    async function handlePost() {
         // Revisa si la usuaria inició sesión (la sesión viene de App)
         if (session === "") {
             setPostError("login");
-        } else if (postText.trim() === "") {
+            return;
+        }
+        if (postText.trim() === "") {
             setPostError("Write something before posting.");
-        } else {
-            // Si no eligió tema, queda "Community"
-            let postTopic = "Community";
-            if (topic !== "") {
-                postTopic = topic;
+            return;
+        }
+
+        setPosting(true);
+
+        // La autora es la cuenta con la sesión abierta en Supabase
+        const { data: userData } = await supabase.auth.getUser();
+        if (!userData.user) {
+            setPostError("login");
+            setPosting(false);
+            return;
+        }
+
+        // Si no eligió tema, queda "Community"
+        let postTopic = "Community";
+        if (topic !== "") {
+            postTopic = topic;
+        }
+
+        // Foto del post: la propia (se sube a Storage) o la portada elegida
+        let imageUrl = coverUrl(covers[cover].file);
+        let imageAlt = covers[cover].alt;
+
+        if (photo) {
+            // RLS de Storage: solo deja subir dentro de la carpeta con el id de la usuaria
+            // El nombre lleva la hora para que no se repita; se quitan espacios y tildes
+            const path = userData.user.id + "/" + Date.now() + "-" + photo.name.replace(/[^a-zA-Z0-9.]/g, "-");
+            const { error: uploadError } = await supabase.storage.from('post-images').upload(path, photo);
+
+            if (uploadError) {
+                console.error('Error uploading photo:', uploadError);
+                setPostError("We couldn't upload your photo. Try again.");
+                setPosting(false);
+                return;
             }
 
-            // Post nuevo
-            const newPost: Post = {
-                id: Date.now(), // número que no se repite
-                user: currentUser.user,
-                initial: currentUser.initial,
-                role: currentUser.role,
-                time: "Just now",
-                tag: postTopic,
-                text: postText.trim(),
-                image: covers[cover].image,
-                imageAlt: covers[cover].alt,
-                comments: 0,
-                likes: 0,
-                liked: false
-            };
+            imageUrl = supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl;
+            imageAlt = "Photo shared by the author";
+        }
 
-            // Pone el post nuevo de primero
-            setFeed([newPost, ...feed]);
+        // insert guarda la fila; select y single devuelven el post nuevo con su autora
+        const { data, error } = await supabase
+            .from('posts')
+            .insert({
+                user_id: userData.user.id,
+                content: postText.trim(),
+                topic: postTopic,
+                image_url: imageUrl,
+                image_alt: imageAlt
+            })
+            .select(postColumns)
+            .single();
+
+        if (error) {
+            console.error('Error creating post:', error);
+            setPostError("We couldn't publish your post. Try again.");
+        } else {
+            // Pone el post nuevo de primero (sin volver a pedir toda la lista)
+            addRow(data as unknown as PostRow);
 
             // Limpia el formulario
             setPostText("");
             setPostError("");
             setType("");
             setTopic("");
+            chooseCover(0);
 
             // Abre la ventana de "Posted successfully"
             setPostedOpen(true);
         }
+        setPosting(false);
     }
 
     // El header, el menú y el footer los pone MainLayout
@@ -204,10 +332,10 @@ function Index({ session, saved, onSave }: IndexProps) {
                             <span className="option-label">Topic</span>
                             <div className="chips topic-chips">
                                 {topics.map((item) => (
-                                    <button key={item} type="button"
-                                        className={topic === item ? "chip topic-chip active" : "chip topic-chip"}
-                                        aria-pressed={topic === item} onClick={() => setTopic(item)}>
-                                        {item}
+                                    <button key={item.value} type="button"
+                                        className={topic === item.value ? "chip topic-chip active" : "chip topic-chip"}
+                                        aria-pressed={topic === item.value} onClick={() => setTopic(item.value)}>
+                                        {item.text}
                                     </button>
                                 ))}
                             </div>
@@ -215,31 +343,55 @@ function Index({ session, saved, onSave }: IndexProps) {
 
                     </div>
 
-                    {/* Portada del post */}
+                    {/* Portada del post o foto propia */}
                     <div className="option-group">
-                        <span className="option-label">Choose a cover</span>
+                        <span className="option-label">Choose a cover or upload a photo</span>
                         <div className="covers">
+                            {/* Una portada queda marcada solo si no hay foto propia */}
                             {covers.map((item, index) => (
-                                <button key={item.alt} type="button" className={cover === index ? "cover active" : "cover"}
-                                    aria-pressed={cover === index} onClick={() => setCover(index)}>
+                                <button key={item.alt} type="button"
+                                    className={cover === index && !photo ? "cover active" : "cover"}
+                                    aria-pressed={cover === index && !photo} onClick={() => chooseCover(index)}>
                                     <img src={item.image} alt={item.alt} />
                                 </button>
                             ))}
+
+                            {/* El label abre el selector de archivos (el input está escondido) */}
+                            <label className={photo ? "cover upload-cover active" : "cover upload-cover"}>
+                                {photoPreview !== ""
+                                    ? <img src={photoPreview} alt="Your photo" />
+                                    : <span className="upload-cover-text">+ Upload photo</span>}
+                                <input type="file" accept="image/*" onChange={handlePhoto} disabled={posting} hidden />
+                            </label>
                         </div>
+
+                        {/* Aviso si la foto no sirve (muy pesada o no es imagen) */}
+                        {photoError !== "" && <p className="form-error">{photoError}</p>}
                     </div>
 
                     <div className="post-actions">
-                        <button type="button" className="post-button" onClick={handlePost}>Post</button>
+                        <button type="button" className="post-button" onClick={handlePost} disabled={posting}>
+                            {posting ? "Posting..." : "Post"}
+                        </button>
                     </div>
 
                 </div>
 
 
                 {/* Una tarjeta por cada post */}
+                {/* Mensajes mientras cargan los posts, si hay error o si todavía no hay ninguno */}
+                {loadingFeed && <p className="feed-message">Loading posts...</p>}
+                {feedError !== "" && <p className="feed-message">{feedError}</p>}
+                {!loadingFeed && feedError === "" && feed.length === 0 && (
+                    <p className="feed-message">No posts yet. Be the first to share something!</p>
+                )}
+
                 <div className="posts-grid">
                     {feed.map((post) => (
                         <FeedCard key={post.id} post={post}
-                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)} />
+                            saved={saved.includes(post.id)} onSave={() => onSave(post.id)}
+                            liked={liked.includes(post.id)} likes={likeCounts[post.id] ?? 0}
+                            onLike={() => onLike(post.id)} />
                     ))}
                 </div>
 

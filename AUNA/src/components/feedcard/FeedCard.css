@@ -146,6 +146,40 @@
     cursor: pointer;
 }
 
+/* Mientras se envía el comentario el botón queda apagado */
+.comment-box button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+/* Lista de comentarios guardados (tabla comments) */
+.comment-list {
+    list-style: none;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.comment-list li {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* El @usuario de quien comentó */
+.comment-list strong {
+    color: var(--text-h);
+    font-weight: 600;
+}
+
+/* Mensaje si no se pudo enviar el comentario */
+.comment-error {
+    margin-top: 6px;
+    color: var(--accent);
+    font-size: 11px;
+}
+
 
 /* Tarjetas de posts en pantallas grandes */
 @media (min-width: 1360px) {

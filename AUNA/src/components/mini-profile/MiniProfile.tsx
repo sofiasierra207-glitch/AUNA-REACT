@@ -1,17 +1,13 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import type { ProfileData } from '../../hooks/useProfile';
 import './mini-profile.css';
-
-// datos de la usuaria que salen arriba del menu (como en el figma)
-const profileUser = {
-    name: 'Valentina Torres',
-    user: '@valen.torres',
-};
 
 // tipado de las props: el Header me dice si estoy abierto
 // y me pasa que hacer en cada opcion
 interface MiniProfileProps {
     open: boolean;
+    profile: ProfileData | null; // perfil de la usuaria con la sesion abierta (Supabase)
     onClose: () => void;
     onViewProfile: () => void;   // abre la ventana del perfil (profile de Anny)
     onSettings: () => void;     // abre Settings (configuration de Cami)
@@ -20,9 +16,13 @@ interface MiniProfileProps {
 
 // mini perfil: menu que sale debajo del boton de perfil del header
 // en js lo creaba con createElement e innerHTML, ahora es un componente
-function MiniProfile({ open, onClose, onViewProfile, onSettings, onLogout }: MiniProfileProps) {
+function MiniProfile({ open, profile, onClose, onViewProfile, onSettings, onLogout }: MiniProfileProps) {
+    // nombre y usuario de su fila en profiles (mientras carga, queda vacio)
+    const name = profile ? profile.full_name : '';
+    const user = profile ? profile.username : '';
+
     // la inicial para el circulo: charAt(0) es la primera letra del nombre
-    const initial = profileUser.name.charAt(0);
+    const initial = name.charAt(0).toUpperCase();
 
     // click afuera del menu o tecla Escape: se cierra
     // solo escucho mientras el menu esta abierto
@@ -59,10 +59,13 @@ function MiniProfile({ open, onClose, onViewProfile, onSettings, onLogout }: Min
     return (
         <div className="mini-perfil abierto" role="menu">
             <div className="mini-perfil-arriba">
-                <div className="perfil-avatar">{initial}</div>
+                {/* si subio foto se ve la foto; si no, la inicial */}
+                {profile && profile.avatar_url
+                    ? <img className="perfil-avatar" src={profile.avatar_url} alt={name} />
+                    : <div className="perfil-avatar">{initial}</div>}
                 <div>
-                    <p className="mini-perfil-nombre">{profileUser.name}</p>
-                    <p className="mini-perfil-usuario">{profileUser.user}</p>
+                    <p className="mini-perfil-nombre">{name}</p>
+                    <p className="mini-perfil-usuario">{user}</p>
                 </div>
             </div>
 

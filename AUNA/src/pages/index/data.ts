@@ -1,13 +1,7 @@
-// Fotos de los posts
-import flores from '../../assets/images/flores.png'
-import arboles from '../../assets/images/arboles.png'
-import doscafes from '../../assets/images/doscafes.png'
-import sala from '../../assets/images/sala.png'
-import amigashablando from '../../assets/images/amigashablando.png'
-
-// Forma que tiene cada post
+// Forma que tiene cada post en una tarjeta del Home (FeedCard)
+// los likes y comentarios no van aquí: vienen de sus tablas en Supabase
 export interface Post {
-    id: number;           // número para identificar el post (los guardados usan este id)
+    id: string;           // texto que identifica el post (en Supabase es un uuid; los guardados usan este id)
     user: string;
     initial: string;
     role: string;
@@ -16,9 +10,22 @@ export interface Post {
     text: string;
     image: string;
     imageAlt: string;
-    comments: number;
-    likes: number;
-    liked: boolean;
+}
+
+// Forma de una fila de la tabla posts de Supabase
+// profiles viene de la relación (FK user_id → profiles.id): la autora del post
+export interface PostRow {
+    id: string;
+    content: string;
+    topic: string;
+    image_url: string | null;
+    image_alt: string | null;
+    created_at: string;
+    profiles: {
+        username: string;
+        full_name: string;
+        role: string;
+    } | null;
 }
 
 // Forma que tiene cada lugar de AÚNA Help
@@ -27,87 +34,6 @@ export interface Resource {
     name: string;
     details: string;
 }
-
-// Usuaria con la sesión abierta (autora de los posts nuevos)
-export const currentUser = {
-    user: "@valen.torres",
-    initial: "V",
-    role: "Verified creator"
-};
-
-// Lista de posts del feed (cada post es un objeto)
-export const posts: Post[] = [
-    {
-        id: 101,
-        user: "@mara.arte",
-        initial: "M",
-        role: "Verified creator",
-        time: "2h ago",
-        tag: "Creativity",
-        text: "Sharing my illustration process this week. What colors would you use for the next series?",
-        image: flores,
-        imageAlt: "Colorful flowers illustration",
-        comments: 48,
-        likes: 312,
-        liked: false
-    },
-    {
-        id: 102,
-        user: "@sofia.caminata",
-        initial: "S",
-        role: "Wellness Community",
-        time: "5h ago",
-        tag: "Wellness",
-        text: "A 3km route through the central park, well lit and busy at all hours. Perfect for starting the day with peace of mind.",
-        image: arboles,
-        imageAlt: "Green park with tall trees",
-        comments: 33,
-        likes: 507,
-        liked: false
-    },
-    {
-        id: 103,
-        user: "@valen.creativa",
-        initial: "V",
-        role: "Verified creator",
-        time: "8h ago",
-        tag: "Places",
-        text: "Found this café with a big table to work alongside others. Another AÚNA user recommended it to me — that's how the network works.",
-        image: doscafes,
-        imageAlt: "Two coffee cups on a wooden table",
-        comments: 19,
-        likes: 244,
-        liked: false
-    },
-    {
-        id: 104,
-        user: "@lucia.lee",
-        initial: "L",
-        role: "Book club",
-        time: "1d ago",
-        tag: "Reading",
-        text: "My reading nook is finally ready. This month we're reading 'The House of the Spirits' together — there's room for everyone.",
-        image: sala,
-        imageAlt: "Cozy reading room with plants",
-        comments: 74,
-        likes: 631,
-        liked: false
-    },
-    {
-        id: 105,
-        user: "@circulo.aúna",
-        initial: "C",
-        role: "Monthly meetup",
-        time: "2d ago",
-        tag: "Community",
-        text: "Here's how this month's meetup went. Nothing like a shared table to remind us we're not alone.",
-        image: amigashablando,
-        imageAlt: "Friends talking around a table",
-        comments: 121,
-        likes: 892,
-        liked: false
-    }
-];
 
 // Lugares cercanos de AÚNA Help
 export const resources: Resource[] = [

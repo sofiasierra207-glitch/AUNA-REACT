@@ -3,21 +3,44 @@ import type { FormEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PostCard from '../../components/postcard/PostCard';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import { weeklyCollections, explorePosts, topics } from './data';
+import usePosts, { timeAgo } from '../../hooks/usePosts';
+import { weeklyCollections, topics } from './data';
+import type { Post } from './data';
+import type { PostRow } from '../index/data';
 import searchIcon from '../../assets/icons/search.svg';
+import libroAnimado from '../../assets/images/libroanimado.png';
 import './explore.css';
 
 const initialCount = 6; // cuantos posts muestro al inicio
 
-// tipado de las props: los guardados vienen del estado global de App
+// pasa una fila de la tabla posts a la forma que usa PostCard
+// meta junta el rol de la autora y hace cuanto lo publico
+function toExplorePost(row: PostRow): Post {
+    return {
+        id: row.id,
+        user: row.profiles ? row.profiles.username : '@auna',
+        meta: (row.profiles ? row.profiles.role : 'Member') + ' · ' + timeAgo(row.created_at),
+        topic: row.topic,
+        text: row.content,
+        // si el post no tiene foto uso la portada del cuaderno
+        image: row.image_url ?? libroAnimado,
+        imageAlt: row.image_alt ?? 'Notebook with stickers',
+        likes: 0, // el numero real lo pone Explore con los likes de la tabla likes
+    };
+}
+
+// tipado de las props: los guardados y los likes vienen del estado global de App
+// (App los guarda en Supabase, en las tablas saved_posts y likes)
 interface ExploreProps {
-    saved: number[];
-    onSave: (id: number) => void;
+    saved: string[];                // ids guardados como texto (los de Supabase son uuid)
+    onSave: (id: string) => void;
+    liked: string[];                // ids de los posts con mi like
+    likeCounts: Record<string, number>; // cuantos likes tiene cada post
+    onLike: (id: string) => void;
 }
 
 // pagina de Explore
-function Explore({ saved, onSave }: ExploreProps) {
+function Explore({ saved, onSave, liked, likeCounts, onLike }: ExploreProps) {
     // la busqueda vive en la url (/explore?q=park)
     // asi el popup de buscar me puede mandar una palabra desde cualquier pagina
     const [searchParams, setSearchParams] = useSearchParams();
@@ -37,12 +60,12 @@ function Explore({ saved, onSave }: ExploreProps) {
         setVisibleCount(initialCount);
     }
 
-    // likes con mi custom hook, se guardan en localStorage
-    // los guardados ya no van aqui: vienen de App por props (estado global)
-    const [likes, setLikes] = useLocalStorage<number[]>('aunaLikes', []);
+    // posts de la tabla posts de Supabase (custom hook usePosts, el mismo del Home)
+    const { rows, loading, error } = usePosts();
 
     // filtro los posts por tema y por texto
-    const filtered = explorePosts.filter((post) => {
+    // la busqueda revisa la autora, el tema y el texto de cada post de la base de datos
+    const filtered = rows.map(toExplorePost).filter((post) => {
         // pasa si el filtro es All o si el tema del post es igual al filtro
         const matchesTopic = currentTopic === 'All' || post.topic === currentTopic;
 
@@ -56,12 +79,6 @@ function Explore({ saved, onSave }: ExploreProps) {
     // slice toma solo los que se ven
     const visible = filtered.slice(0, visibleCount);
     const allLoaded = visibleCount >= filtered.length;
-
-    // agrega o quita un id de un array (lo uso para los likes)
-    // includes revisa si ya esta, filter crea un array nuevo sin ese id
-    function toggle(list: number[], id: number) {
-        return list.includes(id) ? list.filter((item) => item !== id) : [...list, id];
-    }
 
     function changeTopic(topic: string) {
         setCurrentTopic(topic);
@@ -158,16 +175,20 @@ function Explore({ saved, onSave }: ExploreProps) {
                     {visible.map((post) => (
                         <PostCard
                             key={post.id}
-                            post={post}
-                            isLiked={likes.includes(post.id)}
+                            post={{ ...post, likes: likeCounts[post.id] ?? 0 }}
+                            isLiked={liked.includes(post.id)}
                             isSaved={saved.includes(post.id)}
-                            onLike={(id) => setLikes(toggle(likes, id))}
+                            onLike={onLike}
                             onSave={onSave}
                         />
                     ))}
                 </div>
 
-                {filtered.length === 0 && (
+                {/* mensajes mientras cargan los posts o si hubo un error */}
+                {loading && <p className="sin-resultados">Loading posts...</p>}
+                {error !== '' && <p className="sin-resultados">{error}</p>}
+
+                {!loading && error === '' && filtered.length === 0 && (
                     <p className="sin-resultados">No posts found. Try another topic or word.</p>
                 )}
 

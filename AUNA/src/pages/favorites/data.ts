@@ -14,7 +14,7 @@ export interface SavedItem {
     name: string;
     text: string;
     image: string;
-    exploreId: number; // id del post en explore (0 si no viene de explore)
+    exploreId: string; // id del post en explore ("" si no viene de explore)
 }
 
 // tabs para filtrar (el numero de cada una lo calculo en la pagina)
@@ -48,20 +48,20 @@ export const figmaSaved: SavedItem[] = [
         name: '@dani.mindful',
         text: 'Three breaths to calm anxiety before an interview.',
         image: daniMindful,
-        exploreId: 2,
+        exploreId: "2",
     },
     {
         type: 'Place',
         name: 'Calm Café',
         text: 'Safe spot in the network: you can wait here or ask to be accompanied.',
         image: cafeCalma,
-        exploreId: 0,
+        exploreId: "",
     },
     {
         type: 'Creator',
         name: '@laura.psi',
         text: 'I support people through anxiety and grief. I post short exercises.',
         image: lauraPsi,
-        exploreId: 0,
+        exploreId: "",
     },
 ];

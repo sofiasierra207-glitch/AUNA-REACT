@@ -1,21 +1,37 @@
 import { useEffect, useState } from 'react';
-import type { KeyboardEvent as ReactKeyboardEvent, MouseEvent } from 'react';
+import type { ChangeEvent, KeyboardEvent as ReactKeyboardEvent, MouseEvent } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { supabase } from '../../supabaseClient';
+import type { ProfileData } from '../../hooks/useProfile';
 import './configuration.css';
 
 // tipado de las props
 // onLogout borra la sesion del estado global de App (lo hace el Header)
 interface ConfigurationProps {
     open: boolean;
+    email: string;                   // correo con la sesion abierta
+    profile: ProfileData | null;     // su fila en profiles (Supabase)
+    onProfileChange: () => void;     // vuelve a pedir el perfil despues de guardar
     onClose: () => void;
     onLogout: () => void;
 }
 
 // tipado de una fila de la cuenta: type dice si es texto, correo o contraseña
+// column es la columna de la tabla profiles que cambia esa fila
 interface AccountField {
     label: string;
     value: string;
     type: string;
+    column: string;
+}
+
+// letras que puede tener un usuario (igual que en Create account)
+const usernameLetters = 'abcdefghijklmnopqrstuvwxyz0123456789._';
+
+// revisa que el usuario tenga de 3 a 30 letras y solo las permitidas
+function isValidUsername(username: string) {
+    if (username.length < 3 || username.length > 30) return false;
+    return username.split('').every((letter) => usernameLetters.includes(letter));
 }
 
 // tipado de un interruptor de notificaciones o privacidad
@@ -25,14 +41,6 @@ interface Toggle {
     text: string;
     on: boolean;
 }
-
-// datos de la cuenta (como en el figma)
-// la contraseña no se guarda en el codigo: la fila solo muestra puntos
-const initialAccount: AccountField[] = [
-    { label: 'Full name', value: 'Valentina Torres', type: 'text' },
-    { label: 'Email address', value: 'valen.torres@email.com', type: 'email' },
-    { label: 'Password', value: '', type: 'password' },
-];
 
 // interruptores de notificaciones y privacidad
 const initialToggles: Toggle[] = [
@@ -45,10 +53,25 @@ const initialToggles: Toggle[] = [
 
 // ventana de Settings (se abre desde el boton "Edit profile" del perfil)
 // en js la armaba con createElement e innerHTML, ahora es un componente
-function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
-    // datos de la cuenta y de los interruptores en estado
-    const [account, setAccount] = useState<AccountField[]>(initialAccount);
+function Configuration({ open, email, profile, onProfileChange, onClose, onLogout }: ConfigurationProps) {
+    // filas de la cuenta: salen de su perfil en Supabase
+    // la contraseña nunca se muestra: la fila solo tiene puntos
+    const account: AccountField[] = [
+        { label: 'Full name', value: profile ? profile.full_name : '', type: 'text', column: 'full_name' },
+        { label: 'Username', value: profile ? profile.username : '', type: 'text', column: 'username' },
+        { label: 'Bio', value: profile && profile.bio ? profile.bio : '', type: 'text', column: 'bio' },
+        { label: 'Email address', value: email, type: 'email', column: '' },
+        { label: 'Password', value: '', type: 'password', column: '' },
+    ];
+
+    // interruptores en estado
     const [toggles, setToggles] = useState<Toggle[]>(initialToggles);
+
+    // error al guardar una fila (por ejemplo, usuario ocupado)
+    const [rowError, setRowError] = useState('');
+
+    // true mientras se sube la foto
+    const [uploading, setUploading] = useState(false);
 
     // fila que estoy editando ("" si ninguna) y lo que escribo en ella
     const [editing, setEditing] = useState('');
@@ -108,9 +131,11 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
         return () => document.removeEventListener('keydown', handleKey);
     }, [open, onClose]);
 
-    // muestra el valor; si es contraseña muestra puntos
+    // muestra el valor; si es contraseña muestra puntos; si está vacío invita a llenarlo
     function showValue(field: AccountField) {
-        return field.type === 'password' ? '••••••••' : field.value;
+        if (field.type === 'password') return '••••••••';
+        if (field.value === '') return 'Add your ' + field.label.toLowerCase();
+        return field.value;
     }
 
     // click en una fila
@@ -118,6 +143,7 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
     // el correo y la contraseña abren el formulario seguro
     function startEdit(field: AccountField) {
         setSecureNotice('');
+        setRowError('');
         if (field.type === 'text') {
             if (editing !== field.label) {
                 setEditing(field.label);
@@ -129,20 +155,31 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
         }
     }
 
-    // Save del formulario seguro: revisa los campos antes de cambiar algo
-    // la contraseña actual solo se revisa que este escrita
-    // (en la entrega final la revisa el servicio de autenticacion)
-    function saveSecure() {
+    // revisa la contraseña actual con Supabase Auth (iniciando sesion otra vez con ella)
+    async function checkCurrentPassword() {
+        const { error } = await supabase.auth.signInWithPassword({ email: email, password: currentPassword });
+        return !error;
+    }
+
+    // Save del formulario seguro: revisa los campos y despues cambia en Supabase
+    async function saveSecure() {
         if (currentPassword === '') {
             setSecureError('Write your current password.');
         } else if (secureChange === 'email') {
             const clean = newEmail.trim();
             if (!clean.includes('@') || !clean.includes('.')) {
                 setSecureError('Write a valid email address.');
+            } else if (!(await checkCurrentPassword())) {
+                setSecureError('Your current password is not correct.');
             } else {
-                // el correo no cambia hasta que se confirme desde el enlace
-                cancelSecure();
-                setSecureNotice('We sent a confirmation link to ' + clean + '. Your email will change once you confirm it.');
+                // Supabase manda un enlace: el correo no cambia hasta que se confirme
+                const { error } = await supabase.auth.updateUser({ email: clean });
+                if (error) {
+                    setSecureError(error.message);
+                } else {
+                    cancelSecure();
+                    setSecureNotice('We sent a confirmation link to ' + clean + '. Your email will change once you confirm it.');
+                }
             }
         } else if (newPassword.length < 8) {
             setSecureError('Your new password needs at least 8 characters.');
@@ -150,21 +187,109 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
             setSecureError('Your new password must be different from the current one.');
         } else if (newPassword !== confirmPassword) {
             setSecureError("The new passwords don't match.");
+        } else if (!(await checkCurrentPassword())) {
+            setSecureError('Your current password is not correct.');
         } else {
-            // la contraseña no se guarda en ninguna parte
-            cancelSecure();
-            setSecureNotice('Your password was updated.');
+            // Supabase guarda la contraseña nueva encriptada; en la app no se guarda en ninguna parte
+            const { error } = await supabase.auth.updateUser({ password: newPassword });
+            if (error) {
+                setSecureError(error.message);
+            } else {
+                cancelSecure();
+                setSecureNotice('Your password was updated.');
+            }
         }
     }
 
-    // guardo lo que escribi; si esta vacio dejo el valor anterior
-    // map crea un array nuevo cambiando solo la fila que edite
-    function saveEdit() {
-        const clean = editText.trim();
-        if (clean !== '') {
-            setAccount(account.map((field) => (field.label === editing ? { ...field, value: clean } : field)));
-        }
+    // guardo lo que escribi en su fila de profiles (Supabase)
+    // si no cambio nada o queda vacio (menos la bio) no se guarda
+    async function saveEdit() {
+        const field = account.find((item) => item.label === editing);
         setEditing('');
+        if (!field || !profile) return;
+
+        let clean = editText.trim();
+        if (clean === field.value) return;
+
+        if (field.column === 'full_name' && clean === '') {
+            setRowError('Your name cannot be empty.');
+            return;
+        }
+
+        if (field.column === 'bio' && clean.length > 200) {
+            setRowError('Your bio can have up to 200 characters.');
+            return;
+        }
+
+        if (field.column === 'username') {
+            // mismo formato que en Create account: minusculas, sin @ ni espacios
+            clean = clean.toLowerCase().replace('@', '');
+            if (!isValidUsername(clean)) {
+                setRowError('Use 3 to 30 letters, numbers, dots or underscores, with no spaces.');
+                return;
+            }
+            clean = '@' + clean;
+            if (clean === field.value) return;
+
+            // ¿ya lo tiene otra cuenta?
+            const { data: taken } = await supabase.from('profiles').select('id').eq('username', clean).maybeSingle();
+            if (taken) {
+                setRowError('That username is already taken.');
+                return;
+            }
+        }
+
+        // RLS solo deja cambiar la fila propia (id = la cuenta con sesion)
+        const { error } = await supabase.from('profiles').update({ [field.column]: clean }).eq('id', profile.id);
+        if (error) {
+            setRowError('We could not save it. Try again.');
+        } else {
+            onProfileChange();
+        }
+    }
+
+    // foto de perfil: se sube al bucket avatars, dentro de la carpeta de la usuaria
+    async function handlePhoto(event: ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files ? event.target.files[0] : null;
+        if (!file || !profile) return;
+
+        if (!file.type.startsWith('image/')) {
+            setRowError('Choose an image file.');
+            return;
+        }
+
+        setRowError('');
+        setUploading(true);
+
+        // la ruta empieza con su id, si no Supabase la rechaza (regla de Storage)
+        // Date.now() hace un nombre nuevo cada vez, asi no queda la foto vieja en cache
+        const path = profile.id + '/' + Date.now() + '-' + file.name;
+        const { error } = await supabase.storage.from('avatars').upload(path, file);
+
+        if (error) {
+            setUploading(false);
+            setRowError('We could not upload your photo. Try again.');
+            return;
+        }
+
+        // URL publica de la foto para guardarla en su perfil
+        const { data } = supabase.storage.from('avatars').getPublicUrl(path);
+        await supabase.from('profiles').update({ avatar_url: data.publicUrl }).eq('id', profile.id);
+
+        setUploading(false);
+        onProfileChange();
+    }
+
+    // quitar la foto: avatar_url vuelve a null y se ve la inicial otra vez
+    async function removePhoto() {
+        if (!profile) return;
+        setRowError('');
+        const { error } = await supabase.from('profiles').update({ avatar_url: null }).eq('id', profile.id);
+        if (error) {
+            setRowError('We could not remove your photo. Try again.');
+        } else {
+            onProfileChange();
+        }
     }
 
     // Enter guarda el cambio
@@ -236,6 +361,28 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
 
                 <p className="settings-group">ACCOUNT</p>
                 <div className="settings-account">
+                    {/* foto de perfil: el label abre el selector de archivos (el input esta escondido) */}
+                    <div className="settings-photo">
+                        {profile && profile.avatar_url
+                            ? <img className="settings-photo-img" src={profile.avatar_url} alt="Your profile photo" />
+                            : <span className="settings-photo-img">{profile ? profile.full_name.charAt(0).toUpperCase() : ''}</span>}
+                        <div>
+                            <span className="settings-label">Profile photo</span>
+                            <div className="settings-photo-actions">
+                                <label className="settings-photo-button">
+                                    {uploading ? 'Uploading...' : 'Change photo'}
+                                    <input type="file" accept="image/*" onChange={handlePhoto} disabled={uploading} hidden />
+                                </label>
+                                {/* solo aparece si ya tiene foto */}
+                                {profile && profile.avatar_url && (
+                                    <button type="button" className="settings-photo-remove" onClick={removePhoto}>
+                                        Remove photo
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
                     {/* una fila por dato; la que estoy editando lleva la clase editing (el css muestra el input) */}
                     {account.map((field) => (
                         <div
@@ -319,6 +466,9 @@ function Configuration({ open, onClose, onLogout }: ConfigurationProps) {
                             </div>
                         </div>
                     )}
+
+                    {/* error al guardar una fila o la foto */}
+                    {rowError !== '' && <p className="settings-secure-error" role="status">{rowError}</p>}
 
                     {/* mensaje cuando el cambio sale bien */}
                     {secureNotice !== '' && <p className="settings-secure-ok" role="status">{secureNotice}</p>}
