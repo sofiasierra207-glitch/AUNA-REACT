@@ -280,6 +280,18 @@ function Configuration({ open, email, profile, onProfileChange, onClose, onLogou
         onProfileChange();
     }
 
+    // quitar la foto: avatar_url vuelve a null y se ve la inicial otra vez
+    async function removePhoto() {
+        if (!profile) return;
+        setRowError('');
+        const { error } = await supabase.from('profiles').update({ avatar_url: null }).eq('id', profile.id);
+        if (error) {
+            setRowError('We could not remove your photo. Try again.');
+        } else {
+            onProfileChange();
+        }
+    }
+
     // Enter guarda el cambio
     function handleEnter(event: ReactKeyboardEvent<HTMLInputElement>) {
         if (event.key === 'Enter') {
@@ -356,10 +368,18 @@ function Configuration({ open, email, profile, onProfileChange, onClose, onLogou
                             : <span className="settings-photo-img">{profile ? profile.full_name.charAt(0).toUpperCase() : ''}</span>}
                         <div>
                             <span className="settings-label">Profile photo</span>
-                            <label className="settings-photo-button">
-                                {uploading ? 'Uploading...' : 'Change photo'}
-                                <input type="file" accept="image/*" onChange={handlePhoto} disabled={uploading} hidden />
-                            </label>
+                            <div className="settings-photo-actions">
+                                <label className="settings-photo-button">
+                                    {uploading ? 'Uploading...' : 'Change photo'}
+                                    <input type="file" accept="image/*" onChange={handlePhoto} disabled={uploading} hidden />
+                                </label>
+                                {/* solo aparece si ya tiene foto */}
+                                {profile && profile.avatar_url && (
+                                    <button type="button" className="settings-photo-remove" onClick={removePhoto}>
+                                        Remove photo
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
 
