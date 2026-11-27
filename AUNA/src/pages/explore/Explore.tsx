@@ -3,7 +3,6 @@ import type { FormEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PostCard from '../../components/postcard/PostCard';
 import CollectionCard from '../../components/collectioncard/CollectionCard';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import usePosts, { timeAgo } from '../../hooks/usePosts';
 import { weeklyCollections, topics } from './data';
 import type { Post } from './data';
@@ -31,14 +30,18 @@ function toExplorePost(row: PostRow): Post {
     };
 }
 
-// tipado de las props: los guardados vienen del estado global de App
+// tipado de las props: los guardados y los likes vienen del estado global de App
+// (App los guarda en Supabase, en las tablas saved_posts y likes)
 interface ExploreProps {
     saved: string[];                // ids guardados como texto (los de Supabase son uuid)
     onSave: (id: string) => void;
+    liked: string[];                // ids de los posts con mi like
+    likeCounts: Record<string, number>; // cuantos likes tiene cada post
+    onLike: (id: string) => void;
 }
 
 // pagina de Explore
-function Explore({ saved, onSave }: ExploreProps) {
+function Explore({ saved, onSave, liked, likeCounts, onLike }: ExploreProps) {
     // la busqueda vive en la url (/explore?q=park)
     // asi el popup de buscar me puede mandar una palabra desde cualquier pagina
     const [searchParams, setSearchParams] = useSearchParams();
@@ -57,10 +60,6 @@ function Explore({ saved, onSave }: ExploreProps) {
         setInputText(searchParams.get('q') ?? '');
         setVisibleCount(initialCount);
     }
-
-    // likes con mi custom hook, se guardan en localStorage
-    // los guardados ya no van aqui: vienen de App por props (estado global)
-    const [likes, setLikes] = useLocalStorage<string[]>('aunaLikes', []);
 
     // posts de la tabla posts de Supabase (custom hook usePosts, el mismo del Home)
     const { rows, loading, error } = usePosts();
@@ -81,12 +80,6 @@ function Explore({ saved, onSave }: ExploreProps) {
     // slice toma solo los que se ven
     const visible = filtered.slice(0, visibleCount);
     const allLoaded = visibleCount >= filtered.length;
-
-    // agrega o quita un id de un array (lo uso para los likes)
-    // includes revisa si ya esta, filter crea un array nuevo sin ese id
-    function toggle(list: string[], id: string) {
-        return list.includes(id) ? list.filter((item) => item !== id) : [...list, id];
-    }
 
     function changeTopic(topic: string) {
         setCurrentTopic(topic);
@@ -183,10 +176,10 @@ function Explore({ saved, onSave }: ExploreProps) {
                     {visible.map((post) => (
                         <PostCard
                             key={post.id}
-                            post={post}
-                            isLiked={likes.includes(post.id)}
+                            post={{ ...post, likes: likeCounts[post.id] ?? 0 }}
+                            isLiked={liked.includes(post.id)}
                             isSaved={saved.includes(post.id)}
-                            onLike={(id) => setLikes(toggle(likes, id))}
+                            onLike={onLike}
                             onSave={onSave}
                         />
                     ))}

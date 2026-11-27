@@ -10,7 +10,7 @@ import './PostCard.css';
 
 // tipado de las props
 // el padre (Explore) me dice si el post tiene like o esta guardado
-// y me pasa las funciones para cambiarlo, porque esos datos los guarda el en localStorage
+// y me pasa las funciones para cambiarlo; esos datos los guarda App en Supabase
 interface PostCardProps {
     post: Post;
     isLiked: boolean;
@@ -27,8 +27,8 @@ function PostCard({ post, isLiked, isSaved, onLike, onSave }: PostCardProps) {
     const [boxOpen, setBoxOpen] = useState(false);            // caja de comentar abierta o no
     const [comment, setComment] = useState('');                 // lo que escribo en la caja
 
-    // si tiene like le sumo 1 al numero
-    const totalLikes = isLiked ? post.likes + 1 : post.likes;
+    // cuantos likes tiene: ya vienen contados de la tabla likes (incluye el mio)
+    const totalLikes = post.likes;
 
     // circulo con la inicial: charAt(1) porque la posicion 0 es el @
     const initial = post.user.charAt(1).toUpperCase();
