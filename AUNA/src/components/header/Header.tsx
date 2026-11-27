@@ -5,6 +5,7 @@ import Profile from '../profile/Profile';
 import Language from '../language/Language';
 import Configuration from '../configuration/Configuration';
 import MiniProfile from '../mini-profile/MiniProfile';
+import useProfile from '../../hooks/useProfile';
 import './Header.css';
 
 import logo from '../../assets/images/logoauna.png';
@@ -34,6 +35,9 @@ function Header({ session, onLogout }: HeaderProps) {
 
     // ¿Está abierto el mini perfil? (menú de Cami debajo del botón de perfil)
     const [miniOpen, setMiniOpen] = useState(false);
+
+    // Perfil de la usuaria con la sesión abierta (tabla profiles de Supabase)
+    const { profile, postCount, savedCount } = useProfile(session);
 
     // Para ir a otra página desde el código
     const navigate = useNavigate();
@@ -127,7 +131,7 @@ function Header({ session, onLogout }: HeaderProps) {
                     <Language open={languageOpen} onClose={() => setLanguageOpen(false)} />
 
                     {/* Mini perfil de Cami, debajo del botón de perfil */}
-                    <MiniProfile open={miniOpen} onClose={() => setMiniOpen(false)}
+                    <MiniProfile open={miniOpen} profile={profile} onClose={() => setMiniOpen(false)}
                         onViewProfile={handleViewProfile} onSettings={handleSettings} onLogout={handleLogout} />
 
                 </div>
@@ -142,6 +146,7 @@ function Header({ session, onLogout }: HeaderProps) {
 
             {/* Ventana del perfil */}
             <Profile open={profileOpen} session={session}
+                profile={profile} postCount={postCount} savedCount={savedCount}
                 onClose={() => setProfileOpen(false)} onLogout={handleLogout} onEdit={handleEdit} />
 
             {/* Ventana de Settings (configuration de Cami) */}
