@@ -37,7 +37,7 @@ function Header({ session, onLogout }: HeaderProps) {
     const [miniOpen, setMiniOpen] = useState(false);
 
     // Perfil de la usuaria con la sesión abierta (tabla profiles de Supabase)
-    const { profile, postCount, savedCount } = useProfile(session);
+    const { profile, postCount, savedCount, reload } = useProfile(session);
 
     // Para ir a otra página desde el código
     const navigate = useNavigate();
@@ -150,7 +150,8 @@ function Header({ session, onLogout }: HeaderProps) {
                 onClose={() => setProfileOpen(false)} onLogout={handleLogout} onEdit={handleEdit} />
 
             {/* Ventana de Settings (configuration de Cami) */}
-            <Configuration open={settingsOpen}
+            {/* le paso el perfil para editarlo y reload para ver los cambios */}
+            <Configuration open={settingsOpen} email={session} profile={profile} onProfileChange={reload}
                 onClose={() => setSettingsOpen(false)} onLogout={handleLogout} />
 
         </header>
