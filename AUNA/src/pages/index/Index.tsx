@@ -8,7 +8,7 @@ import './index.css';
 import FeedCard from '../../components/feedcard/FeedCard';
 import CommunityHelp from '../../components/communityhelp/CommunityHelp';
 import Posted from '../../components/posted/Posted';
-import { currentUser, resources } from './data';
+import { resources } from './data';
 import type { Post, PostRow } from './data';
 
 // Imágenes e íconos
@@ -135,38 +135,54 @@ function Index({ session, saved, onSave }: IndexProps) {
     // ¿Está abierta la ventana de "Posted successfully"?
     const [postedOpen, setPostedOpen] = useState(false);
 
-    // Botón Post: publica si hay sesión y texto
-    function handlePost() {
+    // ¿Se está guardando el post? (evita publicar dos veces con doble clic)
+    const [posting, setPosting] = useState(false);
+
+    // Botón Post: guarda el post en la tabla posts de Supabase
+    async function handlePost() {
         // Revisa si la usuaria inició sesión (la sesión viene de App)
         if (session === "") {
             setPostError("login");
-        } else if (postText.trim() === "") {
+            return;
+        }
+        if (postText.trim() === "") {
             setPostError("Write something before posting.");
+            return;
+        }
+
+        setPosting(true);
+
+        // La autora es la cuenta con la sesión abierta en Supabase
+        const { data: userData } = await supabase.auth.getUser();
+        if (!userData.user) {
+            setPostError("login");
+            setPosting(false);
+            return;
+        }
+
+        // Si no eligió tema, queda "Community"
+        let postTopic = "Community";
+        if (topic !== "") {
+            postTopic = topic;
+        }
+
+        // insert guarda la fila; select y single devuelven el post nuevo con su autora
+        const { data, error } = await supabase
+            .from('posts')
+            .insert({
+                user_id: userData.user.id,
+                content: postText.trim(),
+                topic: postTopic
+            })
+            .select(postColumns)
+            .single();
+
+        if (error) {
+            console.error('Error creating post:', error);
+            setPostError("We couldn't publish your post. Try again.");
         } else {
-            // Si no eligió tema, queda "Community"
-            let postTopic = "Community";
-            if (topic !== "") {
-                postTopic = topic;
-            }
-
-            // Post nuevo
-            const newPost: Post = {
-                id: String(Date.now()), // texto que no se repite
-                user: currentUser.user,
-                initial: currentUser.initial,
-                role: currentUser.role,
-                time: "Just now",
-                tag: postTopic,
-                text: postText.trim(),
-                image: covers[cover].image,
-                imageAlt: covers[cover].alt,
-                comments: 0,
-                likes: 0,
-                liked: false
-            };
-
-            // Pone el post nuevo de primero
-            setFeed([newPost, ...feed]);
+            // Pone el post nuevo de primero (sin volver a pedir toda la lista)
+            setFeed([toPost(data as unknown as PostRow), ...feed]);
 
             // Limpia el formulario
             setPostText("");
@@ -177,6 +193,7 @@ function Index({ session, saved, onSave }: IndexProps) {
             // Abre la ventana de "Posted successfully"
             setPostedOpen(true);
         }
+        setPosting(false);
     }
 
     // El header, el menú y el footer los pone MainLayout
@@ -307,7 +324,9 @@ function Index({ session, saved, onSave }: IndexProps) {
                     </div>
 
                     <div className="post-actions">
-                        <button type="button" className="post-button" onClick={handlePost}>Post</button>
+                        <button type="button" className="post-button" onClick={handlePost} disabled={posting}>
+                            {posting ? "Posting..." : "Post"}
+                        </button>
                     </div>
 
                 </div>
