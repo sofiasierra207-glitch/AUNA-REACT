@@ -150,6 +150,43 @@
 }
 
 
+/* Foto de perfil: círculo con la foto o la inicial y botón para cambiarla */
+.settings-photo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 0;
+}
+
+.settings-photo-img {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--accent-bg);
+    color: var(--accent);
+    font-family: var(--heading);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-photo-button {
+    display: block;
+    margin-top: 4px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.settings-photo-button:hover {
+    color: var(--accent-hover);
+}
+
+
 /* Formulario seguro para cambiar el correo o la contraseña */
 
 /* Caja blanca con borde, debajo de las filas */

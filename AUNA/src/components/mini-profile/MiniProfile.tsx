@@ -59,7 +59,10 @@ function MiniProfile({ open, profile, onClose, onViewProfile, onSettings, onLogo
     return (
         <div className="mini-perfil abierto" role="menu">
             <div className="mini-perfil-arriba">
-                <div className="perfil-avatar">{initial}</div>
+                {/* si subio foto se ve la foto; si no, la inicial */}
+                {profile && profile.avatar_url
+                    ? <img className="perfil-avatar" src={profile.avatar_url} alt={name} />
+                    : <div className="perfil-avatar">{initial}</div>}
                 <div>
                     <p className="mini-perfil-nombre">{name}</p>
                     <p className="mini-perfil-usuario">{user}</p>

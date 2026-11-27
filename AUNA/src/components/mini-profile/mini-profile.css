@@ -49,6 +49,11 @@
 
 /* circulo rosado con la inicial
    flex-shrink 0 para que no se aplaste */
+/* si es foto, se recorta para llenar el circulo */
+img.perfil-avatar {
+    object-fit: cover;
+}
+
 .perfil-avatar {
     width: 56px;
     height: 56px;

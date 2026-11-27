@@ -74,7 +74,10 @@ function Profile({ open, session, profile, postCount, savedCount, onClose, onLog
             <div className="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-name">
 
                 <div className="profile-top">
-                    <span className="profile-avatar">{initial}</span>
+                    {/* Si subió foto se ve la foto; si no, la inicial */}
+                    {profile && profile.avatar_url
+                        ? <img className="profile-avatar" src={profile.avatar_url} alt={name} />
+                        : <span className="profile-avatar">{initial}</span>}
                     <div className="profile-names">
                         <div className="profile-title">
                             <h3 id="profile-name">{name}</h3>
