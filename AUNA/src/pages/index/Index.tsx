@@ -63,10 +63,7 @@ function toPost(row: PostRow): Post {
         text: row.content,
         // Si el post no tiene foto, usa la primera portada
         image: row.image_url ?? covers[0].image,
-        imageAlt: row.image_alt ?? covers[0].alt,
-        comments: 0,   // los comentarios y likes reales se conectan después
-        likes: 0,
-        liked: false
+        imageAlt: row.image_alt ?? covers[0].alt
     };
 }
 
