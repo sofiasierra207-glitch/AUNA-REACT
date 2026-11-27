@@ -13,13 +13,14 @@ Final project for *Diseño con Algoritmos* (Universidad Icesi, 2026-2) by Ana So
 - Edit your profile: name, username, bio and photo
 - Create posts with a photo
 - Search posts by topic or word
-- Like and save posts (saved posts appear in Favorites)
+- Like, comment and save posts (saved posts appear in Favorites)
+- See new posts appear without reloading the page
 - Ask the community for help
 
 
 ## Built with
 
-React, TypeScript and Vite, with React Router for the pages. Supabase stores the users, posts, likes, saved posts and photos. The site is published on Render.
+React, TypeScript and Vite, with React Router for the pages. Supabase stores the users, posts, likes, comments, saved posts and photos, and sends new posts in real time. The site is published on Render.
 
 
 ## How to run it
@@ -49,11 +50,11 @@ React, TypeScript and Vite, with React Router for the pages. Supabase stores the
 
 - `AUNA/src/pages` – one folder per page (Home, Explore, Community, Favorites, Help, Login, 404)
 - `AUNA/src/components` – reusable pieces and modals
-- `AUNA/src/hooks` – custom hooks (profile, posts, likes, saved posts)
+- `AUNA/src/hooks` – custom hooks (profile, posts, likes, comments, saved posts)
 - `AUNA/src/supabaseClient.ts` – the connection to Supabase
 
 
 ## Team
 
 - **Ana Sofía Sierra** – Home, Community, Help, Login, layout, profile, likes, saved posts and deploy
-- **Camila Martínez** – Explore, Favorites, modals, database setup and posts
+- **Camila Martínez** – Explore, Favorites, modals, database setup, posts, comments and real time
