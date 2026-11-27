@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './FeedCard.css';
 
+import useComments from '../../hooks/useComments';
 import type { Post } from '../../pages/index/data';
 import commentIcon from '../../assets/icons/comment.svg';
 import heartIcon from '../../assets/icons/heart.svg';
@@ -23,17 +25,33 @@ interface FeedCardProps {
 // Tarjeta de un post del feed del Home
 function FeedCard({ post, saved, onSave, liked, likes, onLike }: FeedCardProps) {
 
-    // Estados que solo le importan a la tarjeta (comentarios)
-    const [comments, setComments] = useState(post.comments);
+    // Comentarios de este post (tabla comments, con el custom hook useComments)
+    const { comments, addComment } = useComments(post.id);
+
+    // Estados que solo le importan a la tarjeta
     const [commentOpen, setCommentOpen] = useState(false);
     const [commentText, setCommentText] = useState("");
+    const [commentError, setCommentError] = useState("");
+    const [sending, setSending] = useState(false);
 
-    // Send: suma el comentario si hay texto
-    function handleSend() {
-        if (commentText.trim() !== "") {
-            setComments(comments + 1);
+    const navigate = useNavigate();
+
+    // Send: guarda el comentario en Supabase si hay texto
+    async function handleSend() {
+        if (commentText.trim() === "" || sending) return;
+
+        setSending(true);
+        const result = await addComment(commentText.trim());
+        setSending(false);
+
+        // Sin sesión: lleva al Login (igual que el like y el guardar)
+        if (result === "login") {
+            navigate("/login");
+        } else if (result !== "") {
+            setCommentError(result);
+        } else {
             setCommentText("");
-            setCommentOpen(false);
+            setCommentError("");
         }
     }
 
@@ -61,7 +79,7 @@ function FeedCard({ post, saved, onSave, liked, likes, onLike }: FeedCardProps) 
                     <button type="button" className="action-button comment-button" aria-label="Comment"
                         onClick={() => setCommentOpen(!commentOpen)}>
                         <img src={commentIcon} alt="" />
-                        <span className="comment-count">{comments}</span>
+                        <span className="comment-count">{comments.length}</span>
                     </button>
 
                     {/* Like */}
@@ -80,12 +98,28 @@ function FeedCard({ post, saved, onSave, liked, likes, onLike }: FeedCardProps) 
 
                 </div>
 
-                {/* Caja para comentar */}
+                {/* Comentarios guardados: se ven al abrir la caja */}
+                {commentOpen && comments.length > 0 && (
+                    <ul className="comment-list">
+                        {comments.map((item) => (
+                            <li key={item.id}>
+                                <strong>{item.profiles ? item.profiles.username : "@auna"}</strong> {item.content}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                {/* Caja para comentar (Enter también envía) */}
                 <div className={commentOpen ? "comment-box open" : "comment-box"}>
                     <input type="text" placeholder="Write a comment..." aria-label="Write a comment"
-                        value={commentText} onChange={(event) => setCommentText(event.target.value)} />
-                    <button type="button" className="send-button" onClick={handleSend}>Send</button>
+                        maxLength={300} value={commentText}
+                        onChange={(event) => { setCommentText(event.target.value); setCommentError(""); }}
+                        onKeyDown={(event) => { if (event.key === "Enter") handleSend(); }} />
+                    <button type="button" className="send-button" onClick={handleSend} disabled={sending}>
+                        {sending ? "..." : "Send"}
+                    </button>
                 </div>
+                {commentError !== "" && <p className="comment-error">{commentError}</p>}
 
             </div>
         </article>
