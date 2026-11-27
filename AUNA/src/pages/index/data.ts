@@ -44,13 +44,6 @@ export interface Resource {
     details: string;
 }
 
-// Usuaria con la sesión abierta (autora de los posts nuevos)
-export const currentUser = {
-    user: "@valen.torres",
-    initial: "V",
-    role: "Verified creator"
-};
-
 // Lista de posts del feed (cada post es un objeto)
 export const posts: Post[] = [
     {
