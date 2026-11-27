@@ -11,3 +11,24 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 // Cliente de Supabase: con él se hacen el login, las consultas y las subidas de fotos
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Crea la fila de la usuaria en la tabla profiles si todavía no existe
+// Se llama cuando ya hay sesión, porque RLS solo deja crear el perfil propio
+export async function createProfileIfMissing() {
+    const { data } = await supabase.auth.getUser();
+    const user = data.user;
+    if (!user) return;
+
+    // ¿Ya tiene perfil?
+    const { data: profile } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+    if (profile) return;
+
+    // Los datos del registro quedaron guardados en Auth (user_metadata)
+    const email = user.email ?? '';
+    await supabase.from('profiles').insert({
+        id: user.id,
+        username: '@' + email.split('@')[0],
+        full_name: user.user_metadata.full_name ?? '',
+        city: user.user_metadata.city ?? ''
+    });
+}
