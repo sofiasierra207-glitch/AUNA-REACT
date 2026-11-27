@@ -24,10 +24,11 @@ export async function createProfileIfMissing() {
     if (profile) return;
 
     // Los datos del registro quedaron guardados en Auth (user_metadata)
+    // Si no eligió usuario (cuentas viejas), se usa el comienzo del correo
     const email = user.email ?? '';
     await supabase.from('profiles').insert({
         id: user.id,
-        username: '@' + email.split('@')[0],
+        username: user.user_metadata.username ?? '@' + email.split('@')[0],
         full_name: user.user_metadata.full_name ?? '',
         city: user.user_metadata.city ?? ''
     });
