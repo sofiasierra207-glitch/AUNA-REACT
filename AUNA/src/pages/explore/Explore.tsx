@@ -25,8 +25,7 @@ function toExplorePost(row: PostRow): Post {
         // si el post no tiene foto uso la portada del cuaderno
         image: row.image_url ?? libroAnimado,
         imageAlt: row.image_alt ?? 'Notebook with stickers',
-        comments: 0, // los comentarios y likes reales se conectan despues
-        likes: 0,
+        likes: 0, // el numero real lo pone Explore con los likes de la tabla likes
     };
 }
 
