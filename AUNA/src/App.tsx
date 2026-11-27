@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import useLocalStorage from './hooks/useLocalStorage';
+import { supabase } from './supabaseClient';
 import MainLayout from './components/mainlayout/MainLayout';
 import Index from './pages/index/Index';
 import Explore from './pages/explore/Explore';
@@ -23,6 +24,12 @@ function App() {
     // Ids de los posts guardados (Home, Explore y Favorites usan esta misma lista)
     const [saved, setSaved] = useLocalStorage<number[]>("aunaGuardados", []);
 
+    // Log out: cierra la sesión en Supabase y deja vacía la de la app
+    async function handleLogout() {
+        await supabase.auth.signOut();
+        setSession("");
+    }
+
     // Save: si el post ya estaba guardado lo quita; si no, lo agrega
     function toggleSave(id: number) {
         if (saved.includes(id)) {
@@ -35,8 +42,8 @@ function App() {
     return (
         <Routes>
             {/* Páginas que llevan header, menú de celular y footer */}
-            {/* MainLayout recibe la sesión para el perfil del Header; Log out la deja vacía */}
-            <Route element={<MainLayout session={session} onLogout={() => setSession("")} />}>
+            {/* MainLayout recibe la sesión para el perfil del Header; Log out la cierra */}
+            <Route element={<MainLayout session={session} onLogout={handleLogout} />}>
                 <Route path="/" element={<Index session={session} saved={saved} onSave={toggleSave} />} />
                 <Route path="/explore" element={<Explore saved={saved} onSave={toggleSave} />} />
                 <Route path="/favorites" element={<Favorites savedIds={saved} />} />
